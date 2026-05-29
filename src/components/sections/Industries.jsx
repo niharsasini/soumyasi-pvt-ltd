@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { INDUSTRIES_DATA } from "@/lib/constants/industries.constants";
+import { INDUSTRIES, INDUSTRIES_META } from "@/lib/data/industries";
 
 const container = {
   hidden: {},
@@ -23,7 +23,8 @@ const fadeUp = {
 };
 
 export default function Industries() {
-  const { badge, heading, description, industries } = INDUSTRIES_DATA;
+  const { badge, heading, description } = INDUSTRIES_META;
+  const industries = INDUSTRIES;
 
   // ------------------ TYPE-DELETE REWRITE ANIMATION ------------------
   const [displayText, setDisplayText] = useState("");
@@ -112,7 +113,7 @@ export default function Industries() {
                     </h3>
 
                     <p className="mt-1 text-sm sm:text-base text-gray-600 leading-relaxed">
-                      {item.desc}
+                      {item.description}
                     </p>
                   </div>
                 </motion.div>

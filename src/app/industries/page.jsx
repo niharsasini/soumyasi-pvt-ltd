@@ -2,67 +2,9 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  Factory,
-  Building2,
-  Hospital,
-  School,
-  Landmark,
-  Cpu,
-  Warehouse,
-  Hotel,
-} from "lucide-react";
+import { INDUSTRIES } from "@/lib/data/industries";
 
-const industries = [
-  {
-    icon: <Factory size={28} />,
-    title: "Manufacturing & Industrial Plants",
-    description:
-      "Complete electrical infrastructure solutions for factories, heavy industries, and production facilities.",
-  },
-  {
-    icon: <Building2 size={28} />,
-    title: "Commercial Complexes",
-    description:
-      "High-performance electrical systems for offices, malls, IT parks, and commercial buildings.",
-  },
-  {
-    icon: <Hospital size={28} />,
-    title: "Healthcare Facilities",
-    description:
-      "Reliable and compliant electrical installations for hospitals, clinics, and medical institutions.",
-  },
-  {
-    icon: <School size={28} />,
-    title: "Educational Institutions",
-    description:
-      "Safe and energy-efficient power systems for schools, colleges, and universities.",
-  },
-  {
-    icon: <Landmark size={28} />,
-    title: "Government & Infrastructure",
-    description:
-      "Large-scale electrification projects supporting public infrastructure and utilities.",
-  },
-  {
-    icon: <Cpu size={28} />,
-    title: "IT & Data Centers",
-    description:
-      "Smart power management systems for data centers and technology-driven enterprises.",
-  },
-  {
-    icon: <Warehouse size={28} />,
-    title: "Warehousing & Logistics",
-    description:
-      "Robust electrical setups designed for distribution hubs and logistics operations.",
-  },
-  {
-    icon: <Hotel size={28} />,
-    title: "Hospitality & Real Estate",
-    description:
-      "Energy-efficient solutions for hotels, residential complexes, and real estate developments.",
-  },
-];
+const industries = INDUSTRIES;
 
 export default function IndustriesPage() {
   return (
@@ -105,7 +47,9 @@ export default function IndustriesPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {industries.map((item, index) => (
+            {industries.map((item, index) => {
+              const Icon = item.icon;
+              return (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -115,7 +59,7 @@ export default function IndustriesPage() {
                 className="group bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-blue-200 transition"
               >
                 <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-blue-100 text-blue-700 mb-5 group-hover:bg-yellow-400 group-hover:text-black transition">
-                  {item.icon}
+                  <Icon size={28} />
                 </div>
 
                 <h3 className="text-lg font-semibold text-blue-900 mb-3">
@@ -126,7 +70,8 @@ export default function IndustriesPage() {
                   {item.description}
                 </p>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

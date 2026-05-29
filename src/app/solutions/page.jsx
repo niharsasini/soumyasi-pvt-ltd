@@ -1,47 +1,23 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { Zap, Sun, Building2, Settings, ShieldCheck, Cpu } from "lucide-react";
+import { Sun } from "lucide-react";
+import { SOLUTIONS } from "@/lib/data/solutions";
 
-const solutions = [
+const solutions = SOLUTIONS;
+
+// Lazy-load the WebGL viewer client-side only so it never blocks SSR.
+const SolarPanelViewer = dynamic(
+  () => import("@/components/three/SolarPanelViewer"),
   {
-    icon: <Sun size={30} />,
-    title: "Solar Energy Systems",
-    description:
-      "High-efficiency solar installations designed for commercial and residential energy optimization.",
+    ssr: false,
+    loading: () => (
+      <div className="h-[420px] w-full animate-pulse rounded-2xl bg-gradient-to-b from-brand-dark to-brand-darker ring-1 ring-white/10 sm:h-[480px] lg:h-[560px]" />
+    ),
   },
-  {
-    icon: <Zap size={30} />,
-    title: "Power Distribution",
-    description:
-      "Reliable electrical distribution networks engineered for scalable infrastructure growth.",
-  },
-  {
-    icon: <Building2 size={30} />,
-    title: "Industrial Electrification",
-    description:
-      "Turnkey electrical solutions for factories, plants, and industrial facilities.",
-  },
-  {
-    icon: <Settings size={30} />,
-    title: "Maintenance & AMC",
-    description:
-      "Preventive maintenance ensuring uninterrupted system performance and reliability.",
-  },
-  {
-    icon: <ShieldCheck size={30} />,
-    title: "Safety & Compliance",
-    description:
-      "Electrical audits and safety compliance aligned with national standards.",
-  },
-  {
-    icon: <Cpu size={30} />,
-    title: "Smart Energy Automation",
-    description:
-      "IoT-enabled smart monitoring systems for intelligent energy management.",
-  },
-];
+);
 
 export default function SolutionsPage() {
   return (
@@ -73,6 +49,64 @@ export default function SolutionsPage() {
         <div className="absolute bottom-0 left-0 w-full h-16 bg-white rounded-t-[50px]" />
       </section>
 
+      {/* ================= 3D SOLAR PANEL VIEWER ================= */}
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto grid items-center gap-12 lg:grid-cols-2">
+          {/* LEFT — copy */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+          >
+            <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-brand-accentDark">
+              <Sun size={18} /> Solar Energy Systems
+            </span>
+
+            <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-brand-primaryDark">
+              Engineered for Maximum Yield
+            </h2>
+
+            <p className="mt-6 text-gray-600 leading-relaxed">
+              High-efficiency photovoltaic arrays, precision-mounted and
+              optimised for your site. Drag to orbit the module, scroll to zoom
+              in on the cell layout, anti-reflective glass and aluminium frame.
+            </p>
+
+            <ul className="mt-8 space-y-3 text-gray-700">
+              {[
+                "Tier-1 monocrystalline modules",
+                "Optimised tilt for peak generation",
+                "Corrosion-resistant mounting structure",
+              ].map((point) => (
+                <li key={point} className="flex items-start gap-3">
+                  <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-brand-accent" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-8 rounded-lg bg-brand-accent px-8 py-3 font-semibold text-black shadow-md transition hover:bg-brand-accentDark"
+            >
+              Request a Site Assessment
+            </motion.button>
+          </motion.div>
+
+          {/* RIGHT — interactive 3D model */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+          >
+            <SolarPanelViewer />
+          </motion.div>
+        </div>
+      </section>
+
       {/* ================= SOLUTIONS GRID ================= */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
@@ -87,7 +121,9 @@ export default function SolutionsPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {solutions.map((item, index) => (
+            {solutions.map((item, index) => {
+              const Icon = item.icon;
+              return (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -97,7 +133,7 @@ export default function SolutionsPage() {
                 className="group bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition duration-300 border border-gray-100 hover:border-blue-200"
               >
                 <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-blue-100 text-blue-700 mb-6 group-hover:bg-yellow-400 group-hover:text-black transition">
-                  {item.icon}
+                  <Icon size={30} />
                 </div>
 
                 <h3 className="text-xl font-semibold mb-3 text-blue-900">
@@ -108,7 +144,8 @@ export default function SolutionsPage() {
                   {item.description}
                 </p>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
