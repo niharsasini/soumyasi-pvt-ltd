@@ -83,13 +83,13 @@ html { scroll-behavior: smooth; }
 * { -webkit-tap-highlight-color: transparent; }
 
 /* ── Leaflet map overrides ── */
-.ev-map .leaflet-container { background: #0a0f1e; }
-.leaflet-popup-content-wrapper,
-.leaflet-popup-tip {
+.leaflet-popup-content-wrapper {
   background: transparent !important;
+  border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
 }
+.leaflet-popup-tip { background: #f59e0b !important; }
 .leaflet-popup-content { margin: 0 !important; }
 .leaflet-control-zoom a {
   background: #0f172a !important;
