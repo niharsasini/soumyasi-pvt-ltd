@@ -1,9 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import L from "leaflet";
 import { EV_STATIONS } from "@/lib/data/ev-stations";
 import "leaflet/dist/leaflet.css";
+
+// Fix default marker icons broken by webpack/Next.js bundling
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
 const ODISHA_CENTER = [20.9517, 85.0985];
 const INITIAL_ZOOM = 7;
@@ -24,10 +32,7 @@ function StationMarker({ station }) {
         weight: 2,
       }}
     >
-      <Popup
-        className="ev-popup"
-        closeButton={false}
-      >
+      <Popup closeButton={false}>
         <div style={{
           background: "#0f172a",
           border: "1px solid rgba(245,158,11,0.3)",
