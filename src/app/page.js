@@ -1,20 +1,20 @@
-import Hero from "@/components/sections/Hero";
-import WhatWeDo from "@/components/sections/WhatWeDo";
-import StatsStrip from "@/components/sections/StatsStrip";
-import Industries from "@/components/sections/Industries";
-import WhyChooseUs from "@/components/sections/WhyChooseUs";
-import Testimonial from "@/components/sections/Testimonial";
-import FinalCTA from "@/components/sections/FinalCTA";
+import Hero          from "@/components/sections/home/Hero";
+import WhatWeDo      from "@/components/sections/home/WhatWeDo";
+import StatsStrip    from "@/components/sections/home/StatsStrip";
+import Industries    from "@/components/sections/home/Industries";
+import WhyChooseUs   from "@/components/sections/home/WhyChooseUs";
+import Testimonials  from "@/components/sections/home/Testimonials";
+import FinalCTA      from "@/components/sections/home/FinalCTA";
 
 export default function Page() {
   return (
-    <main className="w-full overflow-x-hidden bg-[#0f172a] antialiased">
+    <main className="w-full overflow-x-hidden bg-brand-bg antialiased">
       <Hero />
       <WhatWeDo />
       <StatsStrip />
       <Industries />
       <WhyChooseUs />
-      <Testimonial />
+      <Testimonials />
       <FinalCTA />
     </main>
   );

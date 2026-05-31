@@ -25,7 +25,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="min-h-screen flex flex-col bg-[#0f172a] text-white antialiased">
+      <body className="min-h-screen flex flex-col bg-brand-bg text-brand-text antialiased">
         <CustomCursor />
         <Navbar />
         <main className="flex-grow">{children}</main>

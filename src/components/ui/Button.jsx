@@ -3,51 +3,53 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+const STYLES = {
+  primary: "btn-shimmer bg-gradient-to-r from-amber-400 to-amber-600 text-black font-semibold rounded-full hover:shadow-gold active:scale-95",
+  ghost:   "border-2 border-amber-500/50 text-amber-400 font-semibold rounded-full hover:bg-amber-500/10 hover:border-amber-500",
+  outline: "border border-white/20 text-white font-semibold rounded-full hover:border-white/40 hover:bg-white/5",
+  danger:  "bg-red-600 text-white font-semibold rounded-full hover:bg-red-700",
+};
+
+const SIZES = {
+  sm: "px-5 py-2 text-xs",
+  md: "px-7 py-3 text-sm",
+  lg: "px-9 py-4 text-base",
+};
+
 export default function Button({
-  href = "#",
+  variant  = "primary",
+  size     = "md",
+  href,
   children,
-  variant = "primary",
-  size = "md",
-  disabled = false,
-  icon: Icon,
+  className = "",
+  onClick,
+  disabled  = false,
+  ...rest
 }) {
-  const base =
-    "inline-flex items-center justify-center gap-2 rounded-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-brand-primary";
+  const base = `inline-flex items-center justify-center gap-2 transition-all duration-300 ease-out
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400
+    ${STYLES[variant] ?? STYLES.primary}
+    ${SIZES[size] ?? SIZES.md}
+    ${disabled ? "opacity-50 pointer-events-none" : ""}
+    ${className}`;
 
-  const sizes = {
-    sm: "px-4 py-2 text-xs",
-    md: "px-6 py-3 text-sm",
-    lg: "px-8 py-4 text-base",
-  };
-
-  const variants = {
-    primary: "bg-brand-primary text-white hover:bg-brand-primaryDark",
-    outline:
-      "border border-slate-400 text-slate-700 hover:border-brand-primary hover:text-brand-primary",
-    dark: "bg-gray-900 text-white hover:bg-black",
-    ghost: "text-brand-primary hover:bg-blue-50",
-  };
-
-  const disabledStyles = "opacity-50 pointer-events-none";
+  const inner = href ? (
+    <Link href={href} className={base} tabIndex={disabled ? -1 : undefined} {...rest}>
+      {children}
+    </Link>
+  ) : (
+    <button className={base} onClick={onClick} disabled={disabled} {...rest}>
+      {children}
+    </button>
+  );
 
   return (
     <motion.div
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ scale: disabled ? 1 : 1.05 }}
+      whileTap={{ scale: disabled ? 1 : 0.95 }}
       className="inline-block"
     >
-      <Link
-        href={href}
-        className={`
-          ${base}
-          ${sizes[size]}
-          ${variants[variant]}
-          ${disabled ? disabledStyles : ""}
-        `}
-      >
-        {Icon && <Icon size={16} />}
-        {children}
-      </Link>
+      {inner}
     </motion.div>
   );
 }
