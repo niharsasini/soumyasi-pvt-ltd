@@ -89,14 +89,14 @@ export default function EVMapSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="w-full rounded-2xl overflow-hidden"
+          className="w-full rounded-2xl overflow-hidden border border-amber-200"
           style={{
-            height: "clamp(350px, 50vw, 500px)",
-            border: "1px solid rgba(245,158,11,0.2)",
             boxShadow: "0 0 40px rgba(245,158,11,0.08), 0 20px 60px rgba(0,0,0,0.4)",
           }}
         >
-          <EVStationMap />
+          <div className="bg-[#EAEDF0] rounded-2xl p-2 shadow-inner" style={{ height: "clamp(350px, 50vw, 500px)" }}>
+            <EVStationMap />
+          </div>
         </motion.div>
 
         {/* Stats strip */}
