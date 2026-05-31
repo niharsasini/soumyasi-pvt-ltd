@@ -1,8 +1,14 @@
 "use client";
 
-import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useRef, useMemo, useEffect, Component } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Instances, Instance } from "@react-three/drei";
+
+class ErrorBoundary extends Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  render() { return this.state.hasError ? null : this.props.children; }
+}
 
 function SmallCells({ w, h, cols, rows }) {
   const { positions, cw, ch } = useMemo(() => {
@@ -44,7 +50,6 @@ function Panel() {
 
   return (
     <group ref={groupRef}>
-      {/* Frame */}
       <mesh>
         <boxGeometry args={[pw, ph, 0.12]} />
         <meshStandardMaterial
@@ -55,22 +60,35 @@ function Panel() {
           emissiveIntensity={0.08}
         />
       </mesh>
-      {/* Cells */}
       <SmallCells w={pw - 0.1} h={ph - 0.1} cols={4} rows={6} />
     </group>
   );
 }
 
+function Disposer() {
+  const { gl } = useThree();
+  useEffect(() => {
+    return () => {
+      try { gl.dispose(); } catch (_) {}
+    };
+  }, [gl]);
+  return null;
+}
+
 export default function FloatingPanel() {
   return (
-    <Canvas
-      camera={{ position: [0, 0, 4], fov: 42 }}
-      gl={{ antialias: false, alpha: true }}
-      style={{ background: "transparent" }}
-    >
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[3, 5, 3]} intensity={1.5} color="#fff5e0" />
-      <Panel />
-    </Canvas>
+    <ErrorBoundary>
+      <Canvas
+        camera={{ position: [0, 0, 4], fov: 42 }}
+        gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
+        dpr={[1, 1.5]}
+        style={{ background: "transparent" }}
+      >
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[3, 5, 3]} intensity={1.5} color="#fff5e0" />
+        <Panel />
+        <Disposer />
+      </Canvas>
+    </ErrorBoundary>
   );
 }

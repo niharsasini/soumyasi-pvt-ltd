@@ -1,7 +1,13 @@
 "use client";
 
-import React, { useMemo, useState, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import React, { useMemo, useState, useRef, useEffect, Component } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+
+class ErrorBoundary extends Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  render() { return this.state.hasError ? null : this.props.children; }
+}
 import {
   OrbitControls,
   Environment,
@@ -249,55 +255,66 @@ function CanvasLoader() {
   );
 }
 
+function Disposer() {
+  const { gl } = useThree();
+  useEffect(() => {
+    return () => {
+      try { gl.dispose(); } catch (_) {}
+    };
+  }, [gl]);
+  return null;
+}
+
 export default function SolarPanelViewer() {
   const [hovered, setHovered] = useState(false);
   const [dragging, setDragging] = useState(false);
   const autoRotate = !hovered && !dragging;
 
   return (
-    <div
-      className="relative w-full overflow-hidden rounded-2xl"
-      style={{
-        height: "420px",
-        background: "linear-gradient(to bottom, #020c1b, #0a1628)",
-        boxShadow: "0 0 0 1px rgba(34,211,238,0.12), 0 20px 60px rgba(0,0,0,0.5)",
-      }}
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
-    >
-      <Canvas
-        shadows
-        dpr={[1, 2]}
-        camera={{ position: [7, 5, 9], fov: 35 }}
-        gl={{ antialias: true, alpha: false }}
+    <ErrorBoundary>
+      <div
+        className="relative w-full overflow-hidden rounded-2xl"
+        style={{
+          height: "420px",
+          background: "linear-gradient(to bottom, #020c1b, #0a1628)",
+          boxShadow: "0 0 0 1px rgba(34,211,238,0.12), 0 20px 60px rgba(0,0,0,0.5)",
+        }}
+        onPointerEnter={() => setHovered(true)}
+        onPointerLeave={() => setHovered(false)}
       >
-        <React.Suspense fallback={<CanvasLoader />}>
-          <Scene />
-        </React.Suspense>
+        <Canvas
+          shadows
+          dpr={[1, 1.5]}
+          camera={{ position: [7, 5, 9], fov: 35 }}
+          gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
+        >
+          <React.Suspense fallback={<CanvasLoader />}>
+            <Scene />
+          </React.Suspense>
 
-        <OrbitControls
-          makeDefault
-          target={[0, 1.8, 0]}
-          enablePan={false}
-          enableZoom
-          autoRotate={autoRotate}
-          autoRotateSpeed={0.7}
-          minDistance={6}
-          maxDistance={16}
-          maxPolarAngle={Math.PI / 2.05}
-          onStart={() => setDragging(true)}
-          onEnd={() => setDragging(false)}
-        />
-      </Canvas>
+          <OrbitControls
+            makeDefault
+            target={[0, 1.8, 0]}
+            enablePan={false}
+            enableZoom
+            autoRotate={autoRotate}
+            autoRotateSpeed={0.7}
+            minDistance={6}
+            maxDistance={16}
+            maxPolarAngle={Math.PI / 2.05}
+            onStart={() => setDragging(true)}
+            onEnd={() => setDragging(false)}
+          />
+          <Disposer />
+        </Canvas>
 
-      {/* Corner glow */}
-      <div className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-cyan-400/15 blur-3xl" />
-      <div className="pointer-events-none absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-blue-600/10 blur-3xl" />
+        <div className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-cyan-400/15 blur-3xl" />
+        <div className="pointer-events-none absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-blue-600/10 blur-3xl" />
 
-      {/* Interaction hint */}
-      <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-[10px] text-gray-500 tracking-wide">
-        <span>Drag to rotate · Scroll to zoom</span>
+        <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-[10px] text-gray-500 tracking-wide">
+          <span>Drag to rotate · Scroll to zoom</span>
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }

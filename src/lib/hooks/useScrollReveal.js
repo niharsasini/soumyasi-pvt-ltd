@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useInView } from "framer-motion";
+import { useInView, useReducedMotion } from "framer-motion";
 
 /**
  * Returns a ref to attach to a section wrapper, plus:
@@ -18,8 +18,10 @@ import { useInView } from "framer-motion";
  */
 export function useScrollReveal(options = {}) {
   const ref = useRef(null);
+  const reducedMotion = useReducedMotion();
   const isInView = useInView(ref, { once: true, margin: "-80px", ...options });
-  return { ref, isInView };
+  // Skip scroll-triggered reveal when user prefers reduced motion — show content immediately
+  return { ref, isInView: reducedMotion ? true : isInView };
 }
 
 /* Shared variant definitions — import alongside the hook */

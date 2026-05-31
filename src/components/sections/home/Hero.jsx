@@ -201,7 +201,7 @@ export default function Hero() {
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="none"
                 className="w-full h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px] object-cover"
               />
 
