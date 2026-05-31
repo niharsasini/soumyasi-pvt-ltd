@@ -2,13 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
-  --brand: #0ea5a4;
+:root {
+  --brand-cyan: #22d3ee;
+  --brand-blue: #1d4ed8;
+  --brand-dark: #0f172a;
 }
 
-html,body,#root{
-  height:100%;
+html, body {
+  height: 100%;
+  cursor: none;
 }
 
-/* basic utility for the demo */
-.container{max-width:1200px;margin:0 auto;padding:0 1rem}
+/* Show default cursor on mobile/touch */
+@media (hover: none) or (pointer: coarse) {
+  html, body {
+    cursor: auto;
+  }
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.6);
+}
+
+/* ── Swiper pagination ── */
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important;
+}
+.swiper-pagination-bullet-active {
+  background: #22d3ee !important;
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.6) !important;
+}
+
+/* ── Glassmorphism utility ── */
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+  }
+
+  .section-divider {
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.08), transparent);
+  }
+}
+
+/* ── Section gradient bleeds ── */
+.section-top-fade {
+  background: linear-gradient(to bottom, #080e1a, #0f172a);
+}
+
+/* ── Smooth scroll ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Remove blue tap highlight on mobile ── */
+* {
+  -webkit-tap-highlight-color: transparent;
+}

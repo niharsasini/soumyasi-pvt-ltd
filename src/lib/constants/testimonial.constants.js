@@ -1,32 +1,44 @@
-import { Quote } from "lucide-react";
-
 export const TESTIMONIAL_DATA = {
   badge: "Testimonials",
-  heading: "Trusted by Power & Industrial Leaders",
+  heading: "Trusted Across Odisha",
   description:
-    "Our solutions power mission-critical industries across energy, manufacturing, and infrastructure with reliability and precision.",
+    "Real results from real clients across Bhubaneswar, Cuttack, Puri, Rourkela, and beyond.",
 
   testimonials: [
     {
-      name: "Amit Kumar",
-      role: "Plant Head, Thermal Power Unit",
+      name: "Rajesh Mohanty",
+      role: "Business Owner, Bhubaneswar",
       message:
-        "Their engineering quality and on-time execution significantly improved our operational efficiency.",
-      icon: Quote,
+        "Soumyashree installed solar panels for my factory. Our electricity bills dropped by 70% in the first month. Outstanding quality and a very professional team.",
+      stars: 5,
     },
     {
-      name: "Ravi Sharma",
-      role: "Operations Director, Manufacturing",
+      name: "Priya Nanda",
+      role: "IT Park Manager, Cuttack",
       message:
-        "A dependable partner with deep industrial knowledge and excellent after-sales support.",
-      icon: Quote,
+        "We partnered with them for our EV charging stations at our facility. The installation was flawless and the support has been excellent ever since.",
+      stars: 5,
     },
     {
-      name: "Sanjay Verma",
-      role: "Project Manager, Energy Systems",
+      name: "Suresh Pattnaik",
+      role: "Hospital Administrator, Puri",
       message:
-        "Professional, safety-focused, and technically sound. Highly recommended for large-scale projects.",
-      icon: Quote,
+        "The solar and power backup system has been running without issues for 2 years. Truly reliable with exceptional after-sales support.",
+      stars: 5,
+    },
+    {
+      name: "Anita Behera",
+      role: "Homeowner, Bhubaneswar",
+      message:
+        "Very happy with my rooftop solar installation. The team explained every detail clearly. The system already paid back a significant portion of the cost.",
+      stars: 5,
+    },
+    {
+      name: "Debashis Rath",
+      role: "Factory Director, Rourkela",
+      message:
+        "Industrial power solutions from Soumyashree have been top-notch. They understood our requirements and delivered beyond expectations. Highly recommend.",
+      stars: 5,
     },
   ],
 };

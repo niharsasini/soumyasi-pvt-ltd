@@ -1,23 +1,34 @@
 import "./globals.css";
+import { Inter, Outfit } from "next/font/google";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import CustomCursor from "@/components/common/CustomCursor";
 import { BRAND } from "@/lib/config/site.config";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
 export const metadata = {
-  title: `${BRAND.name} — ${BRAND.tagline}`,
+  title: `${BRAND.name} — Solar, EV Charging & Power Solutions | Odisha`,
   description: BRAND.description,
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <body className="min-h-screen flex flex-col bg-[#0f172a] text-white antialiased">
+        <CustomCursor />
         <Navbar />
-
-        {/* Main Content */}
-        <main className="flex-grow pt-10">{children}</main>
-
-        {/* Footer */}
+        <main className="flex-grow">{children}</main>
         <Footer />
       </body>
     </html>

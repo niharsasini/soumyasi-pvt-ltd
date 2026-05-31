@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Mail, Phone, MapPin, Facebook, Linkedin, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import {
   BRAND,
   CONTACT,
@@ -9,50 +9,82 @@ import {
   FOOTER_SERVICES,
 } from "@/lib/config/site.config";
 
-const SOCIAL_ICON_CLASS =
-  "p-2 bg-gray-800 rounded-md hover:bg-brand-accent hover:text-black transition";
+const SocialIcons = {
+  Facebook: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  ),
+  Linkedin: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  ),
+  Twitter: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4 4l16 16M4 20L20 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+      <path d="M2 3h6.5l13 18H15.5z" />
+    </svg>
+  ),
+};
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-950 text-gray-300">
-      {/* ================= TOP SECTION ================= */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12 sm:py-16">
+    <footer className="bg-[#020617] text-gray-400 relative overflow-hidden">
+      {/* Top gradient border */}
+      <div
+        className="absolute top-0 inset-x-0 h-[1px]"
+        style={{
+          background: "linear-gradient(to right, transparent, rgba(34,211,238,0.4), transparent)",
+        }}
+      />
+
+      {/* Background glow */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-30"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 40% at 50% 100%, rgba(29,78,216,0.12), transparent)",
+        }}
+      />
+
+      {/* ── MAIN CONTENT ── */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Company Info */}
+          {/* Company */}
           <div className="space-y-5">
-            <h2 className="text-xl sm:text-2xl font-bold text-white leading-snug">
+            <h2 className="text-lg font-bold text-white font-display leading-snug">
               {BRAND.name}
             </h2>
-
-            <p className="text-sm text-gray-400 leading-relaxed">
-              {BRAND.description}
-            </p>
-
-            {/* Social Icons */}
-            <div className="flex gap-4 pt-2">
-              <a href={SOCIAL.facebook} aria-label="Facebook" className={SOCIAL_ICON_CLASS}>
-                <Facebook size={18} />
-              </a>
-              <a href={SOCIAL.linkedin} aria-label="LinkedIn" className={SOCIAL_ICON_CLASS}>
-                <Linkedin size={18} />
-              </a>
-              <a href={SOCIAL.twitter} aria-label="Twitter" className={SOCIAL_ICON_CLASS}>
-                <Twitter size={18} />
-              </a>
+            <p className="text-sm text-gray-500 leading-relaxed">{BRAND.description}</p>
+            <div className="flex gap-3 pt-1">
+              {[
+                { href: SOCIAL.facebook, Icon: SocialIcons.Facebook, label: "Facebook" },
+                { href: SOCIAL.linkedin, Icon: SocialIcons.Linkedin, label: "LinkedIn" },
+                { href: SOCIAL.twitter, Icon: SocialIcons.Twitter, label: "X / Twitter" },
+              ].map(({ href, Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="p-2 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-400 transition-all duration-300"
+                >
+                  <Icon size={16} />
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-5 text-lg">
-              Quick Links
-            </h3>
+            <h3 className="text-white font-semibold mb-5 text-base">Quick Links</h3>
             <ul className="space-y-3 text-sm">
               {FOOTER_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="hover:text-brand-accent transition"
+                    className="hover:text-cyan-400 transition-colors duration-300"
                   >
                     {item.label}
                   </Link>
@@ -63,14 +95,12 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-white font-semibold mb-5 text-lg">
-              Our Services
-            </h3>
+            <h3 className="text-white font-semibold mb-5 text-base">Our Services</h3>
             <ul className="space-y-3 text-sm">
               {FOOTER_SERVICES.map((service) => (
                 <li
                   key={service}
-                  className="hover:text-brand-accent transition cursor-pointer"
+                  className="hover:text-cyan-400 transition-colors duration-300 cursor-pointer"
                 >
                   {service}
                 </li>
@@ -78,32 +108,30 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold mb-5 text-lg">
-              Contact Us
-            </h3>
-
+            <h3 className="text-white font-semibold mb-5 text-base">Contact Us</h3>
             <div className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
-                <MapPin size={18} className="text-brand-accent mt-1 shrink-0" />
-                <p className="text-gray-400">
+                <MapPin size={16} className="text-cyan-400 mt-0.5 shrink-0" />
+                <p className="text-gray-500">
                   {CONTACT.address.line1}
                   <br />
                   {CONTACT.address.line2}
                 </p>
               </div>
-
               <div className="flex items-center gap-3">
-                <Phone size={18} className="text-brand-accent shrink-0" />
-                <a href={CONTACT.phoneHref} className="text-gray-400 hover:text-brand-accent">
+                <Phone size={16} className="text-cyan-400 shrink-0" />
+                <a href={CONTACT.phoneHref} className="hover:text-cyan-400 transition-colors">
                   {CONTACT.phone}
                 </a>
               </div>
-
               <div className="flex items-center gap-3">
-                <Mail size={18} className="text-brand-accent shrink-0" />
-                <a href={`mailto:${CONTACT.email}`} className="text-gray-400 hover:text-brand-accent">
+                <Mail size={16} className="text-cyan-400 shrink-0" />
+                <a
+                  href={`mailto:${CONTACT.email}`}
+                  className="hover:text-cyan-400 transition-colors"
+                >
                   {CONTACT.email}
                 </a>
               </div>
@@ -112,26 +140,23 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ================= NEWSLETTER ================= */}
-      <div className="border-t border-gray-800">
+      {/* ── NEWSLETTER ── */}
+      <div className="relative z-10 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
-              <h4 className="text-white font-semibold text-base sm:text-lg">
-                Subscribe to our Newsletter
-              </h4>
-              <p className="text-sm text-gray-400 mt-1">
-                Get the latest updates on our projects and innovations.
+              <h4 className="text-white font-semibold text-base">Subscribe to our Newsletter</h4>
+              <p className="text-sm text-gray-500 mt-1">
+                Get the latest updates on solar, EV, and power projects.
               </p>
             </div>
-
-            <div className="flex flex-col sm:flex-row w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-2">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="px-4 py-2 w-full sm:w-64 rounded-md sm:rounded-l-md sm:rounded-r-none bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-accent text-sm"
+                className="px-4 py-2.5 w-full sm:w-64 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:border-cyan-400/50 text-sm text-white placeholder-gray-600 transition-colors"
               />
-              <button className="mt-3 sm:mt-0 sm:ml-0 bg-brand-accent hover:bg-brand-accentDark text-black px-5 py-2 rounded-md sm:rounded-r-md sm:rounded-l-none font-semibold transition">
+              <button className="px-6 py-2.5 rounded-xl bg-cyan-400 text-[#0f172a] font-semibold text-sm hover:bg-cyan-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300">
                 Subscribe
               </button>
             </div>
@@ -139,9 +164,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ================= BOTTOM ================= */}
-      <div className="bg-black text-center py-4 text-xs sm:text-sm text-gray-500 px-4">
-        © {new Date().getFullYear()} {BRAND.name}. All Rights Reserved.
+      {/* ── BOTTOM ── */}
+      <div className="relative z-10 border-t border-white/5 text-center py-5 text-xs text-gray-600 px-4">
+        © {new Date().getFullYear()} {BRAND.name}. All Rights Reserved. · Bhubaneswar, Odisha.
       </div>
     </footer>
   );

@@ -1,127 +1,98 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { INDUSTRIES, INDUSTRIES_META } from "@/lib/data/industries";
+import { INDUSTRIES } from "@/lib/data/industries";
 
 const container = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.07 } },
 };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: "easeOut" },
-  },
+const item = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 export default function Industries() {
-  const { badge, heading, description } = INDUSTRIES_META;
-  const industries = INDUSTRIES;
-
-  // ------------------ TYPE-DELETE REWRITE ANIMATION ------------------
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const typingSpeed = 120;
-
-  useEffect(() => {
-    let timeout;
-
-    if (!isDeleting && displayText.length < heading.length) {
-      timeout = setTimeout(() => {
-        setDisplayText(heading.slice(0, displayText.length + 1));
-      }, typingSpeed);
-    } else if (!isDeleting && displayText.length === heading.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 1500);
-    } else if (isDeleting && displayText.length > 0) {
-      timeout = setTimeout(() => {
-        setDisplayText(heading.slice(0, displayText.length - 1));
-      }, typingSpeed / 1.5);
-    } else if (isDeleting && displayText.length === 0) {
-      setIsDeleting(false);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, heading]);
-  // -------------------------------------------------------------------
-
   return (
-    <section className="w-full bg-gray-50 py-16 sm:py-20">
-      <motion.div
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={container}
-      >
-        {/* TWO COLUMN LAYOUT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* LEFT – CONTENT */}
-          <motion.div variants={fadeUp} className="lg:col-span-4">
-            <span className="inline-block mb-3 text-xs sm:text-sm font-semibold tracking-wider text-yellow-600 uppercase">
-              {badge}
-            </span>
+    <section className="w-full py-24 relative overflow-hidden" style={{ background: "#080e1a" }}>
+      {/* Background glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(29,78,216,0.1), transparent)",
+        }}
+      />
 
-            {/* ------------------- HEADING WITH TYPING ANIMATION ------------------- */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 leading-snug min-h-[4.5rem] sm:min-h-[5rem] md:min-h-[6rem] relative">
-              {/* Invisible full heading to reserve space */}
-              <span className="absolute invisible">{heading}</span>
+      {/* Top divider */}
+      <div
+        className="absolute inset-x-0 top-0 h-px"
+        style={{
+          background: "linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent)",
+        }}
+      />
 
-              {/* Visible typing text */}
-              <span>{displayText}</span>
-              <span className="animate-pulse">|</span>
-            </h2>
-            {/* --------------------------------------------------------------------- */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="text-xs font-semibold tracking-widest uppercase text-cyan-400 mb-3 block">
+            Industries We Serve
+          </span>
+          <h2 className="text-4xl sm:text-5xl font-bold font-display text-white">
+            Powering Every Sector
+          </h2>
+          <p className="mt-4 text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">
+            From manufacturing floors to hospital corridors — our solutions power every corner of Odisha's economy.
+          </p>
+        </motion.div>
 
-            <p className="mt-4 sm:mt-6 text-gray-600 text-base sm:text-lg leading-relaxed">
-              {description}
-            </p>
-          </motion.div>
+        {/* Grid */}
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={container}
+        >
+          {INDUSTRIES.map((ind) => {
+            const Icon = ind.icon;
+            return (
+              <motion.div
+                key={ind.title}
+                variants={item}
+                whileHover={{ scale: 1.04, y: -4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="group flex flex-col items-center text-center p-6 rounded-2xl bg-white/4 border border-white/8 hover:border-cyan-400/40 hover:bg-white/7 transition-all duration-300 cursor-default"
+                style={{
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
+                }}
+              >
+                {/* Icon */}
+                <div className="w-13 h-13 w-12 h-12 rounded-xl bg-cyan-400/8 group-hover:bg-cyan-400/16 flex items-center justify-center mb-4 transition-colors duration-300">
+                  <Icon size={24} className="text-cyan-400" />
+                </div>
 
-          {/* RIGHT – INDUSTRIES LIST */}
-          <motion.div
-            className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6"
-            variants={container}
-          >
-            {industries.map((item, index) => {
-              const Icon = item.icon;
+                {/* Title */}
+                <h3 className="text-sm font-semibold text-white leading-snug group-hover:text-cyan-300 transition-colors duration-300">
+                  {ind.title}
+                </h3>
 
-              return (
-                <motion.div
-                  key={index}
-                  variants={fadeUp}
-                  whileHover={{ x: 6 }}
-                  transition={{ duration: 0.3 }}
-                  className="group flex gap-4 items-start p-5 bg-white border border-gray-100 rounded-xl hover:shadow-md transition"
-                >
-                  {/* ICON */}
-                  <div className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-lg bg-blue-50 group-hover:bg-blue-100 transition">
-                    <Icon size={20} className="text-blue-800" />
-                  </div>
-
-                  {/* TEXT */}
-                  <div>
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-1 text-sm sm:text-base text-gray-600 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </motion.div>
+                {/* Description (visible on sm+) */}
+                <p className="mt-2 text-[11px] text-gray-500 leading-relaxed hidden sm:block">
+                  {ind.description.split(".")[0]}.
+                </p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
     </section>
   );
 }

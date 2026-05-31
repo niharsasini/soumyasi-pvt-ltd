@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { useMemo, useState, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import {
   OrbitControls,
   Environment,
@@ -11,24 +11,7 @@ import {
   Instance,
 } from "@react-three/drei";
 
-/* -------------------------------------------------------------------------- */
-/*  Swap-in point for a real .glb model                                       */
-/*                                                                            */
-/*  When a production model is ready:                                         */
-/*    1. Drop the file at  public/models/solar-panel.glb                      */
-/*    2. Uncomment RealSolarPanel + the preload below.                        */
-/*    3. Render <RealSolarPanel /> in place of <PlaceholderSolarPanel />      */
-/*       inside <Scene /> — both accept the same position/rotation props,     */
-/*       so nothing else has to change.                                       */
-/* -------------------------------------------------------------------------- */
-// import { useGLTF } from "@react-three/drei";
-// function RealSolarPanel(props) {
-//   const { scene } = useGLTF("/models/solar-panel.glb");
-//   return <primitive object={scene} {...props} />;
-// }
-// useGLTF.preload("/models/solar-panel.glb");
-
-/** Grid of photovoltaic cells, instanced for performance. */
+/** PV cell grid, instanced for GPU performance */
 function Cells({ width, height, cols, rows, gap, z }) {
   const { positions, cellW, cellH } = useMemo(() => {
     const inset = 0.08;
@@ -50,12 +33,12 @@ function Cells({ width, height, cols, rows, gap, z }) {
   return (
     <Instances limit={positions.length} castShadow>
       <boxGeometry args={[cellW, cellH, 0.02]} />
-      {/* Dark photovoltaic blue, glassy + reflective for a premium read */}
+      {/* Deep photovoltaic blue with metallic/glass finish */}
       <meshStandardMaterial
-        color="#0a2342"
-        metalness={0.55}
-        roughness={0.2}
-        envMapIntensity={1.4}
+        color="#071d3a"
+        metalness={0.6}
+        roughness={0.12}
+        envMapIntensity={1.8}
       />
       {positions.map((p, i) => (
         <Instance key={i} position={p} />
@@ -64,127 +47,221 @@ function Cells({ width, height, cols, rows, gap, z }) {
   );
 }
 
-/**
- * Placeholder geometry that reads as a real solar panel: a thin dark-blue
- * panel with a visible grid of cells, an aluminium frame, mounted on a pole
- * at a tilt. Accepts standard object props (position/rotation) so a real
- * model can drop in later with no surrounding changes.
- */
+/** Thin silver grid lines overlaid on the cells */
+function GridLines({ width, height, cols, rows, z }) {
+  const lines = useMemo(() => {
+    const inset = 0.08;
+    const innerW = width - inset * 2;
+    const innerH = height - inset * 2;
+    const xStep = innerW / cols;
+    const yStep = innerH / rows;
+    const positions = [];
+    for (let c = 1; c < cols; c++) {
+      positions.push({ x: -innerW / 2 + c * xStep, y: 0, axis: "y", len: innerH });
+    }
+    for (let r = 1; r < rows; r++) {
+      positions.push({ x: 0, y: -innerH / 2 + r * yStep, axis: "x", len: innerW });
+    }
+    return positions;
+  }, [width, height, cols, rows]);
+
+  return (
+    <>
+      {lines.map((l, i) => (
+        <mesh key={i} position={[l.x, l.y, z]}>
+          <boxGeometry
+            args={l.axis === "y" ? [0.012, l.len, 0.005] : [l.len, 0.012, 0.005]}
+          />
+          <meshStandardMaterial
+            color="#d0d5dd"
+            metalness={0.9}
+            roughness={0.1}
+            envMapIntensity={1.0}
+          />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
+/** Frame with animated emissive glow */
+function PulsingFrame({ panelW, panelH }) {
+  const matRef = useRef();
+
+  useFrame(({ clock }) => {
+    if (matRef.current) {
+      matRef.current.emissiveIntensity =
+        0.18 + Math.sin(clock.elapsedTime * 1.8) * 0.12;
+    }
+  });
+
+  return (
+    <mesh castShadow receiveShadow>
+      <boxGeometry args={[panelW, panelH, 0.16]} />
+      <meshStandardMaterial
+        ref={matRef}
+        color="#c8cdd3"
+        metalness={0.92}
+        roughness={0.25}
+        emissive="#22d3ee"
+        emissiveIntensity={0.18}
+        envMapIntensity={1.2}
+      />
+    </mesh>
+  );
+}
+
+/** Ground reflection plane */
+function GroundPlane() {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]} receiveShadow>
+      <planeGeometry args={[14, 14]} />
+      <meshStandardMaterial
+        color="#050d18"
+        metalness={0.75}
+        roughness={0.35}
+        opacity={0.85}
+        transparent
+        envMapIntensity={0.6}
+      />
+    </mesh>
+  );
+}
+
+/** Solar panel geometry */
 function PlaceholderSolarPanel(props) {
   const panelW = 3.0;
   const panelH = 5.0;
-  const tilt = -0.5; // radians — leans the top of the panel back
+  const tilt = -0.48;
 
   return (
     <group {...props}>
-      {/* ---- Mount: ground base + pole ---- */}
+      {/* Base disc */}
       <mesh position={[0, 0.06, 0]} castShadow receiveShadow>
-        <cylinderGeometry args={[0.75, 0.85, 0.12, 48]} />
-        <meshStandardMaterial color="#2a2f36" metalness={0.7} roughness={0.45} />
+        <cylinderGeometry args={[0.78, 0.9, 0.12, 48]} />
+        <meshStandardMaterial color="#1e2530" metalness={0.75} roughness={0.4} />
       </mesh>
+
+      {/* Pole */}
       <mesh position={[0, 1.05, 0]} castShadow>
-        <cylinderGeometry args={[0.13, 0.13, 2.0, 32]} />
-        <meshStandardMaterial color="#9aa3ad" metalness={0.95} roughness={0.3} />
+        <cylinderGeometry args={[0.11, 0.13, 2.0, 32]} />
+        <meshStandardMaterial color="#9baab8" metalness={0.95} roughness={0.25} />
       </mesh>
 
-      {/* ---- Tilted panel assembly ---- */}
+      {/* Tilted panel assembly */}
       <group position={[0, 2.05, 0]} rotation={[tilt, 0, 0]}>
-        {/* Aluminium frame (slightly larger than the glass, with depth) */}
-        <mesh castShadow receiveShadow>
-          <boxGeometry args={[panelW, panelH, 0.16]} />
-          <meshStandardMaterial
-            color="#c7ccd1"
-            metalness={0.9}
-            roughness={0.28}
-            envMapIntensity={1.1}
-          />
-        </mesh>
+        {/* Pulsing aluminium frame */}
+        <PulsingFrame panelW={panelW} panelH={panelH} />
 
-        {/* Dark substrate / backsheet, inset so the frame reads as a border */}
+        {/* Dark substrate */}
         <mesh position={[0, 0, 0.07]} receiveShadow>
           <boxGeometry args={[panelW - 0.12, panelH - 0.12, 0.06]} />
-          <meshStandardMaterial color="#020912" metalness={0.3} roughness={0.5} />
+          <meshStandardMaterial color="#010810" metalness={0.2} roughness={0.6} />
         </mesh>
 
-        {/* Cell grid sitting just proud of the substrate */}
-        <Cells
-          width={panelW}
-          height={panelH}
-          cols={6}
-          rows={10}
-          gap={0.06}
-          z={0.11}
-        />
+        {/* Cell grid */}
+        <Cells width={panelW} height={panelH} cols={6} rows={10} gap={0.055} z={0.11} />
 
-        {/* Mounting rails on the back */}
+        {/* Silver bus-bar grid lines */}
+        <GridLines width={panelW} height={panelH} cols={6} rows={10} z={0.115} />
+
+        {/* Mounting rails (back) */}
         {[-1.3, 1.3].map((y) => (
           <mesh key={y} position={[0, y, -0.12]} castShadow>
-            <boxGeometry args={[panelW * 0.8, 0.12, 0.1]} />
-            <meshStandardMaterial color="#6b7280" metalness={0.85} roughness={0.35} />
+            <boxGeometry args={[panelW * 0.78, 0.12, 0.1]} />
+            <meshStandardMaterial color="#5a6370" metalness={0.88} roughness={0.3} />
           </mesh>
         ))}
 
-        {/* Bracket connecting the pole to the panel back */}
+        {/* Pole bracket */}
         <mesh position={[0, -0.2, -0.3]} castShadow>
-          <boxGeometry args={[0.3, 0.3, 0.5]} />
-          <meshStandardMaterial color="#6b7280" metalness={0.85} roughness={0.35} />
+          <boxGeometry args={[0.28, 0.28, 0.5]} />
+          <meshStandardMaterial color="#5a6370" metalness={0.88} roughness={0.3} />
         </mesh>
       </group>
     </group>
   );
 }
 
-/** Everything that lives inside <Canvas>, grouped for the Suspense boundary. */
+/** Full scene */
 function Scene() {
   return (
     <>
-      {/* Soft studio lighting */}
-      <ambientLight intensity={0.45} />
-      <directionalLight position={[6, 9, 6]} intensity={1.3} />
-      <directionalLight position={[-6, 4, -5]} intensity={0.45} />
+      {/* Ambient fill */}
+      <ambientLight intensity={0.3} />
+
+      {/* Warm sun-like directional light from top-right */}
+      <directionalLight
+        position={[8, 10, 5]}
+        intensity={2.2}
+        color="#fff5e0"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-near={0.5}
+        shadow-camera-far={30}
+        shadow-camera-left={-8}
+        shadow-camera-right={8}
+        shadow-camera-top={8}
+        shadow-camera-bottom={-8}
+      />
+
+      {/* Cool fill from opposite */}
+      <directionalLight position={[-5, 4, -6]} intensity={0.4} color="#cce8ff" />
+
+      {/* Rim/accent */}
       <spotLight
-        position={[0, 10, 4]}
-        angle={0.5}
+        position={[0, 12, 2]}
+        angle={0.45}
         penumbra={1}
-        intensity={0.5}
+        intensity={0.6}
+        color="#22d3ee"
       />
 
       <PlaceholderSolarPanel />
-      {/* <RealSolarPanel /> */}
 
-      {/* Soft grounding shadow */}
+      <GroundPlane />
+
+      {/* Soft contact shadow */}
       <ContactShadows
-        position={[0, 0, 0]}
-        opacity={0.45}
+        position={[0, 0.02, 0]}
+        opacity={0.55}
         scale={14}
-        blur={2.6}
+        blur={3.0}
         far={6}
+        color="#000820"
       />
 
-      {/* Image-based lighting for realistic reflections on glass + metal */}
-      <Environment preset="city" />
+      {/* HDRI reflections */}
+      <Environment preset="sunset" />
     </>
   );
 }
 
-/** In-canvas loading spinner shown while the HDRI / model assets stream in. */
 function CanvasLoader() {
   return (
     <Html center>
-      <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-brand-accent" />
+      <div
+        className="h-10 w-10 animate-spin rounded-full border-2 border-white/10"
+        style={{ borderTopColor: "#22d3ee" }}
+      />
     </Html>
   );
 }
 
 export default function SolarPanelViewer() {
-  // Auto-rotate runs by default and pauses while the user hovers or drags.
   const [hovered, setHovered] = useState(false);
   const [dragging, setDragging] = useState(false);
   const autoRotate = !hovered && !dragging;
 
   return (
     <div
-      className="relative h-[420px] w-full overflow-hidden rounded-2xl bg-gradient-to-b from-brand-dark to-brand-darker ring-1 ring-white/10 sm:h-[480px] lg:h-[560px]"
+      className="relative w-full overflow-hidden rounded-2xl"
+      style={{
+        height: "420px",
+        background: "linear-gradient(to bottom, #020c1b, #0a1628)",
+        boxShadow: "0 0 0 1px rgba(34,211,238,0.12), 0 20px 60px rgba(0,0,0,0.5)",
+      }}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
     >
@@ -192,7 +269,7 @@ export default function SolarPanelViewer() {
         shadows
         dpr={[1, 2]}
         camera={{ position: [7, 5, 9], fov: 35 }}
-        gl={{ antialias: true }}
+        gl={{ antialias: true, alpha: false }}
       >
         <React.Suspense fallback={<CanvasLoader />}>
           <Scene />
@@ -204,7 +281,7 @@ export default function SolarPanelViewer() {
           enablePan={false}
           enableZoom
           autoRotate={autoRotate}
-          autoRotateSpeed={0.8}
+          autoRotateSpeed={0.7}
           minDistance={6}
           maxDistance={16}
           maxPolarAngle={Math.PI / 2.05}
@@ -213,8 +290,14 @@ export default function SolarPanelViewer() {
         />
       </Canvas>
 
-      {/* Subtle brand accent corner glow — UI chrome */}
-      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brand-accent/20 blur-3xl" />
+      {/* Corner glow */}
+      <div className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-cyan-400/15 blur-3xl" />
+      <div className="pointer-events-none absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-blue-600/10 blur-3xl" />
+
+      {/* Interaction hint */}
+      <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-[10px] text-gray-500 tracking-wide">
+        <span>Drag to rotate · Scroll to zoom</span>
+      </div>
     </div>
   );
 }

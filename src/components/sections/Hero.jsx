@@ -1,103 +1,210 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { ChevronDown } from "lucide-react";
+
+const SWAP_WORDS = ["Cleaner", "Greener", "Smarter"];
+
+const STATS = [
+  { value: 500, suffix: "+", label: "Solar Installations" },
+  { value: 50, suffix: "+", label: "EV Stations" },
+  { value: 10, suffix: "+", label: "Years Experience" },
+];
+
+function useCountUp(target, duration = 2000, active = false) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setCount(Math.floor(eased * target));
+      if (p < 1) requestAnimationFrame(tick);
+      else setCount(target);
+    };
+    requestAnimationFrame(tick);
+  }, [target, duration, active]);
+  return count;
+}
+
+function StatBadge({ value, suffix, label, active, delay }) {
+  const count = useCountUp(value, 2000, active);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={active ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay }}
+      className="flex flex-col items-center px-4 py-5 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyan-400/40 transition-colors duration-300"
+    >
+      <span className="text-2xl sm:text-3xl font-bold font-display text-cyan-400 tabular-nums">
+        {count}{suffix}
+      </span>
+      <span className="text-[11px] sm:text-xs text-gray-400 mt-1 text-center leading-snug">{label}</span>
+    </motion.div>
+  );
+}
 
 export default function Hero() {
+  const [wordIdx, setWordIdx] = useState(0);
+  const [statsActive, setStatsActive] = useState(false);
+  const statsRef = useRef(null);
+
+  useEffect(() => {
+    const id = setInterval(() => setWordIdx((i) => (i + 1) % SWAP_WORDS.length), 2200);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setStatsActive(true), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <section className="relative w-full min-h-screen bg-gradient-to-br from-[#020617] via-[#0B1220] to-[#0F172A]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 min-h-screen flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center w-full">
-          {/* LEFT CONTENT */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-5 sm:space-y-6"
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#0f172a]">
+      {/* ── Animated gradient mesh background ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Base radial gradients */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 90% 70% at 50% -10%, rgba(29,78,216,0.25), transparent 60%),
+              radial-gradient(ellipse 50% 50% at 80% 60%, rgba(34,211,238,0.07), transparent 60%),
+              radial-gradient(ellipse 50% 50% at 15% 75%, rgba(29,78,216,0.1), transparent 60%)
+            `,
+          }}
+        />
+
+        {/* Floating orbs */}
+        <motion.div
+          animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-[15%] h-72 w-72 sm:h-96 sm:w-96 rounded-full bg-blue-700/10 blur-3xl"
+        />
+        <motion.div
+          animate={{ x: [0, -30, 0], y: [0, 25, 0] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+          className="absolute bottom-1/3 right-[10%] h-64 w-64 rounded-full bg-cyan-400/6 blur-3xl"
+        />
+        <motion.div
+          animate={{ x: [0, 20, 0], y: [0, -15, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          className="absolute top-2/3 left-1/2 h-48 w-48 rounded-full bg-blue-600/8 blur-2xl"
+        />
+
+        {/* Subtle grid */}
+        <div
+          className="absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+            backgroundSize: "72px 72px",
+          }}
+        />
+      </div>
+
+      {/* ── Content ── */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-24 flex flex-col items-center text-center">
+        {/* Tag pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/8 text-cyan-400 text-xs font-semibold tracking-widest uppercase"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          Solar · EV Charging · Industrial Power · Odisha
+        </motion.div>
+
+        {/* Main headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold font-display text-white leading-[1.08] tracking-tight mb-4"
+        >
+          Powering Tomorrow's
+          <br />
+          <span
+            className="text-transparent bg-clip-text"
+            style={{
+              backgroundImage: "linear-gradient(135deg, #22d3ee 0%, #3b82f6 60%, #6366f1 100%)",
+            }}
           >
-            {/* Industry tag */}
-            <p className="uppercase tracking-[0.25em] sm:tracking-[0.3em] text-xs sm:text-sm text-cyan-400">
-              Industrial Innovation
-            </p>
+            Odisha
+          </span>
+        </motion.h1>
 
-            {/* Main headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Powering the <br />
-              <span className="text-cyan-400">Next Generation</span> <br />
-              of Industry
-            </h1>
-
-            {/* Animated value line */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="text-xs sm:text-sm uppercase tracking-wide text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.35)]"
+        {/* Word swap */}
+        <div className="h-12 sm:h-14 flex items-center justify-center gap-3 mb-6">
+          <span className="text-xl sm:text-2xl md:text-3xl font-display text-gray-400">
+            Making it
+          </span>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={wordIdx}
+              initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
+              className="text-xl sm:text-2xl md:text-3xl font-bold font-display text-cyan-400"
             >
-              Automation • Manufacturing • Smart Infrastructure
-            </motion.p>
+              {SWAP_WORDS[wordIdx]}
+            </motion.span>
+          </AnimatePresence>
+        </div>
 
-            {/* Core description */}
-            <p className="text-sm sm:text-base text-gray-400 max-w-xl leading-relaxed">
-              We deliver advanced industrial solutions engineered for
-              performance, automation, and long-term reliability — helping
-              enterprises scale with confidence.
-            </p>
+        {/* Sub-headline */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.35 }}
+          className="max-w-2xl text-base sm:text-lg text-gray-400 leading-relaxed mb-10"
+        >
+          From rooftop solar to city-wide EV charging — we build the energy infrastructure Odisha needs to grow.
+        </motion.p>
 
-            {/* Trust indicators */}
-            <div className="flex flex-wrap gap-x-4 gap-y-2 pt-1 text-xs sm:text-sm text-gray-400">
-              <span>✔ Industry-grade solutions</span>
-              <span>✔ Scalable & future-ready</span>
-              <span>✔ Precision-engineered systems</span>
-            </div>
-
-            {/* CTA */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
-              <button className="w-full sm:w-auto px-6 py-3 rounded-md bg-cyan-500 text-black font-semibold hover:bg-cyan-400 transition">
-                Explore Solutions
-              </button>
-
-              <button className="w-full sm:w-auto px-6 py-3 rounded-md border border-gray-600 text-gray-300 hover:border-cyan-400 hover:text-cyan-400 transition">
-                Contact Us
-              </button>
-            </div>
-          </motion.div>
-
-          {/* RIGHT VIDEO */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="relative w-full h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px] rounded-xl overflow-hidden shadow-2xl"
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="flex flex-col sm:flex-row gap-4 mb-16"
+        >
+          <Link
+            href="/solutions"
+            className="inline-flex items-center justify-center px-8 py-4 rounded-full font-bold text-sm sm:text-base text-[#0f172a] bg-cyan-400 hover:bg-cyan-300 hover:shadow-[0_0_32px_rgba(34,211,238,0.5)] transition-all duration-300 hover:scale-105"
           >
-            <video
-              src="/video/3738727067-preview.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="w-full h-full object-cover"
-            />
+            Explore Our Solutions
+          </Link>
+          <Link
+            href="/projects"
+            className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-sm sm:text-base hover:border-cyan-400/50 hover:text-cyan-400 hover:bg-cyan-400/5 transition-all duration-300"
+          >
+            See Our Projects
+          </Link>
+        </motion.div>
 
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-            {/* Video Text */}
-            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-              <h3 className="text-sm sm:text-lg text-white font-semibold">
-                Precision • Automation • Reliability
-              </h3>
-              <p className="text-xs sm:text-sm text-gray-300 mt-1">
-                Engineered for modern industrial ecosystems
-              </p>
-            </div>
-          </motion.div>
+        {/* Stat badges */}
+        <div ref={statsRef} className="grid grid-cols-3 gap-3 sm:gap-5 w-full max-w-md mx-auto">
+          {STATS.map((s, i) => (
+            <StatBadge key={s.label} {...s} active={statsActive} delay={0.1 * i} />
+          ))}
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-gray-600"
+      >
+        <span className="text-[10px] tracking-widest uppercase">Scroll</span>
+        <ChevronDown size={14} />
+      </motion.div>
     </section>
   );
 }
