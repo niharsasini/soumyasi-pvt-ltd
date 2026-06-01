@@ -3,6 +3,8 @@ import { Inter, Outfit } from "next/font/google";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import CustomCursor from "@/components/common/CustomCursor";
+import FloatingActions from "@/components/ui/FloatingActions";
+import BackToTop from "@/components/ui/BackToTop";
 import { BRAND } from "@/lib/config/site.config";
 
 const inter = Inter({
@@ -25,11 +27,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="min-h-screen flex flex-col bg-brand-bg text-brand-text antialiased">
+      <body className="min-h-screen flex flex-col bg-brand-bg text-brand-ink antialiased">
         <CustomCursor />
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
+        <FloatingActions />
+        <BackToTop />
       </body>
     </html>
   );

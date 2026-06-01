@@ -41,47 +41,30 @@ export default function StatsStrip() {
   }, []);
 
   return (
-    <section ref={ref} className="w-full py-20 bg-brand-surface relative overflow-hidden">
-      {/* Subtle gold top line */}
+    <section ref={ref} className="w-full py-16 bg-gradient-to-r from-amber-600 to-amber-700 relative overflow-hidden">
+      {/* Subtle texture overlay */}
       <div
-        className="absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(to right, transparent, rgba(245,158,11,0.3), transparent)" }}
-      />
-      <div
-        className="absolute inset-x-0 bottom-0 h-px"
-        style={{ background: "linear-gradient(to right, transparent, rgba(245,158,11,0.15), transparent)" }}
+        className="absolute inset-0 pointer-events-none opacity-10"
+        style={{ background: "radial-gradient(ellipse 120% 80% at 50% 50%, rgba(255,255,255,0.15), transparent)" }}
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          className="grid grid-cols-2 md:grid-cols-4 overflow-hidden rounded-2xl"
-          style={{ boxShadow: "0 0 0 1px rgba(255,255,255,0.05), 0 20px 60px rgba(0,0,0,0.35)" }}
-        >
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
           {STATS.map((s, i) => (
             <motion.div
               key={s.label}
               initial={{ opacity: 0, y: 20 }}
               animate={on ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="relative flex flex-col items-center py-12 px-6 bg-brand-surface"
+              className="relative flex flex-col items-center py-10 px-6 text-center"
             >
-              {/* Gold divider (not last) */}
               {i < STATS.length - 1 && (
-                <div className="absolute right-0 top-1/4 bottom-1/4 w-px bg-white/6 hidden md:block" />
+                <div className="absolute right-0 top-1/4 bottom-1/4 w-px bg-white/20 hidden md:block" />
               )}
-
-              <span
-                className="text-4xl sm:text-5xl font-bold font-display tabular-nums"
-                style={{
-                  background: "linear-gradient(135deg, #fbbf24, #d97706)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
+              <span className="text-4xl sm:text-5xl font-bold font-display text-white tabular-nums">
                 <CountUp to={s.value} suffix={s.suffix} active={on} />
               </span>
-              <span className="mt-2 text-xs sm:text-sm text-gray-400 text-center font-medium">
+              <span className="mt-2 text-xs sm:text-sm text-amber-100 text-center font-medium">
                 {s.label}
               </span>
             </motion.div>

@@ -37,31 +37,17 @@ export default function EVMapSection() {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="w-full py-24 bg-brand-surface relative overflow-hidden">
-      {/* Decorative borders */}
-      <div
-        className="absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(to right, transparent, rgba(245,158,11,0.4), transparent)" }}
-      />
-      <div
-        className="absolute inset-x-0 bottom-0 h-px"
-        style={{ background: "linear-gradient(to right, transparent, rgba(245,158,11,0.15), transparent)" }}
-      />
-
-      {/* Radial glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(245,158,11,0.05), transparent)" }}
-      />
+    <section className="w-full py-24 bg-brand-section relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-12" ref={ref}>
-          <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-400 mb-4">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
             EV Infrastructure
           </p>
           <motion.h2
-            className="text-4xl sm:text-5xl font-bold font-display text-white"
+            className="text-4xl sm:text-5xl font-bold font-display text-brand-ink"
             variants={VARIANTS.container}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -78,7 +64,7 @@ export default function EVMapSection() {
             variants={VARIANTS.para}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="mt-4 text-gray-400 max-w-xl mx-auto text-base"
+            className="mt-4 text-brand-brown max-w-xl mx-auto text-base"
           >
             50+ charging stations and growing across Odisha. Find your nearest station.
           </motion.p>
@@ -110,13 +96,13 @@ export default function EVMapSection() {
             <motion.div
               key={label}
               variants={VARIANTS.card}
-              className="flex flex-col items-center gap-2 p-5 rounded-2xl glass hover:border-amber-500/40 transition-all duration-300"
+              className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white border border-brand-border shadow-warm hover:border-amber-400 hover:shadow-card-hover transition-all duration-300"
             >
-              <Icon size={20} className="text-amber-400" />
-              <span className="text-2xl sm:text-3xl font-bold font-display text-amber-400 tabular-nums">
+              <Icon size={20} className="text-brand-gold" />
+              <span className="text-2xl sm:text-3xl font-bold font-display text-brand-gold tabular-nums">
                 {value}
               </span>
-              <span className="text-xs text-gray-500 text-center">{label}</span>
+              <span className="text-xs text-brand-muted text-center">{label}</span>
             </motion.div>
           ))}
         </motion.div>

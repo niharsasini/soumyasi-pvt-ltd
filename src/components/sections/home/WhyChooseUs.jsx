@@ -31,33 +31,30 @@ const FEATURES = [
 
 /* Concentric ring radii and colors */
 const RINGS = [
-  { r: 190, color: "rgba(245,158,11,0.20)", dur: 10  },
-  { r: 148, color: "rgba(16,185,129,0.18)",  dur: 14  },
-  { r: 108, color: "rgba(245,158,11,0.25)",  dur: 8   },
-  { r: 72,  color: "rgba(16,185,129,0.22)",  dur: 18  },
+  { r: 190, color: "rgba(217,119,6,0.15)",  dur: 10  },
+  { r: 148, color: "rgba(245,158,11,0.12)", dur: 14  },
+  { r: 108, color: "rgba(217,119,6,0.20)",  dur: 8   },
+  { r: 72,  color: "rgba(245,158,11,0.18)", dur: 18  },
 ];
 
 export default function WhyChooseUs() {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="w-full py-24 bg-brand-surface relative overflow-hidden">
-      <div
-        className="absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent)" }}
-      />
+    <section className="w-full py-24 bg-brand-section relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
           {/* LEFT — feature list */}
           <div ref={ref}>
-            <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-400 mb-4">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
               Why Choose Us
             </p>
 
             <motion.h2
-              className="text-4xl sm:text-5xl font-bold font-display text-white leading-tight mb-5"
+              className="text-4xl sm:text-5xl font-bold font-display text-brand-ink leading-tight mb-5"
               variants={VARIANTS.container}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
@@ -75,7 +72,7 @@ export default function WhyChooseUs() {
               variants={VARIANTS.para}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="text-gray-400 leading-relaxed mb-10"
+              className="text-brand-brown leading-relaxed mb-10"
             >
               We deliver high-performance power solutions built for efficiency, reliability, and long-term excellence.
             </motion.p>
@@ -90,12 +87,12 @@ export default function WhyChooseUs() {
                 const Icon = f.icon;
                 return (
                   <motion.div key={f.title} variants={VARIANTS.card} className="flex gap-4 group">
-                    <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-amber-400/10 group-hover:bg-amber-400/20 flex items-center justify-center transition-colors duration-300">
-                      <Icon size={20} className="text-amber-400" />
+                    <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center transition-colors duration-300">
+                      <Icon size={20} className="text-brand-gold" />
                     </div>
                     <div>
-                      <h3 className="text-base font-semibold text-white">{f.title}</h3>
-                      <p className="text-sm text-gray-400 mt-1 leading-relaxed">{f.desc}</p>
+                      <h3 className="text-base font-semibold text-brand-ink">{f.title}</h3>
+                      <p className="text-sm text-brand-brown mt-1 leading-relaxed">{f.desc}</p>
                     </div>
                   </motion.div>
                 );
@@ -133,8 +130,8 @@ export default function WhyChooseUs() {
                 >
                   10+
                 </div>
-                <div className="text-white font-display font-semibold text-base">Years in Odisha</div>
-                <div className="text-gray-500 text-xs mt-1 tracking-wider uppercase">Power · Precision · Pride</div>
+                <div className="text-brand-ink font-display font-semibold text-base">Years in Odisha</div>
+                <div className="text-brand-muted text-xs mt-1 tracking-wider uppercase">Power · Precision · Pride</div>
               </motion.div>
 
               {/* Corner stats on ring */}
@@ -149,14 +146,14 @@ export default function WhyChooseUs() {
                 return (
                   <div
                     key={label}
-                    className="absolute glass rounded-xl px-3 py-2 text-center"
+                    className="absolute bg-white border border-brand-border shadow-warm rounded-xl px-3 py-2 text-center"
                     style={{
                       left: `calc(50% + ${Math.cos(rad) * dist}px - 36px)`,
                       top:  `calc(50% + ${Math.sin(rad) * dist}px - 22px)`,
                     }}
                   >
-                    <div className="text-amber-400 font-bold text-sm font-display">{label}</div>
-                    <div className="text-gray-500 text-[10px]">{sub}</div>
+                    <div className="text-brand-gold font-bold text-sm font-display">{label}</div>
+                    <div className="text-brand-muted text-[10px]">{sub}</div>
                   </div>
                 );
               })}

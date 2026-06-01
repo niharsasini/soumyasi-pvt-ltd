@@ -43,12 +43,12 @@ function StatBadge({ value, suffix, label, active, i }) {
       initial={{ opacity: 0, y: 20 }}
       animate={active ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, delay: i * 0.12 }}
-      className="flex flex-col items-center px-4 py-4 rounded-2xl glass hover:border-amber-500/40 transition-colors duration-300"
+      className="flex flex-col items-center px-4 py-4 rounded-2xl bg-white border border-brand-border shadow-warm hover:border-amber-400 hover:shadow-card-hover transition-all duration-300"
     >
-      <span className="text-2xl sm:text-3xl font-bold font-display text-amber-400 tabular-nums">
+      <span className="text-2xl sm:text-3xl font-bold font-display text-brand-gold tabular-nums">
         {n}{suffix}
       </span>
-      <span className="text-[10px] text-gray-500 mt-1 text-center">{label}</span>
+      <span className="text-[10px] text-brand-muted mt-1 text-center">{label}</span>
     </motion.div>
   );
 }
@@ -71,26 +71,29 @@ export default function Hero() {
 
   return (
     <section className="relative w-full min-h-screen flex items-center bg-brand-bg overflow-hidden">
-      {/* Background blobs */}
+      {/* Warm radial gradient bg */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 80% 60% at 20% 50%, rgba(245,158,11,0.05), transparent), radial-gradient(ellipse 60% 50% at 80% 50%, rgba(217,119,6,0.04), transparent)",
+        }}
+      />
+      {/* Floating amber orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[15%] left-[5%] h-80 w-80 rounded-full bg-amber-500/6 blur-3xl"
+          className="absolute top-[15%] left-[5%] h-80 w-80 rounded-full bg-amber-400/8 blur-3xl"
         />
         <motion.div
           animate={{ x: [0, -25, 0], y: [0, 20, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-          className="absolute bottom-[20%] right-[10%] h-64 w-64 rounded-full bg-emerald-500/6 blur-3xl"
+          className="absolute bottom-[20%] right-[10%] h-64 w-64 rounded-full bg-amber-300/6 blur-3xl"
         />
-        {/* Subtle grid */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
+        <motion.div
+          animate={{ x: [0, 15, 0], y: [0, -15, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          className="absolute top-[50%] right-[30%] h-40 w-40 rounded-full bg-amber-500/5 blur-2xl"
         />
       </div>
 
@@ -110,13 +113,13 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-xs font-bold tracking-[0.3em] uppercase text-amber-400 mb-6"
+                className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-6"
               >
                 Odisha's Energy Future
               </motion.p>
 
               {/* Headline — word-by-word slide */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-white leading-[1.1] tracking-tight mb-6 overflow-hidden">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-[1.1] tracking-tight mb-6 overflow-hidden">
                 {HEADLINE.map((word, i) => (
                   <motion.span
                     key={i}
@@ -126,7 +129,9 @@ export default function Hero() {
                     animate="visible"
                     className="inline-block mr-[0.28em]"
                   >
-                    {word}
+                    {["Industry.", "Energy."].includes(word)
+                      ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{word}</span>
+                      : word}
                   </motion.span>
                 ))}
               </h1>
@@ -136,7 +141,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.55 }}
-                className="text-base sm:text-lg text-gray-400 leading-relaxed mb-10 max-w-lg"
+                className="text-base sm:text-lg text-brand-brown leading-relaxed mb-10 max-w-lg"
               >
                 Solar installations, EV charging networks, and industrial power — built for Odisha, engineered to last.
               </motion.p>
@@ -150,13 +155,13 @@ export default function Hero() {
               >
                 <Link
                   href="/solutions"
-                  className="btn-shimmer inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-gradient-to-r from-amber-400 to-amber-600 text-black hover:shadow-gold transition-all duration-300 hover:scale-105"
+                  className="btn-shimmer inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-gold hover:shadow-gold-lg hover:scale-105 transition-all duration-300"
                 >
                   Explore Solutions
                 </Link>
                 <Link
                   href="/projects"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border-2 border-amber-500/50 text-amber-400 font-semibold text-sm hover:bg-amber-500/10 hover:border-amber-500 transition-all duration-300"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border-2 border-amber-400 text-amber-700 font-semibold text-sm hover:bg-amber-50 hover:border-amber-500 transition-all duration-300"
                 >
                   Our Projects
                 </Link>
@@ -184,14 +189,14 @@ export default function Hero() {
             <div
               className="relative rounded-2xl overflow-hidden"
               style={{
-                border: "1px solid rgba(245,158,11,0.3)",
-                boxShadow: "0 0 40px rgba(245,158,11,0.12), 0 20px 60px rgba(0,0,0,0.5)",
+                border: "1px solid #fcd34d",
+                boxShadow: "0 20px 60px rgba(120,80,20,0.15)",
               }}
             >
-              {/* Gradient edge overlay */}
+              {/* Subtle warm edge overlay */}
               <div className="absolute inset-0 z-10 pointer-events-none"
                 style={{
-                  background: "linear-gradient(to bottom, transparent 60%, rgba(10,15,30,0.6) 100%), linear-gradient(to right, rgba(10,15,30,0.3), transparent 20%, transparent 80%, rgba(10,15,30,0.3))",
+                  background: "linear-gradient(to bottom, transparent 70%, rgba(255,248,231,0.4) 100%)",
                 }}
               />
 
@@ -220,7 +225,7 @@ export default function Hero() {
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gray-600"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-brand-muted"
       >
         <span className="text-[10px] tracking-widest uppercase">Scroll</span>
         <ChevronDown size={13} />

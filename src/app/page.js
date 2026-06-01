@@ -11,7 +11,7 @@ const EVMapSection = dynamic(() => import("@/components/sections/home/EVMapSecti
 
 export default function Page() {
   return (
-    <div className="w-full bg-brand-bg antialiased">
+    <div className="w-full bg-brand-bg antialiased text-brand-ink">
       <Hero />
       <WhatWeDo />
       <StatsStrip />

@@ -8,20 +8,19 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          bg:        "#0a0f1e",
-          surface:   "#111827",
-          border:    "#1f2937",
-          gold:      "#f59e0b",
-          "gold-lt": "#fbbf24",
-          "gold-dk": "#d97706",
-          green:     "#10b981",
-          "grn-dk":  "#059669",
-          blue:      "#3b82f6",
-          "blue-dk": "#2563eb",
-          text:      "#f9fafb",
-          muted:     "#9ca3af",
-          dark:      "#0a0f1e",
-          darker:    "#020617",
+          bg:        "#FFFBF0",
+          section:   "#FFF8E7",
+          card:      "#FFFDF5",
+          elevated:  "#FEF3C7",
+          gold:      "#d97706",
+          "gold-lt": "#f59e0b",
+          "gold-dk": "#b45309",
+          emerald:   "#059669",
+          indigo:    "#4f46e5",
+          ink:       "#1a1208",
+          brown:     "#78614a",
+          muted:     "#a8917a",
+          border:    "#e8d5b0",
         },
       },
       fontFamily: {
@@ -30,7 +29,7 @@ module.exports = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gold-gradient":   "linear-gradient(135deg, #fbbf24, #d97706)",
+        "gold-gradient":   "linear-gradient(135deg, #f59e0b, #d97706)",
       },
       animation: {
         "float":        "float 7s ease-in-out infinite",
@@ -38,6 +37,7 @@ module.exports = {
         "spin-reverse": "spinReverse 24s linear infinite",
         "pulse-ring":   "pulseRing 3s ease-in-out infinite",
         "shimmer":      "shimmer 0.7s ease forwards",
+        "pulse-glow":   "pulseGlow 3s ease-in-out infinite",
       },
       keyframes: {
         float: {
@@ -56,12 +56,17 @@ module.exports = {
           from: { transform: "translateX(-100%)" },
           to:   { transform: "translateX(100%)" },
         },
+        pulseGlow: {
+          "0%,100%": { boxShadow: "0 0 15px rgba(217,119,6,0.3)" },
+          "50%":     { boxShadow: "0 0 30px rgba(217,119,6,0.6)" },
+        },
       },
       boxShadow: {
-        "gold":    "0 0 24px rgba(245,158,11,0.3)",
-        "gold-lg": "0 0 48px rgba(245,158,11,0.4)",
-        "grn":     "0 0 24px rgba(16,185,129,0.3)",
-        "blue":    "0 0 24px rgba(59,130,246,0.3)",
+        "gold":       "0 4px 15px rgba(217,119,6,0.3)",
+        "gold-lg":    "0 8px 32px rgba(217,119,6,0.4)",
+        "warm":       "0 4px 24px rgba(120,80,20,0.08)",
+        "warm-lg":    "0 8px 32px rgba(120,80,20,0.12)",
+        "card-hover": "0 8px 32px rgba(217,119,6,0.15)",
       },
     },
   },
