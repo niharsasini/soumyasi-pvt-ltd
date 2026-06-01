@@ -1,16 +1,62 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Sun, Zap, Factory, ChevronDown } from "lucide-react";
 import { BRAND, NAV_LINKS, NAV_CTA } from "@/lib/config/site.config";
+
+const MEGA_COLS = [
+  {
+    icon: Sun,
+    title: "Solar Solutions",
+    desc: "Rooftop & ground-mount solar for homes, businesses and industries.",
+    href: "/solutions",
+    color: "text-brand-gold bg-amber-50",
+  },
+  {
+    icon: Zap,
+    title: "EV Network",
+    desc: "Fast-charging stations across Bhubaneswar, Cuttack, Puri and beyond.",
+    href: "/solutions",
+    color: "text-brand-indigo bg-indigo-50",
+  },
+  {
+    icon: Factory,
+    title: "Industrial Power",
+    desc: "Switchgear, substations and transformers for Odisha's industries.",
+    href: "/solutions",
+    color: "text-brand-emerald bg-emerald-50",
+  },
+];
+
+const HamburgerIcon = ({ open }) => (
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <motion.line
+      x1="2" y1="6" x2="20" y2="6"
+      animate={open ? { x1: 3, y1: 3, x2: 19, y2: 19 } : { x1: 2, y1: 6, x2: 20, y2: 6 }}
+      transition={{ duration: 0.25 }}
+    />
+    <motion.line
+      x1="2" y1="11" x2="20" y2="11"
+      animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+      transition={{ duration: 0.2 }}
+    />
+    <motion.line
+      x1="2" y1="16" x2="20" y2="16"
+      animate={open ? { x1: 3, y1: 19, x2: 19, y2: 3 } : { x1: 2, y1: 16, x2: 20, y2: 16 }}
+      transition={{ duration: 0.25 }}
+    />
+  </svg>
+);
 
 export default function Navbar() {
   const [scrolled,  setScrolled]  = useState(false);
   const [open,      setOpen]      = useState(false);
   const [progress,  setProgress]  = useState(0);
+  const [megaOpen,  setMegaOpen]  = useState(false);
+  const megaTimeout = useRef(null);
 
   useEffect(() => {
     const fn = () => {
@@ -27,150 +73,209 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  const openMega  = () => { clearTimeout(megaTimeout.current); setMegaOpen(true); };
+  const closeMega = () => { megaTimeout.current = setTimeout(() => setMegaOpen(false), 120); };
+
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-400 ${
           scrolled
-            ? "bg-[#FFFBF0] shadow-[0_2px_20px_rgba(120,80,20,0.1)] border-b border-brand-border"
-            : "bg-[#FFFBF0]/95 backdrop-blur-xl"
+            ? "bg-[#FFFBF0] border-b border-[#e8d5b0]"
+            : "bg-[#FFFBF0]/98 backdrop-blur-xl"
         }`}
+        style={scrolled ? { boxShadow: "0 4px 30px rgba(120,80,20,0.10)" } : {}}
       >
-        {/* Reading progress bar / accent line at very top */}
+        {/* Reading progress bar */}
         <div className="absolute inset-x-0 top-0 h-[2px] overflow-hidden">
           <div
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-500 to-amber-700 transition-all duration-100"
+            className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-500 to-amber-700 transition-[width] duration-100"
             style={{ width: `${progress}%` }}
           />
           {progress === 0 && (
-            <div
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(to right, transparent, rgba(217,119,6,0.35), transparent)" }}
-            />
+            <div className="absolute inset-0"
+              style={{ background: "linear-gradient(to right, transparent, rgba(217,119,6,0.3), transparent)" }} />
           )}
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-md overflow-hidden">
-              <Image
-                src={BRAND.logo}
-                alt={`${BRAND.name} logo`}
-                fill
-                className="object-contain"
-                priority
-              />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[72px] flex items-center justify-between gap-6">
+
+          {/* ── Logo ── */}
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+            <div className="relative h-9 w-9 rounded-lg overflow-hidden shadow-sm">
+              <Image src={BRAND.logo} alt={`${BRAND.name} logo`} fill className="object-contain" priority />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-sm sm:text-base font-bold font-display text-brand-ink tracking-wide">
+              <span className="text-sm sm:text-[15px] font-bold font-display text-[#1a1208] tracking-wide">
                 {BRAND.shortName}
               </span>
-              <span className="text-[9px] font-semibold tracking-widest uppercase text-brand-gold">
+              <span className="text-[9px] font-semibold tracking-widest uppercase text-[#a8917a]">
                 {BRAND.tagline}
               </span>
             </div>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8 lg:gap-10">
-            {NAV_LINKS.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="relative group text-sm font-medium text-brand-brown hover:text-brand-ink transition-colors duration-300"
-              >
-                {item.label}
-                <motion.span
-                  className="absolute -bottom-1 left-0 h-[2px] rounded-full bg-brand-gold"
-                  initial={{ width: 0 }}
-                  whileHover={{ width: "100%" }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                />
-              </Link>
-            ))}
+          {/* ── Desktop nav ── */}
+          <nav className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map((item) => {
+              const isSolutions = item.label === "Solutions";
+              return isSolutions ? (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={openMega}
+                  onMouseLeave={closeMega}
+                >
+                  <motion.button
+                    whileHover={{ y: -2, scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    className={`flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                      megaOpen
+                        ? "bg-amber-100 text-[#d97706] border border-amber-300 shadow-[0_4px_12px_rgba(217,119,6,0.2)]"
+                        : "text-[#78614a] hover:bg-amber-50 hover:text-[#d97706] hover:border hover:border-amber-200 hover:shadow-[0_4px_12px_rgba(217,119,6,0.15)]"
+                    }`}
+                  >
+                    {item.label}
+                    <motion.span animate={{ rotate: megaOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                      <ChevronDown size={13} />
+                    </motion.span>
+                  </motion.button>
+
+                  {/* Mega dropdown */}
+                  <AnimatePresence>
+                    {megaOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8, scaleY: 0.97 }}
+                        animate={{ opacity: 1, y: 0,  scaleY: 1 }}
+                        exit={{ opacity: 0, y: -8, scaleY: 0.97 }}
+                        transition={{ duration: 0.18, ease: "easeOut" }}
+                        style={{ transformOrigin: "top" }}
+                        onMouseEnter={openMega}
+                        onMouseLeave={closeMega}
+                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[540px] bg-[#FFFBF0] border border-[#e8d5b0] rounded-2xl shadow-[0_20px_60px_rgba(120,80,20,0.15)] overflow-hidden"
+                      >
+                        <div className="p-5 grid grid-cols-3 gap-3">
+                          {MEGA_COLS.map(({ icon: Icon, title, desc, href, color }) => (
+                            <Link
+                              key={title}
+                              href={href}
+                              onClick={() => setMegaOpen(false)}
+                              className="group flex flex-col gap-3 p-4 rounded-xl hover:bg-white hover:shadow-[0_4px_20px_rgba(120,80,20,0.08)] transition-all duration-200"
+                            >
+                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
+                                <Icon size={20} />
+                              </div>
+                              <div>
+                                <p className="text-sm font-bold text-[#1a1208] group-hover:text-[#d97706] transition-colors">{title}</p>
+                                <p className="text-xs text-[#a8917a] mt-1 leading-relaxed">{desc}</p>
+                              </div>
+                              <span className="text-xs font-semibold text-[#d97706] flex items-center gap-1">
+                                Explore →
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <motion.div key={item.label}
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <Link
+                    href={item.href}
+                    className="block px-4 py-2 rounded-full text-sm font-medium text-[#78614a] hover:bg-amber-50 hover:text-[#d97706] hover:border hover:border-amber-200 hover:shadow-[0_4px_12px_rgba(217,119,6,0.15)] transition-all duration-200"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              );
+            })}
           </nav>
 
-          {/* Desktop CTA */}
-          <Link
-            href={NAV_CTA.href}
-            className="btn-shimmer hidden md:inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-[0_4px_15px_rgba(217,119,6,0.3)] hover:shadow-[0_6px_20px_rgba(217,119,6,0.45)] hover:scale-105 transition-all duration-300"
+          {/* ── Desktop CTA ── */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="hidden md:block shrink-0"
           >
-            Get Free Quote
-          </Link>
+            <Link
+              href={NAV_CTA.href}
+              className="btn-shimmer inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-amber-600 border border-amber-400/50"
+              style={{ boxShadow: "0 4px 20px rgba(217,119,6,0.35)" }}
+            >
+              Get Free Quote
+            </Link>
+          </motion.div>
 
-          {/* Mobile toggle */}
+          {/* ── Mobile toggle ── */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-brand-ink"
+            className="md:hidden p-2 text-[#1a1208]"
             aria-label="Toggle menu"
           >
-            {open ? <X size={24} /> : <Menu size={24} />}
+            <HamburgerIcon open={open} />
           </button>
         </div>
       </header>
 
-      {/* Mobile full-screen cream overlay */}
+      {/* ── Mobile full-screen overlay ── */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#FFFBF0] flex flex-col items-center justify-center"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 bg-[#FFFBF0] flex flex-col pt-24 pb-10 px-8 overflow-y-auto"
           >
-            <button
-              onClick={() => setOpen(false)}
-              className="absolute top-5 right-5 text-brand-brown hover:text-brand-ink p-2"
-              aria-label="Close"
-            >
-              <X size={28} />
-            </button>
-
             <motion.nav
               initial="hidden"
               animate="visible"
-              variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
-              className="flex flex-col items-center gap-8"
+              variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
+              className="flex flex-col gap-3 flex-1"
             >
               {NAV_LINKS.map((item) => (
                 <motion.div
                   key={item.label}
                   variants={{
-                    hidden:  { opacity: 0, y: 24 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+                    hidden:  { opacity: 0, x: 60 },
+                    visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 28 } },
                   }}
                 >
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="text-2xl sm:text-3xl font-bold font-display text-brand-brown hover:text-brand-gold transition-colors duration-300"
+                    className="flex items-center px-5 py-4 rounded-2xl text-xl font-bold font-display text-[#78614a] hover:bg-amber-50 hover:text-[#d97706] hover:border hover:border-amber-200 hover:shadow-[0_4px_16px_rgba(217,119,6,0.12)] transition-all duration-200"
                   >
                     {item.label}
                   </Link>
                 </motion.div>
               ))}
-
-              <motion.div
-                variants={{
-                  hidden:  { opacity: 0, y: 24 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.05 } },
-                }}
-              >
-                <Link
-                  href={NAV_CTA.href}
-                  onClick={() => setOpen(false)}
-                  className="mt-4 inline-flex items-center justify-center px-10 py-3.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-lg shadow-gold"
-                >
-                  Get Free Quote
-                </Link>
-              </motion.div>
             </motion.nav>
 
-            <div className="absolute bottom-8 text-brand-muted text-xs tracking-widest uppercase">
-              Soumyashree Power Limited
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.4 }}
+            >
+              <Link
+                href={NAV_CTA.href}
+                onClick={() => setOpen(false)}
+                className="btn-shimmer flex items-center justify-center w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-lg"
+                style={{ boxShadow: "0 4px 20px rgba(217,119,6,0.35)" }}
+              >
+                Get Free Quote
+              </Link>
+              <p className="text-center text-[#a8917a] text-xs tracking-widest uppercase mt-6">
+                Soumyashree Power Limited
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
