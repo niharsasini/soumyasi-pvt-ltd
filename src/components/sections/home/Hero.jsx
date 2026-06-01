@@ -1,15 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-
-const EnergyOrb = dynamic(() => import("@/components/three/EnergyOrb"), {
-  ssr: false,
-  loading: () => null,
-});
 
 const HEADLINE = ["Powering", "Industry.", "Enabling", "Clean", "Energy."];
 
@@ -102,11 +96,6 @@ export default function Hero() {
 
           {/* ── LEFT CONTENT ── */}
           <div className="relative">
-            {/* EnergyOrb decorative */}
-            <div className="absolute -right-8 top-0 h-full w-full opacity-20 pointer-events-none hidden lg:block">
-              <EnergyOrb />
-            </div>
-
             <div className="relative z-10">
               {/* Eyebrow */}
               <motion.p
@@ -193,13 +182,6 @@ export default function Hero() {
                 boxShadow: "0 20px 60px rgba(120,80,20,0.15)",
               }}
             >
-              {/* Subtle warm edge overlay */}
-              <div className="absolute inset-0 z-10 pointer-events-none"
-                style={{
-                  background: "linear-gradient(to bottom, transparent 70%, rgba(255,248,231,0.4) 100%)",
-                }}
-              />
-
               <video
                 src="/video/3738727067-preview.mp4"
                 autoPlay
@@ -209,13 +191,6 @@ export default function Hero() {
                 preload="none"
                 className="w-full h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px] object-cover"
               />
-
-              {/* Caption overlay */}
-              <div className="absolute bottom-5 left-5 right-5 z-20">
-                <p className="text-xs font-semibold tracking-wider uppercase text-amber-400/80">
-                  Precision · Automation · Reliability
-                </p>
-              </div>
             </div>
           </motion.div>
         </div>

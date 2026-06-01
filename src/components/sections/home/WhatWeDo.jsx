@@ -1,14 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import { Sun, Zap, Factory } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
-
-const FloatingPanel = dynamic(() => import("@/components/three/FloatingPanel"), {
-  ssr: false,
-  loading: () => null,
-});
 
 const HEADING = ["Energy", "Solutions", "for", "a", "New", "Odisha"];
 
@@ -107,12 +101,6 @@ export default function WhatWeDo() {
                   Learn More →
                 </a>
 
-                {/* Floating panel decoration on Solar card */}
-                {i === 0 && (
-                  <div className="absolute -right-4 top-1/2 -translate-y-1/2 h-28 w-20 opacity-50 hidden xl:block pointer-events-none">
-                    <FloatingPanel />
-                  </div>
-                )}
               </motion.div>
             );
           })}
