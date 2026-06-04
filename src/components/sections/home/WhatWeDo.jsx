@@ -17,6 +17,8 @@ const CARDS = [
     iconCn: "text-brand-gold bg-amber-50 group-hover:bg-amber-100",
     link:   "text-brand-gold hover:text-amber-700",
     href:   "/solutions",
+    productImage: "/soumyasi/solar-field-odisha.png",
+    eyebrow: "Rooftop & Ground-Mount Solar",
   },
   {
     icon:   Zap,
@@ -28,6 +30,7 @@ const CARDS = [
     link:   "text-indigo-600 hover:text-indigo-700",
     href:   "/solutions",
     productImage: "/soumyasi/ev-charger-ultra60.png",
+    eyebrow: "Ultra 60 · Fast Charger",
   },
   {
     icon:   Factory,
@@ -85,7 +88,7 @@ export default function WhatWeDo() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {CARDS.map((card, i) => {
+          {CARDS.map((card) => {
             const Icon = card.icon;
             return (
               <motion.div
@@ -101,12 +104,12 @@ export default function WhatWeDo() {
                         src={card.productImage}
                         alt={card.title}
                         fill
-                        className="object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover object-center rounded-t-xl group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
                     </div>
                     <div className="p-7 pt-5">
-                      <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-indigo-400 mb-1">Ultra 60 · Fast Charger</p>
+                      <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-muted mb-1">{card.eyebrow}</p>
                       <h3 className="text-xl font-bold font-display text-brand-ink mb-3">{card.title}</h3>
                       <p className="text-brand-brown text-sm leading-relaxed mb-5">{card.desc}</p>
                       <a href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>

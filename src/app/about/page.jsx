@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Target, Leaf, Lightbulb, Shield, Users, MapPin, Award } from "lucide-react";
@@ -205,25 +206,38 @@ export default function AboutPage() {
             </div>
           </motion.div>
 
-          {/* Stats panel */}
+          {/* Stats panel — solar field image with stat cards overlaid */}
           <motion.div ref={statsRef}
             initial={{ opacity:0, x:40 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}
-            className="bg-white rounded-2xl border border-brand-border shadow-warm overflow-hidden">
-            <div className="grid grid-cols-2 divide-x divide-y divide-brand-border">
+            className="relative rounded-2xl overflow-hidden"
+            style={{ minHeight:"340px", boxShadow:"0 20px 60px rgba(217,119,6,0.15)" }}
+          >
+            <Image
+              src="/soumyasi/solar-field-odisha.png"
+              alt="Soumyasi Power solar installation in Odisha"
+              fill
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-900/55 to-amber-700/35" />
+
+            {/* 2×2 stat cards */}
+            <div className="relative z-10 grid grid-cols-2 gap-3 p-4 pb-14">
               {[
                 { value:2014, suffix:"", label:"Year Founded" },
                 { value:500,  suffix:"+", label:"Projects Completed" },
                 { value:15,   suffix:"+", label:"Cities Covered" },
                 { value:50,   suffix:"+", label:"Team Members" },
               ].map((s, i) => (
-                <StatCard key={s.label} {...s} active={statsOn} delay={i * 0.1} />
+                <div key={s.label} className="bg-white/95 backdrop-blur-sm rounded-xl shadow-warm">
+                  <StatCard {...s} active={statsOn} delay={i * 0.1} />
+                </div>
               ))}
             </div>
-            <div className="px-6 py-4 bg-gradient-to-r from-amber-50 to-amber-100 border-t border-brand-border">
-              <div className="flex items-center gap-2">
-                <MapPin size={14} className="text-brand-gold" />
-                <span className="text-xs text-brand-brown font-medium">Headquartered in Bhubaneswar, Odisha</span>
-              </div>
+
+            {/* Bottom bar */}
+            <div className="absolute bottom-0 left-0 right-0 px-5 py-3 bg-white/90 backdrop-blur-sm border-t border-amber-200/50 flex items-center gap-2">
+              <MapPin size={14} className="text-brand-gold" />
+              <span className="text-xs text-brand-brown font-medium">Headquartered in Bhubaneswar, Odisha</span>
             </div>
           </motion.div>
         </div>

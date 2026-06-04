@@ -47,29 +47,56 @@ export default function SolutionsPage() {
             className="absolute bottom-[10%] right-[8%] h-56 w-56 rounded-full bg-amber-300/8 blur-3xl" />
         </div>
 
-        <div className="max-w-4xl mx-auto text-center relative z-10" ref={heroRef}>
-          <motion.p initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5 }}
-            className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-5">
-            Our Solutions
-          </motion.p>
+        <div className="max-w-6xl mx-auto relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left: text */}
+          <div ref={heroRef}>
+            <motion.p initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5 }}
+              className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-5">
+              Our Solutions
+            </motion.p>
 
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight mb-6"
-            variants={VARIANTS.container} initial="hidden" animate={heroInView ? "visible" : "hidden"}
+            <motion.h1
+              className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight mb-6"
+              variants={VARIANTS.container} initial="hidden" animate={heroInView ? "visible" : "hidden"}
+            >
+              {["Energy", "Solutions", "Built", "for", "Odisha"].map((w, i) => (
+                <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
+                  {["Solutions", "Odisha"].includes(w)
+                    ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+                    : w}
+                </motion.span>
+              ))}
+            </motion.h1>
+
+            <motion.p initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.5, duration:0.7 }}
+              className="text-brand-brown text-lg leading-relaxed mb-8">
+              From rooftop solar to fast EV charging — complete energy infrastructure, end to end.
+            </motion.p>
+
+            <motion.div initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.65, duration:0.6 }}>
+              <Link href="/contact"
+                className="btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-gold-lg hover:scale-105 transition-all duration-300">
+                Get a Quote <ArrowRight size={15} />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right: solar field image */}
+          <motion.div
+            initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.3, duration:0.8 }}
+            whileHover={{ scale:1.05 }}
+            className="hidden lg:block rounded-2xl overflow-hidden border border-amber-200 transition-transform duration-300"
+            style={{ boxShadow:"0 20px 60px rgba(217,119,6,0.15)" }}
           >
-            {["Energy", "Solutions", "Built", "for", "Odisha"].map((w, i) => (
-              <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
-                {["Solutions", "Odisha"].includes(w)
-                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
-                  : w}
-              </motion.span>
-            ))}
-          </motion.h1>
-
-          <motion.p initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.5, duration:0.7 }}
-            className="text-brand-brown text-lg leading-relaxed max-w-2xl mx-auto">
-            From rooftop solar to fast EV charging — complete energy infrastructure, end to end.
-          </motion.p>
+            <Image
+              src="/soumyasi/solar-field-odisha.png"
+              alt="Soumyasi Power solar installation in Odisha"
+              width={640}
+              height={440}
+              className="w-full h-auto object-cover object-center"
+              priority
+            />
+          </motion.div>
         </div>
       </section>
 
