@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Sun, Zap, Factory } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
@@ -26,6 +27,7 @@ const CARDS = [
     iconCn: "text-indigo-600 bg-indigo-50 group-hover:bg-indigo-100",
     link:   "text-indigo-600 hover:text-indigo-700",
     href:   "/solutions",
+    productImage: "/soumyasi/ev-charger-ultra60.png",
   },
   {
     icon:   Factory,
@@ -90,17 +92,40 @@ export default function WhatWeDo() {
                 key={card.title}
                 variants={VARIANTS.card}
                 whileHover={{ y: -10 }}
-                className={`group relative p-8 rounded-2xl bg-white border border-brand-border shadow-warm ${card.border} ${card.shadow} transition-all duration-300 cursor-default`}
+                className={`group relative rounded-2xl bg-white border border-brand-border shadow-warm ${card.border} ${card.shadow} transition-all duration-300 cursor-default overflow-hidden`}
               >
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300 ${card.iconCn}`}>
-                  <Icon size={28} />
-                </div>
-                <h3 className="text-xl font-bold font-display text-brand-ink mb-3">{card.title}</h3>
-                <p className="text-brand-brown text-sm leading-relaxed mb-5">{card.desc}</p>
-                <a href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
-                  Learn More →
-                </a>
-
+                {card.productImage ? (
+                  <>
+                    <div className="relative w-full h-48 overflow-hidden">
+                      <Image
+                        src={card.productImage}
+                        alt={card.title}
+                        fill
+                        className="object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
+                    </div>
+                    <div className="p-7 pt-5">
+                      <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-indigo-400 mb-1">Ultra 60 · Fast Charger</p>
+                      <h3 className="text-xl font-bold font-display text-brand-ink mb-3">{card.title}</h3>
+                      <p className="text-brand-brown text-sm leading-relaxed mb-5">{card.desc}</p>
+                      <a href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
+                        Learn More →
+                      </a>
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-8">
+                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300 ${card.iconCn}`}>
+                      <Icon size={28} />
+                    </div>
+                    <h3 className="text-xl font-bold font-display text-brand-ink mb-3">{card.title}</h3>
+                    <p className="text-brand-brown text-sm leading-relaxed mb-5">{card.desc}</p>
+                    <a href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
+                      Learn More →
+                    </a>
+                  </div>
+                )}
               </motion.div>
             );
           })}

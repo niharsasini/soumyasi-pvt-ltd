@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sun, CheckCircle, ArrowRight } from "lucide-react";
@@ -155,6 +156,65 @@ export default function SolutionsPage() {
                 </motion.div>
               );
             })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══ EV CHARGING HARDWARE ══ */}
+      <section className="py-24 px-4 bg-brand-bg relative">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+
+          {/* Left: product image */}
+          <motion.div
+            initial={{ opacity:0, x:-40 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}
+            className="relative rounded-2xl overflow-hidden"
+            style={{ boxShadow:"0 24px 60px rgba(217,119,6,0.18)" }}
+            whileHover={{ scale:1.02 }}
+          >
+            <Image
+              src="/soumyasi/ev-charger-ultra60.png"
+              alt="Ultra 60 Thunder Charge EV Fast Charger"
+              width={600}
+              height={520}
+              className="w-full h-auto object-cover rounded-2xl"
+              priority
+            />
+          </motion.div>
+
+          {/* Right: copy */}
+          <motion.div initial={{ opacity:0, x:40 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}>
+            <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
+              ULTRA 60 THUNDER CHARGE
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-ink leading-tight mb-5">
+              60kW DC Fast Charger
+            </h2>
+            <p className="text-brand-brown leading-relaxed mb-8">
+              Our flagship charging unit delivers 60kW of DC fast charging power — enough to charge most EVs in under 30 minutes. Dual connector system, smart RFID access, and a user-friendly touchscreen built for Indian road conditions.
+            </p>
+
+            <ul className="space-y-3 mb-10">
+              {[
+                "60kW Power Output",
+                "Dual Connector System",
+                "User-Friendly Touchscreen",
+                "Smart RFID Access",
+                "Compact Footprint",
+                "Certified Performance",
+              ].map((spec) => (
+                <li key={spec} className="flex items-center gap-3 text-sm text-brand-brown">
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+                    <CheckCircle size={12} className="text-white" strokeWidth={2.5} />
+                  </span>
+                  {spec}
+                </li>
+              ))}
+            </ul>
+
+            <Link href="/ev-stations"
+              className="btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-gold-lg hover:scale-105 transition-all duration-300">
+              Find Nearest Station <ArrowRight size={15} />
+            </Link>
           </motion.div>
         </div>
       </section>
