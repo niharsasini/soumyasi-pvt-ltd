@@ -431,7 +431,7 @@ function ProcessSection() {
           goldWords={["Installation"]}
         />
 
-        <div className="grid md:grid-cols-5 gap-5 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 relative">
           {/* Dashed connector */}
           <div className="hidden md:block absolute top-[3.25rem] left-[10%] right-[10%] h-px border-t-2 border-dashed border-amber-200 pointer-events-none" />
 

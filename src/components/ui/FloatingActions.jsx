@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CONTACT } from "@/lib/config/site.config";
 
 const WhatsAppIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
@@ -31,7 +32,7 @@ export default function FloatingActions() {
         <div className="fixed bottom-24 right-6 z-50 flex flex-col gap-3 items-end">
           {/* Call button */}
           <motion.a
-            href="tel:+919876543210"
+            href={CONTACT.phoneHref}
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 60 }}
@@ -60,7 +61,7 @@ export default function FloatingActions() {
 
           {/* WhatsApp button */}
           <motion.a
-            href="https://wa.me/919876543210"
+            href={`https://wa.me/${CONTACT.phone.replace(/\D/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, x: 60 }}

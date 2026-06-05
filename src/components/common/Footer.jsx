@@ -1,13 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Loader2, CheckCircle } from "lucide-react";
 import {
   BRAND,
   CONTACT,
   SOCIAL,
   FOOTER_QUICK_LINKS,
-  FOOTER_SERVICES,
 } from "@/lib/config/site.config";
 
 const SocialIcons = {
@@ -29,6 +29,69 @@ const SocialIcons = {
   ),
 };
 
+const SERVICE_LINKS = [
+  { label: "Solar Power Solutions",    href: "/solutions" },
+  { label: "EV Charging Stations",     href: "/solutions/ev-charging" },
+  { label: "Industrial Electrification", href: "/industries" },
+  { label: "Energy Consulting",         href: "/contact" },
+  { label: "Maintenance & Support",     href: "/contact" },
+];
+
+function Newsletter() {
+  const [email,   setEmail]   = useState("");
+  const [status,  setStatus]  = useState("idle"); // idle | loading | success | error
+  const [errMsg,  setErrMsg]  = useState("");
+
+  const isValidEmail = (v) => /\S+@\S+\.\S+/.test(v);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isValidEmail(email)) {
+      setErrMsg("Please enter a valid email address.");
+      setStatus("error");
+      return;
+    }
+    setStatus("loading");
+    setErrMsg("");
+    await new Promise((r) => setTimeout(r, 1500));
+    setStatus("success");
+  };
+
+  if (status === "success") {
+    return (
+      <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
+        <CheckCircle size={16} />
+        Subscribed! Thank you.
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} noValidate>
+      <div className="flex gap-2">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => { setEmail(e.target.value); setStatus("idle"); setErrMsg(""); }}
+          placeholder="Your email"
+          aria-label="Email for newsletter"
+          className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-white/8 border border-white/10 focus:outline-none focus:border-amber-500/60 text-sm text-[#faf8f5] placeholder-[#c4b8a8]/50 transition-colors"
+        />
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold text-xs hover:shadow-gold transition-all duration-300 whitespace-nowrap disabled:opacity-70 flex items-center gap-1"
+        >
+          {status === "loading" ? <Loader2 size={12} className="animate-spin" /> : "Join"}
+        </button>
+      </div>
+      {status === "error" && errMsg && (
+        <p className="text-red-400 text-xs mt-1.5">{errMsg}</p>
+      )}
+    </form>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="bg-[#1a1208] text-[#c4b8a8] relative overflow-hidden">
@@ -44,8 +107,11 @@ export default function Footer() {
           <div>
             <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-500 mb-1">Start Today</p>
             <h3 className="text-xl sm:text-2xl font-bold font-display text-[#faf8f5]">
-              Ready to go solar?
+              Ready to Power Up?
             </h3>
+            <p className="text-sm text-[#c4b8a8] mt-1 max-w-xs">
+              Solar installations, EV charging stations, and industrial power — get a free assessment today.
+            </p>
           </div>
           <Link
             href="/contact"
@@ -74,6 +140,8 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-white/5 border border-white/10 hover:border-amber-500/60 hover:text-amber-400 hover:shadow-[0_0_12px_rgba(217,119,6,0.3)] transition-all duration-300"
                 >
                   <Icon />
@@ -90,10 +158,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               {FOOTER_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="hover:text-amber-400 transition-colors duration-300"
-                  >
+                  <Link href={item.href} className="hover:text-amber-400 transition-colors duration-300">
                     {item.label}
                   </Link>
                 </li>
@@ -101,15 +166,17 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Services — now with real links */}
           <div>
             <h3 className="text-[#faf8f5] font-semibold mb-5 text-sm uppercase tracking-wider">
               Our Services
             </h3>
             <ul className="space-y-3 text-sm">
-              {FOOTER_SERVICES.map((svc) => (
-                <li key={svc} className="hover:text-amber-400 transition-colors duration-300 cursor-pointer">
-                  {svc}
+              {SERVICE_LINKS.map(({ label, href }) => (
+                <li key={label}>
+                  <Link href={href} className="hover:text-amber-400 transition-colors duration-300">
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -143,20 +210,9 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Newsletter */}
             <div>
               <h4 className="text-[#faf8f5] font-semibold text-sm mb-3">Newsletter</h4>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  aria-label="Email for newsletter"
-                  className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-white/8 border border-white/10 focus:outline-none focus:border-amber-500/60 text-sm text-[#faf8f5] placeholder-[#c4b8a8]/50 transition-colors"
-                />
-                <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold text-xs hover:shadow-gold transition-all duration-300 whitespace-nowrap">
-                  Join
-                </button>
-              </div>
+              <Newsletter />
             </div>
           </div>
         </div>
@@ -164,7 +220,10 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="relative z-10 border-t border-white/5 text-center py-5 text-xs text-[#c4b8a8]/60 px-4">
-        © {new Date().getFullYear()} {BRAND.name}. All Rights Reserved. &nbsp;·&nbsp; Made with ☀️ in Odisha
+        © {new Date().getFullYear()} {BRAND.name}. All Rights Reserved.
+        &nbsp;·&nbsp; Made with ☀️ in Odisha
+        &nbsp;·&nbsp; <Link href="/privacy-policy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link>
+        &nbsp;·&nbsp; <Link href="/terms" className="hover:text-amber-400 transition-colors">Terms</Link>
       </div>
     </footer>
   );

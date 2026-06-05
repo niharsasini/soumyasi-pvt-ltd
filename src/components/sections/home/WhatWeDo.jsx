@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sun, Zap, Factory } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
@@ -112,9 +113,9 @@ export default function WhatWeDo() {
                       <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-muted mb-1">{card.eyebrow}</p>
                       <h3 className="text-xl font-bold font-display text-brand-ink mb-3">{card.title}</h3>
                       <p className="text-brand-brown text-sm leading-relaxed mb-5">{card.desc}</p>
-                      <a href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
+                      <Link href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
                         Learn More →
-                      </a>
+                      </Link>
                     </div>
                   </>
                 ) : (

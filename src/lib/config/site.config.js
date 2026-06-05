@@ -24,9 +24,9 @@ export const CONTACT = {
 };
 
 export const SOCIAL = {
-  facebook: "#",
-  linkedin: "#",
-  twitter: "#",
+  facebook: "https://www.facebook.com/soumyasipower",
+  linkedin: "https://www.linkedin.com/company/soumyasi-power",
+  twitter: "https://twitter.com/soumyasipower",
 };
 
 export const NAV_LINKS = [

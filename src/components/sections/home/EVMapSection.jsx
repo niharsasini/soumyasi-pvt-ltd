@@ -9,13 +9,10 @@ import { EV_STATIONS } from "@/lib/data/ev-stations";
 const EVStationMap = dynamic(() => import("@/components/map/EVStationMap"), {
   ssr: false,
   loading: () => (
-    <div
-      className="w-full h-full flex items-center justify-center rounded-2xl"
-      style={{ background: "linear-gradient(to bottom, #020c1b, #0a1628)" }}
-    >
+    <div className="w-full h-full flex items-center justify-center rounded-2xl bg-amber-50">
       <div
         className="h-10 w-10 animate-spin rounded-full border-2"
-        style={{ borderColor: "rgba(245,158,11,0.2)", borderTopColor: "#f59e0b" }}
+        style={{ borderColor: "rgba(217,119,6,0.2)", borderTopColor: "#d97706" }}
       />
     </div>
   ),
