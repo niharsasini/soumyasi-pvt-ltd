@@ -17,9 +17,9 @@ const MEGA_COLS = [
   },
   {
     icon: Zap,
-    title: "EV Network",
-    desc: "Fast-charging stations across Bhubaneswar, Cuttack, Puri and beyond.",
-    href: "/solutions",
+    title: "EV Charging",
+    desc: "Install a 60kW DC fast charging station at your location — site assessment, installation, and support.",
+    href: "/solutions/ev-charging",
     color: "text-brand-indigo bg-indigo-50",
   },
   {

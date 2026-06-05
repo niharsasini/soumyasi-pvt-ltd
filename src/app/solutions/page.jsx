@@ -306,9 +306,9 @@ function EVChargerSection() {
             ))}
           </div>
 
-          <Link href="/ev-stations"
+          <Link href="/solutions/ev-charging"
             className="btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:scale-105 transition-all duration-300">
-            Find Nearest Station <ArrowRight size={15} />
+            Learn More <ArrowRight size={15} />
           </Link>
         </motion.div>
       </div>
