@@ -8,11 +8,11 @@ export const metadata = {
 const SECTIONS = [
   {
     title: "1. Acceptance of Terms",
-    content: `By accessing or using the Soumyashree Power Limited website, you agree to be bound by these Terms of Service. If you do not agree, please discontinue use of our website.`,
+    content: `By accessing or using the Soumyashi Power Limited website, you agree to be bound by these Terms of Service. If you do not agree, please discontinue use of our website.`,
   },
   {
     title: "2. Our Services",
-    content: `Soumyashree Power Limited provides solar energy installations, EV charging infrastructure, and industrial electrical solutions in Odisha, India. Service delivery is governed by separate project agreements and proposals issued to each client.`,
+    content: `Soumyashi Power Limited provides solar energy installations, EV charging infrastructure, and industrial electrical solutions in Odisha, India. Service delivery is governed by separate project agreements and proposals issued to each client.`,
   },
   {
     title: "3. Website Use",
@@ -24,7 +24,7 @@ const SECTIONS = [
   },
   {
     title: "4. Intellectual Property",
-    content: `All content on this website — including text, images, graphics, logos, and the Soumyasi Power brand — is the property of Soumyashree Power Limited and protected under applicable intellectual property laws. Unauthorised use is prohibited.`,
+    content: `All content on this website — including text, images, graphics, logos, and the Soumyasi Power brand — is the property of Soumyashi Power Limited and protected under applicable intellectual property laws. Unauthorised use is prohibited.`,
   },
   {
     title: "5. Quotations & Project Proposals",
@@ -32,7 +32,7 @@ const SECTIONS = [
   },
   {
     title: "6. Limitation of Liability",
-    content: `To the maximum extent permitted by law, Soumyashree Power Limited shall not be liable for any indirect, incidental, or consequential damages arising from use of this website or reliance on information provided herein.`,
+    content: `To the maximum extent permitted by law, Soumyashi Power Limited shall not be liable for any indirect, incidental, or consequential damages arising from use of this website or reliance on information provided herein.`,
   },
   {
     title: "7. Third-Party Links",
@@ -48,7 +48,7 @@ const SECTIONS = [
   },
   {
     title: "10. Contact",
-    content: `For questions about these Terms, contact us at info@soumyashreepower.com or write to: Soumyashree Power Limited, Plot No. 123, Industrial Area, Bhubaneswar, Odisha, India.`,
+    content: `For questions about these Terms, contact us at info@soumyasipower.com or write to: Soumyashi Power Limited, Plot No. 123, Industrial Area, Bhubaneswar, Odisha, India.`,
   },
 ];
 

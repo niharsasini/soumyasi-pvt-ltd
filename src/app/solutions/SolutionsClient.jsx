@@ -185,7 +185,7 @@ function SolutionsGridSection() {
                 </div>
                 <h3 className="text-xl font-bold font-display text-[#1a1208] mt-5 mb-2">{item.title}</h3>
                 <p className="text-[#78614a] text-sm leading-relaxed mt-2">{item.description}</p>
-                <Link href="/contact"
+                <Link href={`/solutions/${item.slug}`}
                   className="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700 font-medium text-sm mt-5 transition-colors">
                   Learn More →
                 </Link>
@@ -251,7 +251,8 @@ function SolarViewerSection() {
             style={{ boxShadow:"0 20px 60px rgba(217,119,6,0.12)" }}>
             <SolarPanelViewer />
             <p className="text-[#a8917a] text-xs text-center mt-3">
-              🖱 Drag to rotate · Scroll to zoom
+              <span className="hidden sm:inline">🖱 Drag to rotate · Scroll to zoom</span>
+              <span className="sm:hidden">👆 Drag to rotate · Pinch to zoom</span>
             </p>
           </div>
         </motion.div>

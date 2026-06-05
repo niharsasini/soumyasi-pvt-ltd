@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const STATS = [
-  { value: 500, suffix: "+", label: "Projects Completed" },
-  { value: 50,  suffix: "+", label: "EV Stations Live"   },
-  { value: 15,  suffix: "+", label: "Cities Covered"     },
-  { value: 98,  suffix: "%", label: "Client Satisfaction" },
+  { value: 500, suffix: "+", label: "Projects Completed",  href: "/projects" },
+  { value: 50,  suffix: "+", label: "EV Stations Live",    href: "/solutions/ev-charging" },
+  { value: 15,  suffix: "+", label: "Cities Covered",      href: "/about" },
+  { value: 98,  suffix: "%", label: "Client Satisfaction", href: null },
 ];
 
 function CountUp({ to, suffix, active }) {
@@ -50,25 +51,36 @@ export default function StatsStrip() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
-          {STATS.map((s, i) => (
-            <motion.div
-              key={s.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={on ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="relative flex flex-col items-center py-10 px-6 text-center"
-            >
-              {i < STATS.length - 1 && (
-                <div className="absolute right-0 top-1/4 bottom-1/4 w-px bg-white/20 hidden md:block" />
-              )}
-              <span className="text-4xl sm:text-5xl font-bold font-display text-white tabular-nums">
-                <CountUp to={s.value} suffix={s.suffix} active={on} />
-              </span>
-              <span className="mt-2 text-xs sm:text-sm text-amber-100 text-center font-medium">
-                {s.label}
-              </span>
-            </motion.div>
-          ))}
+          {STATS.map((s, i) => {
+            const inner = (
+              <>
+                {i < STATS.length - 1 && (
+                  <div className="absolute right-0 top-1/4 bottom-1/4 w-px bg-white/20 hidden md:block" />
+                )}
+                <span className="text-4xl sm:text-5xl font-bold font-display text-white tabular-nums">
+                  <CountUp to={s.value} suffix={s.suffix} active={on} />
+                </span>
+                <span className="mt-2 text-xs sm:text-sm text-amber-100 text-center font-medium">
+                  {s.label}
+                </span>
+              </>
+            );
+            return (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={on ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="relative flex flex-col items-center py-10 px-6 text-center"
+              >
+                {s.href ? (
+                  <Link href={s.href} className="flex flex-col items-center hover:opacity-80 transition-opacity duration-200">
+                    {inner}
+                  </Link>
+                ) : inner}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -71,10 +71,10 @@ export default function FinalCTA() {
             Get Free Assessment
           </Link>
           <Link
-            href="/solutions"
+            href="/solutions/ev-charging"
             className="inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300"
           >
-            Find EV Station
+            Explore EV Network
           </Link>
         </motion.div>
       </div>

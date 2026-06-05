@@ -12,7 +12,7 @@ const MEGA_COLS = [
     icon: Sun,
     title: "Solar Solutions",
     desc: "Rooftop & ground-mount solar for homes, businesses and industries.",
-    href: "/solutions",
+    href: "/solutions/solar-energy",
     color: "text-brand-gold bg-amber-50",
   },
   {
@@ -26,7 +26,7 @@ const MEGA_COLS = [
     icon: Factory,
     title: "Industrial Power",
     desc: "Switchgear, substations and transformers for Odisha's industries.",
-    href: "/solutions",
+    href: "/solutions/industrial-electrification",
     color: "text-brand-emerald bg-emerald-50",
   },
 ];
@@ -273,7 +273,7 @@ export default function Navbar() {
                 Get Free Quote
               </Link>
               <p className="text-center text-[#a8917a] text-xs tracking-widest uppercase mt-6">
-                Soumyashree Power Limited
+                Soumyashi Power Limited
               </p>
             </motion.div>
           </motion.div>

@@ -309,9 +309,9 @@ export default function SolarPanelViewer() {
         </Canvas>
 
         <div className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-cyan-400/15 blur-3xl" />
-        <div className="pointer-events-none absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-blue-600/10 blur-3xl" />
+        <div className="pointer-events-none absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-amber-400/10 blur-3xl" />
 
-        <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-[10px] text-gray-500 tracking-wide">
+        <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-[10px] text-[#a8917a] tracking-wide">
           <span>Drag to rotate · Scroll to zoom</span>
         </div>
       </div>

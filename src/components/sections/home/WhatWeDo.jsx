@@ -29,7 +29,7 @@ const CARDS = [
     shadow: "hover:shadow-[0_8px_32px_rgba(79,70,229,0.15)]",
     iconCn: "text-indigo-600 bg-indigo-50 group-hover:bg-indigo-100",
     link:   "text-indigo-600 hover:text-indigo-700",
-    href:   "/solutions",
+    href:   "/solutions/ev-charging",
     productImage: "/soumyasi/ev-charger-ultra60.png",
     eyebrow: "Ultra 60 · Fast Charger",
   },
@@ -125,9 +125,9 @@ export default function WhatWeDo() {
                     </div>
                     <h3 className="text-xl font-bold font-display text-brand-ink mb-3">{card.title}</h3>
                     <p className="text-brand-brown text-sm leading-relaxed mb-5">{card.desc}</p>
-                    <a href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
+                    <Link href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
                       Learn More →
-                    </a>
+                    </Link>
                   </div>
                 )}
               </motion.div>

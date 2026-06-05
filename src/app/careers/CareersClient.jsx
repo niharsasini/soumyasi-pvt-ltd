@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lightbulb, Leaf, TrendingUp, MapPin, Clock, X } from "lucide-react";
 import SectionHeading from '@/components/ui/SectionHeading';
+import { VARIANTS } from "@/lib/animations/variants";
 
 const CULTURE = [
   { icon: Lightbulb, title: "Innovation", desc: "We build with the latest technology — from smart solar systems to IoT-enabled EV infrastructure. Push boundaries every day." },
@@ -118,25 +120,40 @@ export default function CareersClient() {
     <div className="bg-brand-bg text-brand-ink min-h-screen">
       {/* Hero */}
       <section className="pt-32 pb-16 px-4 text-center relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(217,119,6,0.05), transparent)" }} />
-        <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-          className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
-          We're Hiring
-        </motion.p>
-        <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight">
-          Build Odisha's{" "}
-          <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">Energy Future</span>
-        </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="mt-5 max-w-xl mx-auto text-brand-brown text-lg">
-          Join a passionate team turning Odisha into a clean energy powerhouse — one rooftop at a time.
-        </motion.p>
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div animate={{ x:[0,25,0], y:[0,-18,0] }} transition={{ duration:10, repeat:Infinity, ease:"easeInOut" }}
+            className="absolute top-[8%] left-[4%] h-80 w-80 rounded-full bg-amber-400/25 blur-3xl" />
+          <motion.div animate={{ x:[0,-20,0], y:[0,15,0] }} transition={{ duration:13, repeat:Infinity, ease:"easeInOut", delay:3 }}
+            className="absolute top-[10%] right-[6%] h-64 w-64 rounded-full bg-amber-300/20 blur-3xl" />
+          <motion.div animate={{ x:[0,15,0], y:[0,-12,0] }} transition={{ duration:11, repeat:Infinity, ease:"easeInOut", delay:6 }}
+            className="absolute bottom-[8%] left-[50%] h-48 w-48 rounded-full bg-amber-400/15 blur-3xl" />
+        </div>
+        <div className="relative z-10">
+          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
+            We&apos;re Hiring
+          </motion.p>
+          <motion.h1
+            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight"
+            variants={VARIANTS.container} initial="hidden" animate="visible"
+          >
+            {["Build", "Odisha's", "Energy", "Future"].map((w, i) => (
+              <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
+                {["Energy", "Future"].includes(w)
+                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+                  : w}
+              </motion.span>
+            ))}
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+            className="mt-5 max-w-xl mx-auto text-brand-brown text-lg">
+            Join a passionate team turning Odisha into a clean energy powerhouse — one rooftop at a time.
+          </motion.p>
+        </div>
       </section>
 
       {/* Culture cards */}
-      <section className="pb-16 px-4">
+      <section className="py-24 px-4">
         <div className="max-w-5xl mx-auto grid sm:grid-cols-3 gap-6">
           {CULTURE.map(({ icon: Icon, title, desc }, i) => (
             <motion.div key={title}
@@ -184,6 +201,38 @@ export default function CareersClient() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 px-4 bg-gradient-to-br from-amber-600 to-amber-800 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.08), transparent)" }} />
+        <motion.div animate={{ scale:[1,1.3,1], opacity:[0.15,0.3,0.15] }} transition={{ duration:6, repeat:Infinity }}
+          className="absolute top-1/2 left-[6%] -translate-y-1/2 h-64 w-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-200 mb-4">Stay Connected</p>
+          <motion.h2
+            initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}
+            className="text-4xl sm:text-5xl font-bold font-display text-white leading-tight mb-5"
+          >
+            Don&apos;t See the Right Role?
+          </motion.h2>
+          <motion.p initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:0.2 }}
+            className="text-amber-100 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+            We&apos;re always looking for passionate people. Send us your profile and we&apos;ll reach out when the right opportunity opens.
+          </motion.p>
+          <motion.div initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:0.35 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact"
+              className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-700 bg-white hover:bg-amber-50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+              Send Your CV
+            </Link>
+            <Link href="/about"
+              className="inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300">
+              Meet the Team
+            </Link>
+          </motion.div>
         </div>
       </section>
 

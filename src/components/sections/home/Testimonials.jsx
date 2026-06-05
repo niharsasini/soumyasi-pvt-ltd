@@ -14,7 +14,7 @@ const TESTIMONIALS = [
   {
     name:    "Rajesh Mohanty",
     role:    "Business Owner, Bhubaneswar",
-    message: "Soumyashree installed solar panels for our factory. Electricity bills dropped 70% in the first month. Outstanding quality and professionalism.",
+    message: "Soumyashi installed solar panels for our factory. Electricity bills dropped 70% in the first month. Outstanding quality and professionalism.",
     stars:   5,
   },
   {
@@ -38,7 +38,7 @@ const TESTIMONIALS = [
   {
     name:    "Debashis Rath",
     role:    "Factory Director, Sambalpur",
-    message: "Industrial power solutions from Soumyashree have been top-notch. They understood our requirements and delivered beyond expectations.",
+    message: "Industrial power solutions from Soumyashi have been top-notch. They understood our requirements and delivered beyond expectations.",
     stars:   5,
   },
 ];

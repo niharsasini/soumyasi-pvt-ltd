@@ -54,7 +54,7 @@ export default function IndustriesClient() {
             badge="Our Expertise"
             words={["Industry-Specific", "Solutions"]}
             goldWords={["Industry-Specific"]}
-            subtitle="Soumyashree Power supports critical sectors with innovative electrical engineering solutions built for reliability."
+            subtitle="Soumyashi Power supports critical sectors with innovative electrical engineering solutions built for reliability."
           />
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">

@@ -2,7 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { Zap, MapPin, Clock } from "lucide-react";
+import Link from "next/link";
+import { Zap, MapPin, Clock, ArrowRight } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 import { EV_STATIONS } from "@/lib/data/ev-stations";
 
@@ -102,6 +103,21 @@ export default function EVMapSection() {
               <span className="text-xs text-brand-muted text-center">{label}</span>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-10 text-center"
+        >
+          <Link
+            href="/solutions/ev-charging"
+            className="btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-[0_12px_40px_rgba(217,119,6,0.35)] hover:scale-105 transition-all duration-300"
+          >
+            Explore EV Charging Solutions <ArrowRight size={15} />
+          </Link>
         </motion.div>
       </div>
     </section>

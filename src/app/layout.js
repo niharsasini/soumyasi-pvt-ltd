@@ -5,6 +5,7 @@ import Footer from "@/components/common/Footer";
 import CustomCursor from "@/components/common/CustomCursor";
 import FloatingActions from "@/components/ui/FloatingActions";
 import BackToTop from "@/components/ui/BackToTop";
+import CookieConsent from "@/components/ui/CookieConsent";
 import { BRAND } from "@/lib/config/site.config";
 
 const inter = Inter({
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <FloatingActions />
         <BackToTop />
+        <CookieConsent />
       </body>
     </html>
   );

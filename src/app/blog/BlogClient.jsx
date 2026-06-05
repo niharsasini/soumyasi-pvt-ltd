@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Calendar, ArrowRight, Tag } from "lucide-react";
+import { VARIANTS } from "@/lib/animations/variants";
 
 const ARTICLES = [
   {
@@ -42,8 +43,8 @@ const ARTICLES = [
     category: "Industrial",
     date: "April 22, 2026",
     readTime: "6 min",
-    catColor: "bg-slate-100 text-slate-700",
-    gradient: "from-slate-400 to-gray-600",
+    catColor: "bg-orange-100 text-orange-700",
+    gradient: "from-orange-400 to-amber-600",
   },
   {
     slug: "solar-myths-debunked",
@@ -72,25 +73,40 @@ export default function BlogClient() {
     <div className="bg-brand-bg text-brand-ink min-h-screen">
       {/* Hero */}
       <section className="pt-32 pb-16 px-4 text-center relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(217,119,6,0.05), transparent)" }} />
-        <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-          className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
-          Knowledge Base
-        </motion.p>
-        <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight">
-          Energy{" "}
-          <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">Insights</span>
-        </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="mt-5 max-w-xl mx-auto text-brand-brown text-lg">
-          Expert guides on solar savings, EV infrastructure, and the future of clean energy in Odisha.
-        </motion.p>
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div animate={{ x:[0,25,0], y:[0,-18,0] }} transition={{ duration:10, repeat:Infinity, ease:"easeInOut" }}
+            className="absolute top-[8%] left-[4%] h-80 w-80 rounded-full bg-amber-400/25 blur-3xl" />
+          <motion.div animate={{ x:[0,-20,0], y:[0,15,0] }} transition={{ duration:13, repeat:Infinity, ease:"easeInOut", delay:3 }}
+            className="absolute top-[10%] right-[6%] h-64 w-64 rounded-full bg-amber-300/20 blur-3xl" />
+          <motion.div animate={{ x:[0,15,0], y:[0,-12,0] }} transition={{ duration:11, repeat:Infinity, ease:"easeInOut", delay:6 }}
+            className="absolute bottom-[8%] left-[50%] h-48 w-48 rounded-full bg-amber-400/15 blur-3xl" />
+        </div>
+        <div className="relative z-10">
+          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
+            Knowledge Base
+          </motion.p>
+          <motion.h1
+            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight"
+            variants={VARIANTS.container} initial="hidden" animate="visible"
+          >
+            {["Energy", "Insights"].map((w, i) => (
+              <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
+                {w === "Insights"
+                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+                  : w}
+              </motion.span>
+            ))}
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+            className="mt-5 max-w-xl mx-auto text-brand-brown text-lg">
+            Expert guides on solar savings, EV infrastructure, and the future of clean energy in Odisha.
+          </motion.p>
+        </div>
       </section>
 
       {/* Articles grid */}
-      <section className="pb-20 px-4">
+      <section className="py-24 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="section-divider mb-14" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -135,6 +151,38 @@ export default function BlogClient() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 px-4 bg-gradient-to-br from-amber-600 to-amber-800 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.08), transparent)" }} />
+        <motion.div animate={{ scale:[1,1.3,1], opacity:[0.15,0.3,0.15] }} transition={{ duration:6, repeat:Infinity }}
+          className="absolute top-1/2 left-[6%] -translate-y-1/2 h-64 w-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-200 mb-4">Take the Next Step</p>
+          <motion.h2
+            initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}
+            className="text-4xl sm:text-5xl font-bold font-display text-white leading-tight mb-5"
+          >
+            Power Up Your Knowledge
+          </motion.h2>
+          <motion.p initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:0.2 }}
+            className="text-amber-100 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+            Ready to go solar or install an EV charger? Talk to our experts.
+          </motion.p>
+          <motion.div initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:0.35 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact"
+              className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-700 bg-white hover:bg-amber-50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+              Get Free Assessment
+            </Link>
+            <Link href="/solutions"
+              className="inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300">
+              Explore Solutions
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>

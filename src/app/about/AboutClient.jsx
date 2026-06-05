@@ -202,7 +202,7 @@ export default function AboutClient() {
             </h2>
             <div className="space-y-4 text-brand-brown leading-relaxed">
               <p>In 2014, founder Suresh Kumar Pattnaik installed his first solar system on a Bhubaneswar factory rooftop. The client's electricity bill fell by 68%. Word spread fast.</p>
-              <p>By 2019, Soumyashree Power had completed 200+ installations and launched Odisha's first commercial EV charging hub — anticipating the electric vehicle wave years before it arrived.</p>
+              <p>By 2019, Soumyashi Power had completed 200+ installations and launched Odisha's first commercial EV charging hub — anticipating the electric vehicle wave years before it arrived.</p>
               <p>Today, with 500+ projects, 50+ EV stations, and operations in 15 cities, we remain what we've always been: a local team with deep Odisha roots, building infrastructure that will last decades.</p>
             </div>
           </motion.div>

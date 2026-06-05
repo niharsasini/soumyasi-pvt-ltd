@@ -71,6 +71,9 @@ export default function Industries() {
                 <p className="mt-1.5 text-[11px] text-brand-muted leading-relaxed hidden sm:block">
                   {ind.description.split(".")[0]}.
                 </p>
+                <span className="mt-2 text-[11px] font-semibold text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  Learn More →
+                </span>
               </motion.div>
             );
           })}

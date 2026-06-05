@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import ContactForm from "@/components/forms/ContactForm";
 import { CONTACT } from "@/lib/config/site.config";
+import { VARIANTS } from "@/lib/animations/variants";
 
 const INFO_CARDS = [
   {
@@ -34,6 +35,14 @@ const INFO_CARDS = [
     href: null,
     color: "text-brand-gold bg-amber-50",
   },
+  {
+    icon: MessageCircle,
+    title: "Chat on WhatsApp",
+    info: "Quick response during business hours",
+    href: `https://wa.me/${CONTACT.phone.replace(/\D/g, "")}`,
+    color: "text-emerald-600 bg-emerald-50",
+    external: true,
+  },
 ];
 
 export default function ContactClient() {
@@ -41,42 +50,45 @@ export default function ContactClient() {
     <div className="bg-brand-bg text-brand-ink overflow-hidden">
       {/* ── HERO ── */}
       <section className="pt-32 pb-16 px-4 text-center bg-brand-bg relative overflow-hidden">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(217,119,6,0.06), transparent)" }}
-        />
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4"
-        >
-          Get In Touch
-        </motion.p>
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight"
-        >
-          Let’s Talk{" "}
-          <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">
-            Energy
-          </span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-5 max-w-xl mx-auto text-brand-brown text-lg"
-        >
-          Tell us about your project and we’ll get back to you within 24 hours.
-        </motion.p>
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div animate={{ x:[0,25,0], y:[0,-18,0] }} transition={{ duration:10, repeat:Infinity, ease:"easeInOut" }}
+            className="absolute top-[8%] left-[4%] h-80 w-80 rounded-full bg-amber-400/25 blur-3xl" />
+          <motion.div animate={{ x:[0,-20,0], y:[0,15,0] }} transition={{ duration:13, repeat:Infinity, ease:"easeInOut", delay:3 }}
+            className="absolute top-[10%] right-[6%] h-64 w-64 rounded-full bg-amber-300/20 blur-3xl" />
+          <motion.div animate={{ x:[0,15,0], y:[0,-12,0] }} transition={{ duration:11, repeat:Infinity, ease:"easeInOut", delay:6 }}
+            className="absolute bottom-[8%] left-[50%] h-48 w-48 rounded-full bg-amber-400/15 blur-3xl" />
+        </div>
+        <div className="relative z-10">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+            className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4"
+          >
+            Get In Touch
+          </motion.p>
+          <motion.h1
+            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight"
+            variants={VARIANTS.container} initial="hidden" animate="visible"
+          >
+            {["Let’s", "Talk", "Energy"].map((w, i) => (
+              <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
+                {w === "Energy"
+                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+                  : w}
+              </motion.span>
+            ))}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.5 }}
+            className="mt-5 max-w-xl mx-auto text-brand-brown text-lg"
+          >
+            Tell us about your project and we&apos;ll get back to you within 24 hours.
+          </motion.p>
+        </div>
       </section>
 
       {/* ── INFO CARDS ── */}
       <section className="py-12 px-4">
-        <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
           {INFO_CARDS.map(({ icon: Icon, title, info, href, color }, i) => (
             <motion.div
               key={title}
@@ -105,7 +117,7 @@ export default function ContactClient() {
       </section>
 
       {/* ── FORM + DETAILS ── */}
-      <section className="py-16 px-4 bg-brand-section">
+      <section className="py-24 px-4 bg-brand-section">
         <div className="section-divider mb-16" />
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-start">
 
@@ -168,11 +180,11 @@ export default function ContactClient() {
       </section>
 
       {/* ── MAP ── */}
-      <section className="py-16 px-4">
+      <section className="py-24 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="rounded-2xl overflow-hidden border border-brand-border shadow-warm">
             <iframe
-              title="Soumyashree Power Office Location"
+              title="Soumyashi Power Office Location"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29920.54841075549!2d85.798185!3d20.296058!"
               width="100%"
               height="380"
