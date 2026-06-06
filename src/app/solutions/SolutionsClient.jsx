@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -15,17 +14,6 @@ import { SOLUTIONS } from "@/lib/data/solutions";
 import { VARIANTS } from "@/lib/animations/variants";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { CONTACT } from "@/lib/config/site.config";
-
-/* ── lazy-load 3-D viewer ─────────────────────────── */
-const SolarPanelViewer = dynamic(
-  () => import("@/components/three/SolarPanelViewer"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="w-full h-[450px] rounded-2xl animate-pulse bg-gradient-to-br from-amber-100 to-amber-200" />
-    ),
-  }
-);
 
 /* ── static data ──────────────────────────────────── */
 const SOLAR_SPECS = [
@@ -247,17 +235,16 @@ function SolarViewerSection() {
           </Link>
         </motion.div>
 
-        {/* Right — 3D viewer */}
-        <motion.div initial="hidden" whileInView="visible" viewport={vp} variants={VARIANTS.slideRight}>
-          <div className="rounded-3xl border border-amber-200/60 bg-amber-50/30 p-4"
-            style={{ boxShadow:"0 20px 60px rgba(217,119,6,0.12)" }}>
-            <SolarPanelViewer />
-            <p className="text-[#a8917a] text-xs text-center mt-3">
-              <span className="hidden sm:inline">🖱 Drag to rotate · Scroll to zoom</span>
-              <span className="sm:hidden">👆 Drag to rotate · Pinch to zoom</span>
-            </p>
-          </div>
-        </motion.div>
+        {/* Right — static solar image */}
+        <div className="relative rounded-3xl overflow-hidden border border-amber-200 shadow-[0_20px_60px_rgba(217,119,6,0.12)] aspect-[4/3]">
+          <Image
+            src="/soumyasi/solar-field-odisha.png"
+            alt="Soumyashi Power solar installation"
+            fill
+            className="object-cover object-center"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
       </div>
     </section>
   );
