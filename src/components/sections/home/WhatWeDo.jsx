@@ -2,137 +2,189 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Sun, Zap, Factory } from "lucide-react";
-import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
-
-const HEADING = ["Energy", "Solutions", "for", "a", "New", "Odisha"];
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { VARIANTS } from "@/lib/animations/variants";
 
 const CARDS = [
   {
-    icon:   Sun,
-    title:  "Solar Power",
-    desc:   "We design and install rooftop and ground-mount solar systems for homes, businesses, and industries across Odisha. Clean energy, real savings.",
-    border: "hover:border-amber-400",
-    shadow: "hover:shadow-card-hover",
-    iconCn: "text-brand-gold bg-amber-50 group-hover:bg-amber-100",
-    link:   "text-brand-gold hover:text-amber-700",
-    href:   "/solutions",
-    productImage: "/soumyasi/solar-field-odisha.png",
-    eyebrow: "Rooftop & Ground-Mount Solar",
+    image: "/soumyasi/solar-field-odisha.png",
+    pillBg: "bg-amber-100",
+    pillText: "text-amber-700",
+    pillLabel: "☀️ Solar",
+    title: "Solar Power Installation",
+    desc: "We design and install rooftop and ground-mount solar systems for homes, businesses, and industries across Odisha. Clean energy, real savings — guaranteed for 25 years.",
+    href: "/solutions",
+    hoverBorder: "hover:border-amber-400",
   },
   {
-    icon:   Zap,
-    title:  "EV Charging Network",
-    desc:   "Our fast-charging network spans Bhubaneswar, Cuttack, Puri, and growing. Find a station, charge up, move on.",
-    border: "hover:border-indigo-400",
-    shadow: "hover:shadow-[0_8px_32px_rgba(79,70,229,0.15)]",
-    iconCn: "text-indigo-600 bg-indigo-50 group-hover:bg-indigo-100",
-    link:   "text-indigo-600 hover:text-indigo-700",
-    href:   "/solutions/ev-charging",
-    productImage: "/soumyasi/ev-charger-ultra60.png",
-    eyebrow: "Ultra 60 · Fast Charger",
+    image: "/soumyasi/ev-charger-ultra60.png",
+    pillBg: "bg-emerald-100",
+    pillText: "text-emerald-700",
+    pillLabel: "⚡ EV Charging",
+    title: "EV Charging Network",
+    desc: "Our fast-charging EV network spans Bhubaneswar, Cuttack, Puri, and growing. 60kW DC fast chargers — charge most EVs in under 30 minutes.",
+    href: "/solutions/ev-charging",
+    hoverBorder: "hover:border-emerald-400",
   },
   {
-    icon:   Factory,
-    title:  "Industrial Power",
-    desc:   "Switchgear, substations, transformers — we handle the full spectrum of electrical infrastructure for Odisha's industries.",
-    border: "hover:border-emerald-400",
-    shadow: "hover:shadow-[0_8px_32px_rgba(5,150,105,0.15)]",
-    iconCn: "text-brand-emerald bg-emerald-50 group-hover:bg-emerald-100",
-    link:   "text-brand-emerald hover:text-emerald-700",
-    href:   "/solutions",
+    image: "/soumyasi/wind-power-plant.png",
+    pillBg: "bg-blue-100",
+    pillText: "text-blue-700",
+    pillLabel: "💨 Wind Power",
+    title: "Wind Power Plant",
+    desc: "Harnessing Odisha's coastal and inland wind corridors to generate reliable, renewable power. From small turbines to utility-scale wind farms — we plan, install, and maintain.",
+    href: "/solutions",
+    hoverBorder: "hover:border-blue-400",
+  },
+  {
+    image: "/soumyasi/industrial-power.png",
+    pillBg: "bg-orange-100",
+    pillText: "text-orange-700",
+    pillLabel: "🏭 Industrial",
+    title: "Industrial Power Supply",
+    desc: "Complete electrical infrastructure for factories, plants, and commercial complexes. Switchgear, transformers, substations, and 24/7 power management — engineered for zero downtime.",
+    href: "/solutions",
+    hoverBorder: "hover:border-orange-400",
   },
 ];
 
+const cardGridVariant = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const linkFadeIn = {
+  hidden: { opacity: 0, x: 20 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, delay: 0.5, ease: "easeOut" } },
+};
+
+const subtitleVariant = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3, ease: "easeOut" } },
+};
+
 export default function WhatWeDo() {
-  const { ref, isInView } = useScrollReveal();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="w-full py-24 bg-brand-section relative overflow-hidden">
-      <div className="absolute inset-x-0 top-0 section-divider" />
-
+    <section className="w-full bg-[#FFF8E7] py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
-        <div className="text-center mb-14" ref={ref}>
-          <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
-            What We Do
-          </p>
+        {/* Header row — heading left, link right */}
+        <div ref={ref} className="flex items-end justify-between mb-3">
           <motion.h2
-            className="text-4xl sm:text-5xl font-bold font-display text-brand-ink"
+            className="text-4xl sm:text-5xl font-bold font-display text-[#1a1208] leading-tight"
             variants={VARIANTS.container}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           >
-            {HEADING.map((w, i) => (
+            {["What", "We", "Do"].map((w, i) => (
               <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
-                {w === "Odisha"
-                  ? <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">{w}</span>
-                  : w}
+                {w}
               </motion.span>
             ))}
           </motion.h2>
-          <motion.p
-            variants={VARIANTS.para}
+
+          <motion.div
+            variants={linkFadeIn}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="mt-4 text-brand-brown max-w-xl mx-auto text-base"
           >
-            Three core pillars. One mission — power Odisha's future cleanly and reliably.
-          </motion.p>
+            <Link
+              href="/solutions"
+              className="group flex items-center gap-1 text-amber-600 font-medium text-sm pb-1"
+            >
+              View All Solutions
+              <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
+          </motion.div>
         </div>
 
-        {/* Cards */}
+        {/* Subtitle */}
+        <motion.p
+          variants={subtitleVariant}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="text-[#78614a] text-base leading-relaxed mb-10 max-w-xl"
+        >
+          Four pillars of clean energy — from your rooftop to the open road,
+          from the wind to your factory floor.
+        </motion.p>
+
+        {/* Decorative gradient divider */}
+        <div
+          className="h-px w-full mb-10"
+          style={{
+            background:
+              "linear-gradient(to right, transparent, #e8c96a, transparent)",
+          }}
+        />
+
+        {/* 4-card grid */}
         <motion.div
-          className="grid md:grid-cols-3 gap-6 relative"
-          variants={VARIANTS.cardGrid}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          variants={cardGridVariant}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {CARDS.map((card) => {
-            const Icon = card.icon;
-            return (
-              <motion.div
-                key={card.title}
-                variants={VARIANTS.card}
-                whileHover={{ y: -10 }}
-                className={`group relative rounded-2xl bg-white border border-brand-border shadow-warm ${card.border} ${card.shadow} transition-all duration-300 cursor-default overflow-hidden`}
-              >
-                {card.productImage ? (
-                  <>
-                    <div className="relative w-full h-48 overflow-hidden">
-                      <Image
-                        src={card.productImage}
-                        alt={card.title}
-                        fill
-                        className="object-cover object-center rounded-t-xl group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
-                    </div>
-                    <div className="p-7 pt-5">
-                      <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-muted mb-1">{card.eyebrow}</p>
-                      <h3 className="text-xl font-bold font-display text-brand-ink mb-3">{card.title}</h3>
-                      <p className="text-brand-brown text-sm leading-relaxed mb-5">{card.desc}</p>
-                      <Link href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
-                        Learn More →
-                      </Link>
-                    </div>
-                  </>
-                ) : (
-                  <div className="p-8">
-                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300 ${card.iconCn}`}>
-                      <Icon size={28} />
-                    </div>
-                    <h3 className="text-xl font-bold font-display text-brand-ink mb-3">{card.title}</h3>
-                    <p className="text-brand-brown text-sm leading-relaxed mb-5">{card.desc}</p>
-                    <Link href={card.href} className={`text-sm font-semibold transition-colors inline-flex items-center gap-1 ${card.link}`}>
-                      Learn More →
-                    </Link>
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
+          {CARDS.map((card) => (
+            <motion.div
+              key={card.title}
+              variants={VARIANTS.card}
+              whileHover={{
+                y: -8,
+                boxShadow: "0 20px 50px rgba(217,119,6,0.18)",
+                transition: { type: "spring", stiffness: 300, damping: 20 },
+              }}
+              className={`group bg-white rounded-3xl overflow-hidden border border-[#e8d5b0] shadow-[0_4px_24px_rgba(120,80,20,0.08)] cursor-pointer ${card.hoverBorder} transition-colors duration-300`}
+            >
+              {/* Image */}
+              <div className="relative w-full h-48 overflow-hidden">
+                <Image
+                  src={card.image}
+                  alt={card.title}
+                  fill
+                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+                />
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, transparent 40%, rgba(255,251,240,0.9) 100%)",
+                  }}
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <span
+                  className={`inline-block rounded-full text-xs font-semibold px-3 py-1 ${card.pillBg} ${card.pillText}`}
+                >
+                  {card.pillLabel}
+                </span>
+                <h3 className="font-display text-xl font-bold text-[#1a1208] mt-3">
+                  {card.title}
+                </h3>
+                <p className="text-[#78614a] text-sm leading-relaxed mt-2 line-clamp-3">
+                  {card.desc}
+                </p>
+                <div className="mt-5">
+                  <Link
+                    href={card.href}
+                    className="group/link text-amber-600 font-medium text-sm inline-flex items-center gap-1"
+                  >
+                    Learn More
+                    <span className="inline-block transition-transform duration-200 group-hover/link:translate-x-1">
+                      →
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
