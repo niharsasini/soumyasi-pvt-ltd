@@ -14,7 +14,7 @@ const CARDS = [
     pillLabel: "☀️ Solar",
     title: "Solar Power Installation",
     desc: "We design and install rooftop and ground-mount solar systems for homes, businesses, and industries across Odisha. Clean energy, real savings — guaranteed for 25 years.",
-    href: "/solutions",
+    href: "/solutions/solar-rooftop",
     hoverBorder: "hover:border-amber-400",
   },
   {
@@ -34,7 +34,7 @@ const CARDS = [
     pillLabel: "💨 Wind Power",
     title: "Wind Power Plant",
     desc: "Harnessing Odisha's coastal and inland wind corridors to generate reliable, renewable power. From small turbines to utility-scale wind farms — we plan, install, and maintain.",
-    href: "/solutions",
+    href: "/solutions/wind-power",
     hoverBorder: "hover:border-blue-400",
   },
   {
@@ -44,7 +44,7 @@ const CARDS = [
     pillLabel: "🏭 Industrial",
     title: "Industrial Power Supply",
     desc: "Complete electrical infrastructure for factories, plants, and commercial complexes. Switchgear, transformers, substations, and 24/7 power management — engineered for zero downtime.",
-    href: "/solutions",
+    href: "/solutions/industrial-power",
     hoverBorder: "hover:border-orange-400",
   },
 ];

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Zap, Factory, ChevronDown } from "lucide-react";
+import { Sun, Zap, Wind, Factory, ChevronDown } from "lucide-react";
 import { BRAND, NAV_LINKS, NAV_CTA } from "@/lib/config/site.config";
 
 const MEGA_COLS = [
@@ -12,7 +12,7 @@ const MEGA_COLS = [
     icon: Sun,
     title: "Solar Solutions",
     desc: "Rooftop & ground-mount solar for homes, businesses and industries.",
-    href: "/solutions/solar-energy",
+    href: "/solutions/solar-rooftop",
     color: "text-brand-gold bg-amber-50",
   },
   {
@@ -23,10 +23,17 @@ const MEGA_COLS = [
     color: "text-brand-indigo bg-indigo-50",
   },
   {
+    icon: Wind,
+    title: "Wind Power",
+    desc: "Coastal and inland wind energy for commercial and industrial use.",
+    href: "/solutions/wind-power",
+    color: "text-blue-600 bg-blue-50",
+  },
+  {
     icon: Factory,
     title: "Industrial Power",
     desc: "Switchgear, substations and transformers for Odisha's industries.",
-    href: "/solutions/industrial-electrification",
+    href: "/solutions/industrial-power",
     color: "text-brand-emerald bg-emerald-50",
   },
 ];
@@ -153,9 +160,9 @@ export default function Navbar() {
                         style={{ transformOrigin: "top" }}
                         onMouseEnter={openMega}
                         onMouseLeave={closeMega}
-                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[540px] bg-[#FFFBF0] border border-[#e8d5b0] rounded-2xl shadow-[0_20px_60px_rgba(120,80,20,0.15)] overflow-hidden"
+                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[700px] bg-[#FFFBF0] border border-[#e8d5b0] rounded-2xl shadow-[0_20px_60px_rgba(120,80,20,0.15)] overflow-hidden"
                       >
-                        <div className="p-5 grid grid-cols-3 gap-3">
+                        <div className="p-5 grid grid-cols-2 lg:grid-cols-4 gap-3">
                           {MEGA_COLS.map(({ icon: Icon, title, desc, href, color }) => (
                             <Link
                               key={title}
