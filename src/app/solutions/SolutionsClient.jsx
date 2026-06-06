@@ -7,8 +7,10 @@ import { motion } from "framer-motion";
 import {
   MapPin, PenLine, Wrench, Activity,
   CheckCircle, ArrowRight, Star, PlugZap, Monitor,
-  CreditCard, ShieldCheck, Award, Zap,
+  CreditCard, ShieldCheck, Award, Zap, Sun, Wind, Factory,
 } from "lucide-react";
+
+const SOLUTION_ICON_MAP = { Sun, Zap, Wind, Factory };
 import { SOLUTIONS } from "@/lib/data/solutions";
 import { VARIANTS } from "@/lib/animations/variants";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -171,9 +173,9 @@ function SolutionsGridSection() {
           viewport={vp}
         >
           {SOLUTIONS.map((item) => {
-            const Icon = item.icon;
+            const Icon = SOLUTION_ICON_MAP[item.icon];
             return (
-              <motion.div key={item.title}
+              <motion.div key={item.slug}
                 variants={VARIANTS.card}
                 whileHover={{ y:-10, borderColor:"#fcd34d", boxShadow:"0 16px 50px rgba(217,119,6,0.18)" }}
                 transition={{ type:"spring", stiffness:300, damping:20 }}
@@ -181,10 +183,10 @@ function SolutionsGridSection() {
                 style={{ boxShadow:"0 4px 24px rgba(120,80,20,0.08)" }}
               >
                 <div className="w-[60px] h-[60px] rounded-xl bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center transition-colors duration-300">
-                  <Icon size={28} className="text-brand-gold" />
+                  {Icon && <Icon size={28} className="text-brand-gold" />}
                 </div>
-                <h3 className="text-xl font-bold font-display text-[#1a1208] mt-5 mb-2">{item.title}</h3>
-                <p className="text-[#78614a] text-sm leading-relaxed mt-2">{item.description}</p>
+                <h3 className="text-xl font-bold font-display text-[#1a1208] mt-5 mb-2">{item.shortTitle}</h3>
+                <p className="text-[#78614a] text-sm leading-relaxed mt-2">{item.tagline}</p>
                 <Link href={`/solutions/${item.slug}`}
                   className="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700 font-medium text-sm mt-5 transition-colors">
                   Learn More →
