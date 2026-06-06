@@ -1,3 +1,5 @@
+const PHONE_HREF = "tel:+919876543210";
+
 export const SOLUTIONS = [
   {
     slug: "solar-rooftop",
@@ -108,7 +110,7 @@ export const SOLUTIONS = [
     ctaHeading: "Ready to Go Solar?",
     ctaSubtext: "Get a free site assessment — no obligation, no pressure.",
     ctaPrimary:   { label: "Book Free Assessment", href: "/contact" },
-    ctaSecondary: { label: "Call Us Now",          href: "tel:+919876543210" },
+    ctaSecondary: { label: "Call Us Now",          href: PHONE_HREF },
 
     metaTitle:       "Solar Rooftop Installation in Odisha | Soumyasi Power",
     metaDescription: "Professional solar rooftop installation across Odisha. Residential, commercial, and industrial solar systems with 25-year warranty and MNRE certification.",
@@ -243,7 +245,7 @@ export const SOLUTIONS = [
     ctaHeading: "Ready to Install an EV Charging Station?",
     ctaSubtext: "Contact us today for a free site assessment. We handle the technical design, installation, and commissioning.",
     ctaPrimary:   { label: "Request Free Assessment", href: "/contact" },
-    ctaSecondary: { label: "Call Us Now",             href: "tel:+919876543210" },
+    ctaSecondary: { label: "Call Us Now",             href: PHONE_HREF },
 
     metaTitle:       "EV Charging Station Installation in Odisha | Soumyasi Power",
     metaDescription: "Install a 60kW DC fast EV charging station at your property. Soumyasi Power handles site assessment, electrical design, installation, and support across Odisha.",
@@ -375,7 +377,7 @@ export const SOLUTIONS = [
     ctaHeading: "Ready to Harness the Wind?",
     ctaSubtext: "Get a free wind resource consultation and site assessment for your project.",
     ctaPrimary:   { label: "Get Wind Assessment", href: "/contact" },
-    ctaSecondary: { label: "Call Us Now",         href: "tel:+919876543210" },
+    ctaSecondary: { label: "Call Us Now",         href: PHONE_HREF },
 
     metaTitle:       "Wind Power Plant Installation in Odisha | Soumyasi Power",
     metaDescription: "Wind turbine installation and wind farm development in Odisha. Site assessment, design, civil work, and grid connection for 250kW to 2MW+ wind projects.",
@@ -491,7 +493,7 @@ export const SOLUTIONS = [
     ctaHeading: "Ready to Power Your Facility?",
     ctaSubtext: "Book a load analysis consultation — free of charge, no obligation.",
     ctaPrimary:   { label: "Book Free Audit", href: "/contact" },
-    ctaSecondary: { label: "Call Us Now",     href: "tel:+919876543210" },
+    ctaSecondary: { label: "Call Us Now",     href: PHONE_HREF },
 
     metaTitle:       "Industrial Power Supply & Substation in Odisha | Soumyasi Power",
     metaDescription: "Complete industrial electrical infrastructure — HT/LT substations, switchgear, transformers, and power distribution for factories and commercial complexes in Odisha.",

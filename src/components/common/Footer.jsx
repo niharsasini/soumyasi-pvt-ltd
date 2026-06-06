@@ -53,8 +53,19 @@ function Newsletter() {
     }
     setStatus("loading");
     setErrMsg("");
-    await new Promise((r) => setTimeout(r, 1500));
-    setStatus("success");
+    try {
+      // TODO: replace xpwzgkqr with your real Formspree newsletter form ID
+      const res = await fetch("https://formspree.io/f/xpwzgkqr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error("formspree error");
+      setStatus("success");
+    } catch {
+      setErrMsg("Something went wrong. Please try again.");
+      setStatus("error");
+    }
   };
 
   if (status === "success") {
@@ -85,9 +96,9 @@ function Newsletter() {
           {status === "loading" ? <Loader2 size={12} className="animate-spin" /> : "Join"}
         </button>
       </div>
-      {status === "error" && errMsg && (
-        <p className="text-red-400 text-xs mt-1.5">{errMsg}</p>
-      )}
+      <p aria-live="polite" aria-atomic="true" className="text-red-400 text-xs mt-1.5">
+        {status === "error" && errMsg ? errMsg : ""}
+      </p>
     </form>
   );
 }

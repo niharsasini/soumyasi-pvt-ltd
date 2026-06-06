@@ -55,9 +55,14 @@ export default function ContactForm() {
       return;
     }
     setStatus("loading");
-    await new Promise((r) => setTimeout(r, 1600));
     try {
-      // trigger confetti on success
+      // TODO: replace xpwzgkqr with your real Formspree form ID
+      const res = await fetch("https://formspree.io/f/xpwzgkqr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("formspree error");
       if (typeof window !== "undefined") {
         const confetti = (await import("canvas-confetti")).default;
         confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ["#d97706", "#f59e0b", "#fbbf24", "#059669"] });
@@ -175,14 +180,16 @@ export default function ContactForm() {
       </motion.div>
 
       {/* Error message */}
-      <AnimatePresence>
-        {status === "error" && (
-          <motion.p initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="text-sm text-red-500 flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
-            <AlertCircle size={15} /> Something went wrong. Please try again.
-          </motion.p>
-        )}
-      </AnimatePresence>
+      <div aria-live="polite" aria-atomic="true">
+        <AnimatePresence>
+          {status === "error" && (
+            <motion.p initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              className="text-sm text-red-500 flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+              <AlertCircle size={15} /> Something went wrong. Please try again.
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
 
       <motion.div custom={5} variants={fieldVariants} initial="hidden" animate="visible">
         <button

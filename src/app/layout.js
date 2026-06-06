@@ -21,8 +21,62 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: `${BRAND.name} — Solar, EV Charging & Power Solutions | Odisha`,
-  description: BRAND.description,
+  title: {
+    default: "Soumyashi Power | Solar & EV Charging Odisha",
+    template: "%s | Soumyashi Power",
+  },
+  description:
+    "Odisha's leading solar panel installation and EV charging network. 500+ installations, 50+ stations across 15+ cities.",
+  keywords: [
+    "solar panels Odisha",
+    "EV charging Bhubaneswar",
+    "solar installation Odisha",
+    "EV charging station Odisha",
+    "Soumyashi Power",
+  ],
+  authors: [{ name: "Soumyashi Power" }],
+  creator: "Soumyashi Power",
+  metadataBase: new URL("https://soumyasipower.com"),
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "https://soumyasipower.com",
+    siteName: "Soumyashi Power",
+    title: "Soumyashi Power | Solar & EV Charging Odisha",
+    description:
+      "Odisha's leading solar panel installation and EV charging network.",
+    images: [
+      {
+        url: "/soumyasi/solar-field-odisha.png",
+        width: 1200,
+        height: 630,
+        alt: "Soumyashi Power Solar Installation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Soumyashi Power | Solar & EV Charging Odisha",
+    description:
+      "Odisha's leading solar panel installation and EV charging network.",
+    images: ["/soumyasi/solar-field-odisha.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }) {

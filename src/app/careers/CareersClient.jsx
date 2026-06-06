@@ -45,11 +45,36 @@ const ROLES = [
 ];
 
 function ApplyModal({ role, onClose }) {
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted,    setSubmitted]    = useState(false);
+  const [submitting,   setSubmitting]   = useState(false);
+  const [submitError,  setSubmitError]  = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError("");
+    const data = new FormData(e.target);
+    const payload = {
+      role: role.title,
+      name:  data.get("name"),
+      email: data.get("email"),
+      phone: data.get("phone"),
+      cover: data.get("cover"),
+    };
+    try {
+      // TODO: replace xpwzgkqr with your real Formspree careers form ID
+      const res = await fetch("https://formspree.io/f/xpwzgkqr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("formspree error");
+      setSubmitted(true);
+    } catch {
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -92,18 +117,21 @@ function ApplyModal({ role, onClose }) {
               ].map((f) => (
                 <div key={f.name}>
                   <label className="block text-xs font-semibold text-brand-ink mb-1.5">{f.label}</label>
-                  <input type={f.type} placeholder={f.ph} required
+                  <input type={f.type} name={f.name} placeholder={f.ph} required
                     className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border text-sm text-brand-ink outline-none focus:border-amber-400 focus:shadow-[0_0_0_3px_rgba(217,119,6,0.1)] transition-all" />
                 </div>
               ))}
               <div>
                 <label className="block text-xs font-semibold text-brand-ink mb-1.5">Cover Note (optional)</label>
-                <textarea rows={3} placeholder="Why you'd be a great fit..."
+                <textarea rows={3} name="cover" placeholder="Why you'd be a great fit..."
                   className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border text-sm text-brand-ink outline-none resize-none focus:border-amber-400 focus:shadow-[0_0_0_3px_rgba(217,119,6,0.1)] transition-all" />
               </div>
-              <button type="submit"
-                className="btn-shimmer w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-gold-lg transition-all duration-300">
-                Submit Application →
+              {submitError && (
+                <p aria-live="polite" className="text-red-500 text-xs">{submitError}</p>
+              )}
+              <button type="submit" disabled={submitting}
+                className="btn-shimmer w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-gold-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                {submitting ? "Submitting..." : "Submit Application →"}
               </button>
             </form>
           </>

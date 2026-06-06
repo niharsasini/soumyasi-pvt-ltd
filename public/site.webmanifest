@@ -1,0 +1,13 @@
+{
+  "name": "Soumyashi Power",
+  "short_name": "Soumyashi",
+  "description": "Odisha's leading solar & EV charging solutions provider",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8E7",
+  "theme_color": "#d97706",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/jpeg" },
+    { "src": "/favicon.ico",          "sizes": "any",      "type": "image/jpeg" }
+  ]
+}

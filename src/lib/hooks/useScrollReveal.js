@@ -24,35 +24,4 @@ export function useScrollReveal(options = {}) {
   return { ref, isInView: reducedMotion ? true : isInView };
 }
 
-/* Shared variant definitions — import alongside the hook */
-export const VARIANTS = {
-  /* Heading wrapper — stagger children */
-  container: {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.08 } },
-  },
-
-  /* Individual word in a heading */
-  word: {
-    hidden:   { opacity: 0, x: -40 },
-    visible:  { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } },
-  },
-
-  /* Card grid wrapper */
-  cardGrid: {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.1 } },
-  },
-
-  /* Individual card */
-  card: {
-    hidden:  { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  },
-
-  /* Paragraph / subtitle */
-  para: {
-    hidden:  { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  },
-};
+export { VARIANTS } from "@/lib/animations/variants";
