@@ -33,7 +33,7 @@ export default function NotFound() {
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           className="mb-6"
         >
-          <span className="text-[120px] sm:text-[160px] font-bold font-display leading-none bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent select-none">
+          <span className="text-[72px] sm:text-[100px] md:text-[140px] font-bold font-display leading-none bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent select-none">
             404
           </span>
         </motion.div>

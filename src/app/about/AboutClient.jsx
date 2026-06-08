@@ -131,7 +131,7 @@ export default function AboutClient() {
               About Us
             </motion.p>
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight mb-6"
+              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-display text-brand-ink leading-tight mb-6"
               variants={VARIANTS.container} initial="hidden" animate={heroInView ? "visible" : "hidden"}
             >
               {["Powering", "Odisha", "Since", "Day", "One"].map((w, i) => (
@@ -141,17 +141,17 @@ export default function AboutClient() {
               ))}
             </motion.h1>
             <motion.p initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.5, duration:0.7 }}
-              className="text-brand-brown text-lg leading-relaxed mb-8 max-w-lg">
+              className="text-brand-brown text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
               We started with a single solar installation in Bhubaneswar. Today we power hundreds of homes, businesses, and charging stations across Odisha.
             </motion.p>
             <motion.div initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.65, duration:0.6 }}
-              className="flex flex-wrap gap-4">
+              className="flex flex-col sm:flex-row flex-wrap gap-4">
               <Link href="/solutions"
-                className="btn-shimmer inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-gold-lg hover:scale-105 transition-all duration-300">
+                className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-gold-lg hover:scale-105 transition-all duration-300">
                 Our Solutions
               </Link>
               <Link href="/contact"
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border-2 border-amber-400 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition-all duration-300">
+                className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full border-2 border-amber-400 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition-all duration-300">
                 Contact Us
               </Link>
             </motion.div>

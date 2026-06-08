@@ -158,7 +158,7 @@ export default function Navbar() {
                         style={{ transformOrigin: "top" }}
                         onMouseEnter={openMega}
                         onMouseLeave={closeMega}
-                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[700px] bg-[#FFFBF0] border border-[#e8d5b0] rounded-2xl shadow-[0_20px_60px_rgba(120,80,20,0.15)] overflow-hidden"
+                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[min(700px,95vw)] overflow-hidden bg-[#FFFBF0] border border-[#e8d5b0] rounded-2xl shadow-[0_20px_60px_rgba(120,80,20,0.15)]"
                       >
                         <div className="p-5 grid grid-cols-2 lg:grid-cols-4 gap-3">
                           {MEGA_COLS.map(({ icon: Icon, title, desc, href, color }) => (
@@ -221,7 +221,7 @@ export default function Navbar() {
           {/* ── Mobile toggle ── */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-[#1a1208]"
+            className="md:hidden p-2.5 text-[#1a1208]"
             aria-label="Toggle menu"
           >
             <HamburgerIcon open={open} />

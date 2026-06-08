@@ -66,7 +66,7 @@ export default function ContactClient() {
             Get In Touch
           </motion.p>
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-display text-brand-ink leading-tight"
             variants={VARIANTS.container} initial="hidden" animate="visible"
           >
             {["Let’s", "Talk", "Energy"].map((w, i) => (
@@ -79,7 +79,7 @@ export default function ContactClient() {
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.5 }}
-            className="mt-5 max-w-xl mx-auto text-brand-brown text-lg"
+            className="mt-5 max-w-xl mx-auto text-brand-brown text-base sm:text-lg"
           >
             Tell us about your project and we&apos;ll get back to you within 24 hours.
           </motion.p>

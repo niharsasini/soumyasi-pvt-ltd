@@ -20,26 +20,35 @@ export default function FloatingActions() {
   const [show, setShow] = useState(false);
   const [waHover, setWaHover] = useState(false);
   const [callHover, setCallHover] = useState(false);
+  const [cookieAccepted, setCookieAccepted] = useState(true);
 
   useEffect(() => {
     const t = setTimeout(() => setShow(true), 2000);
     return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    try {
+      setCookieAccepted(!!localStorage.getItem("cookie-consent"));
+    } catch {
+      // localStorage unavailable
+    }
+  }, []);
+
   return (
     <AnimatePresence>
       {show && (
-        <div className="fixed bottom-24 right-6 z-50 flex flex-col gap-3 items-end">
+        <>
           {/* Call button */}
           <motion.a
             href={CONTACT.phoneHref}
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 60 }}
+            exit={{ opacity: 0, x: -60 }}
             transition={{ type: "spring", stiffness: 300, damping: 22, delay: 0.1 }}
             onMouseEnter={() => setCallHover(true)}
             onMouseLeave={() => setCallHover(false)}
-            className="flex items-center gap-2 overflow-hidden"
+            className="fixed bottom-20 sm:bottom-24 left-4 sm:left-6 z-50 flex items-center gap-2 overflow-hidden transition-all duration-300"
             aria-label="Call now"
           >
             <AnimatePresence>
@@ -64,13 +73,14 @@ export default function FloatingActions() {
             href={`https://wa.me/${CONTACT.phone.replace(/\D/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 60 }}
+            exit={{ opacity: 0, x: -60 }}
             transition={{ type: "spring", stiffness: 300, damping: 22 }}
             onMouseEnter={() => setWaHover(true)}
             onMouseLeave={() => setWaHover(false)}
-            className="flex items-center gap-2 overflow-hidden"
+            style={{ bottom: cookieAccepted ? "1.5rem" : "5rem" }}
+            className="fixed left-4 sm:left-6 z-50 flex items-center gap-2 overflow-hidden transition-all duration-300"
             aria-label="Chat on WhatsApp"
           >
             <AnimatePresence>
@@ -93,7 +103,7 @@ export default function FloatingActions() {
               <WhatsAppIcon />
             </motion.div>
           </motion.a>
-        </div>
+        </>
       )}
     </AnimatePresence>
   );

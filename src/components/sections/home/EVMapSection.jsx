@@ -85,22 +85,24 @@ export default function EVMapSection() {
 
         {/* Stats strip */}
         <motion.div
-          className="mt-8 grid grid-cols-3 gap-4 max-w-2xl mx-auto"
+          className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto"
           variants={VARIANTS.cardGrid}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {STATS.map(({ icon: Icon, value, label }) => (
+          {STATS.map(({ icon: Icon, value, label }, i) => (
             <motion.div
               key={label}
               variants={VARIANTS.card}
-              className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white border border-brand-border shadow-warm hover:border-amber-400 hover:shadow-card-hover transition-all duration-300"
+              className={`flex flex-col items-center gap-2 text-center py-4 sm:py-2 px-5 rounded-2xl sm:rounded-none bg-white sm:bg-transparent border border-brand-border sm:border-0 shadow-warm sm:shadow-none ${
+                i < STATS.length - 1 ? "border-b sm:border-b-0 sm:border-r border-[#e8d5b0] last:border-0" : ""
+              }`}
             >
               <Icon size={20} className="text-brand-gold" />
-              <span className="text-2xl sm:text-3xl font-bold font-display text-brand-gold tabular-nums">
+              <span className="text-2xl sm:text-3xl font-black text-amber-600 tabular-nums">
                 {value}
               </span>
-              <span className="text-xs text-brand-muted text-center">{label}</span>
+              <span className="text-xs sm:text-sm text-[#78614a] text-center">{label}</span>
             </motion.div>
           ))}
         </motion.div>

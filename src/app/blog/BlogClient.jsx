@@ -87,7 +87,7 @@ export default function BlogClient() {
             Knowledge Base
           </motion.p>
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-display text-brand-ink leading-tight"
             variants={VARIANTS.container} initial="hidden" animate="visible"
           >
             {["Energy", "Insights"].map((w, i) => (
@@ -99,7 +99,7 @@ export default function BlogClient() {
             ))}
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-            className="mt-5 max-w-xl mx-auto text-brand-brown text-lg">
+            className="mt-5 max-w-xl mx-auto text-brand-brown text-base sm:text-lg">
             Expert guides on solar savings, EV infrastructure, and the future of clean energy in Odisha.
           </motion.p>
         </div>

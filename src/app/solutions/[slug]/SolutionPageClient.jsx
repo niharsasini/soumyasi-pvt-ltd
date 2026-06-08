@@ -20,7 +20,7 @@ const SolarPanelViewer = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-[450px] rounded-3xl bg-amber-50 border border-amber-200 flex items-center justify-center">
+      <div className="w-full h-[300px] sm:h-[420px] lg:h-[450px] rounded-3xl bg-amber-50 border border-amber-200 flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
           <p className="text-amber-600 text-sm">Loading 3D viewer...</p>
@@ -247,7 +247,7 @@ export default function SolutionPageClient({ solution }) {
             {...FLOAT} className={`hidden lg:block rounded-3xl overflow-hidden border ${a.border} relative`}
             style={{ boxShadow: `0 30px 80px rgba(0,0,0,0.12)` }}>
             {imgError.hero ? (
-              <div className="w-full min-h-[420px] bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center rounded-3xl">
+              <div className="w-full min-h-[250px] sm:min-h-[350px] lg:min-h-[420px] bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center rounded-3xl">
                 {FallbackIcon && <FallbackIcon size={80} className={a.icon} />}
               </div>
             ) : (
@@ -354,7 +354,7 @@ export default function SolutionPageClient({ solution }) {
                   style={{ background: `radial-gradient(ellipse at center, ${a.glowOrb} 0%, transparent 70%)` }} />
                 <div className="relative rounded-3xl overflow-hidden border border-[#e8d5b0] shadow-2xl aspect-[4/3]">
                   {imgError.product ? (
-                    <div className="w-full min-h-[400px] bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center rounded-3xl">
+                    <div className="w-full min-h-[250px] sm:min-h-[350px] lg:min-h-[400px] bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center rounded-3xl">
                       {FallbackIcon && <FallbackIcon size={80} className={a.icon} />}
                     </div>
                   ) : (
@@ -379,7 +379,7 @@ export default function SolutionPageClient({ solution }) {
                 <p className="text-[#78614a] mb-8 leading-relaxed">
                   {solution.product.description}
                 </p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 mb-8">
                   {solution.product.specs?.map((spec, i) => (
                     <motion.div
                       key={i}
@@ -387,10 +387,10 @@ export default function SolutionPageClient({ solution }) {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
-                      className={`${a.spec} border border-[#e8d5b0] rounded-xl p-3 text-center`}
+                      className={`${a.spec} border border-[#e8d5b0] rounded-xl p-2 sm:p-3 text-center`}
                     >
-                      <p className="text-[#a8917a] text-xs mb-1">{spec.label}</p>
-                      <p className={`${a.icon} font-bold text-sm`}>{spec.value}</p>
+                      <p className="text-[#a8917a] text-[10px] sm:text-xs mb-1">{spec.label}</p>
+                      <p className={`${a.icon} font-bold text-xs sm:text-sm`}>{spec.value}</p>
                     </motion.div>
                   ))}
                 </div>

@@ -50,14 +50,17 @@ export default function StatsStrip() {
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0 gap-x-0">
           {STATS.map((s, i) => {
             const inner = (
               <>
                 {i < STATS.length - 1 && (
                   <div className="absolute right-0 top-1/4 bottom-1/4 w-px bg-white/20 hidden md:block" />
                 )}
-                <span className="text-4xl sm:text-5xl font-bold font-display text-white tabular-nums">
+                {i < 2 && (
+                  <div className="absolute -bottom-3 left-1/4 right-1/4 h-px bg-white/20 md:hidden" />
+                )}
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tabular-nums">
                   <CountUp to={s.value} suffix={s.suffix} active={on} />
                 </span>
                 <span className="mt-2 text-xs sm:text-sm text-amber-100 text-center font-medium">

@@ -6,11 +6,20 @@ import { ChevronUp } from "lucide-react";
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
+  const [cookieAccepted, setCookieAccepted] = useState(true);
 
   useEffect(() => {
     const fn = () => setVisible(window.scrollY > 500);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  useEffect(() => {
+    try {
+      setCookieAccepted(!!localStorage.getItem("cookie-consent"));
+    } catch {
+      // localStorage unavailable
+    }
   }, []);
 
   return (
@@ -23,7 +32,8 @@ export default function BackToTop() {
           transition={{ type: "spring", stiffness: 300, damping: 22 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Back to top"
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center shadow-gold hover:shadow-gold-lg hover:scale-110 transition-all duration-300"
+          style={{ bottom: cookieAccepted ? "1.5rem" : "5rem" }}
+          className="fixed right-4 sm:right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center shadow-gold hover:shadow-gold-lg hover:scale-110 transition-all duration-300"
         >
           <ChevronUp size={20} />
         </motion.button>

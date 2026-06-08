@@ -285,7 +285,21 @@ function EVChargerSection() {
             Our flagship charging unit delivers 60kW of DC fast charging power — enough to charge most EVs in under 30 minutes. Built for Indian road conditions, weather-sealed, and RFID-enabled for smart access management.
           </p>
 
-          <div className="grid grid-cols-3 gap-3 mb-8">
+          {/* Mobile: list rows */}
+          <div className="sm:hidden mb-8 rounded-xl bg-white border border-[#e8d5b0] divide-y divide-[#e8d5b0]" style={{ boxShadow:"0 4px 24px rgba(120,80,20,0.08)" }}>
+            {EV_SPECS.map(({ icon: Icon, name, value }) => (
+              <div key={name} className="flex items-center gap-3 px-4 py-3">
+                <Icon size={18} className="text-brand-gold shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold text-brand-ink leading-tight truncate">{name}</p>
+                  <p className="text-xs text-brand-gold font-bold mt-0.5 leading-tight truncate">{value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: card grid */}
+          <div className="hidden sm:grid grid-cols-3 gap-3 mb-8">
             {EV_SPECS.map(({ icon: Icon, name, value }) => (
               <div key={name}
                 className="rounded-xl bg-white border border-[#e8d5b0] p-4 text-center"
@@ -334,7 +348,7 @@ function ProcessSection() {
                 className="bg-white rounded-2xl border border-[#e8d5b0] p-8 hover:border-amber-300 hover:shadow-card-hover transition-all duration-300 relative"
                 style={{ boxShadow:"0 4px 24px rgba(120,80,20,0.08)" }}
               >
-                <p className="font-display text-5xl font-bold text-amber-200 leading-none mb-2 select-none">
+                <p className="font-display text-4xl sm:text-5xl font-bold text-amber-200 leading-none mb-2 select-none">
                   {step.num}
                 </p>
                 <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mb-4">

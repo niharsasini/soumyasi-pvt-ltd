@@ -162,7 +162,7 @@ export default function CareersClient() {
             We&apos;re Hiring
           </motion.p>
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-display text-brand-ink leading-tight"
             variants={VARIANTS.container} initial="hidden" animate="visible"
           >
             {["Build", "Odisha's", "Energy", "Future"].map((w, i) => (
@@ -174,7 +174,7 @@ export default function CareersClient() {
             ))}
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-            className="mt-5 max-w-xl mx-auto text-brand-brown text-lg">
+            className="mt-5 max-w-xl mx-auto text-brand-brown text-base sm:text-lg">
             Join a passionate team turning Odisha into a clean energy powerhouse — one rooftop at a time.
           </motion.p>
         </div>

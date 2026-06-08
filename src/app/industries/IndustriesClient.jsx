@@ -28,7 +28,7 @@ export default function IndustriesClient() {
           </motion.p>
 
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight mb-6"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-display text-brand-ink leading-tight mb-6"
             variants={VARIANTS.container} initial="hidden" animate={isInView ? "visible" : "hidden"}
           >
             {["Powering", "Every", "Sector"].map((w, i) => (
@@ -41,7 +41,7 @@ export default function IndustriesClient() {
           </motion.h1>
 
           <motion.p variants={VARIANTS.para} initial="hidden" animate={isInView ? "visible" : "hidden"}
-            className="text-brand-brown text-lg leading-relaxed max-w-2xl mx-auto">
+            className="text-brand-brown text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
             From manufacturing floors to hospital corridors — our solutions power every corner of Odisha's economy.
           </motion.p>
         </div>

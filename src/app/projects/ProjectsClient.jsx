@@ -122,7 +122,7 @@ export default function ProjectsClient() {
             Our Portfolio
           </motion.p>
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-display text-brand-ink leading-tight"
             variants={VARIANTS.container} initial="hidden" animate="visible"
           >
             {["Our", "Work", "Across", "Odisha"].map((w, i) => (
@@ -134,7 +134,7 @@ export default function ProjectsClient() {
             ))}
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-            className="mt-5 max-w-xl mx-auto text-brand-brown text-lg">
+            className="mt-5 max-w-xl mx-auto text-brand-brown text-base sm:text-lg">
             500+ installations across solar, EV infrastructure, and industrial power.
           </motion.p>
         </div>
