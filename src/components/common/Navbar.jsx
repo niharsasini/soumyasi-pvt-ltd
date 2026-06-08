@@ -86,10 +86,8 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-400 ${
-          scrolled
-            ? "bg-[#FFFBF0] border-b border-[#e8d5b0]"
-            : "bg-[#FFFBF0]/98 backdrop-blur-xl"
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-400 bg-[#FFFBF0]/95 backdrop-blur-xl ${
+          scrolled ? "border-b border-[#e8d5b0]" : ""
         }`}
         style={scrolled ? { boxShadow: "0 4px 30px rgba(120,80,20,0.10)" } : {}}
       >

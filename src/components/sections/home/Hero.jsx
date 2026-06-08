@@ -9,21 +9,10 @@ const EASE = [0.25, 0.46, 0.45, 0.94];
 
 const SLIDE_MS = 6000;
 
-const ACCENTS = ["#d97706", "#10b981", "#fbbf24", "#38bdf8", "#f97316"];
-
 const STATS = [
   { value: 500, suffix: "+", label: "Installations" },
   { value: 50, suffix: "+", label: "EV Stations" },
   { value: 15, suffix: "+", label: "Cities" },
-];
-
-const PARTICLES = [
-  { size: 6, top: "20%", left: "55%", dur: 6, delay: 0 },
-  { size: 4, top: "35%", left: "68%", dur: 8, delay: 1 },
-  { size: 8, top: "60%", left: "52%", dur: 7, delay: 0.5 },
-  { size: 5, top: "75%", left: "70%", dur: 9, delay: 2 },
-  { size: 3, top: "45%", left: "62%", dur: 5, delay: 1.5 },
-  { size: 6, top: "15%", left: "75%", dur: 10, delay: 0.8 },
 ];
 
 function useCountUp(to, active) {
@@ -152,7 +141,7 @@ function SlideEV({ isActive }) {
     <section className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ background: "#0d1117" }}>
       <Image src="/soumyasi/ev-charger-ultra60.png" alt="EV charging station" fill sizes="100vw" loading="lazy" className="object-cover object-center" />
       <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(13,17,23,0.92) 0%, rgba(13,17,23,0.75) 50%, rgba(16,185,129,0.15) 100%)" }} />
-      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-6 pt-24 text-center">
         <motion.span initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold tracking-[0.25em] uppercase mb-6">
           ⚡ EV Charging Network
         </motion.span>
@@ -173,12 +162,12 @@ function SlideEV({ isActive }) {
           <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-white/40 text-white font-semibold text-sm hover:bg-white/10 transition-all duration-300">Learn More</Link>
         </motion.div>
       </div>
-      <motion.div initial={{ opacity: 0, x: -40 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.9 }} className="hidden sm:flex absolute bottom-8 left-8 items-center gap-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 max-w-xs">
-        <div className="relative h-14 w-14 rounded-xl overflow-hidden flex-shrink-0">
-          <Image src="/soumyasi/ev-charger-ultra60.png" alt="" fill sizes="56px" className="object-cover" />
+      <motion.div initial={{ opacity: 0, x: -40 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.9 }} className="hidden sm:flex absolute bottom-8 left-8 items-center gap-3 bg-black/40 backdrop-blur-xl border border-white/20 border-l-4 border-l-emerald-400 rounded-2xl p-4 shadow-2xl max-w-xs">
+        <div className="relative h-12 w-12 rounded-lg overflow-hidden flex-shrink-0">
+          <Image src="/soumyasi/ev-charger-ultra60.png" alt="" fill sizes="48px" className="object-cover" />
         </div>
         <div>
-          <p className="text-white text-sm font-bold">Ultra 60 Thunder Charge</p>
+          <p className="text-white font-semibold text-sm">Ultra 60 Thunder Charge</p>
           <p className="text-white/60 text-xs">60kW DC Fast Charger</p>
         </div>
       </motion.div>
@@ -195,11 +184,12 @@ function SlideSolar({ isActive }) {
           <Image src="/soumyasi/solar-field-odisha.png" alt="Solar field in Odisha" fill sizes="55vw" loading="lazy" className="object-cover" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to right, transparent 60%, rgba(26,10,0,0.6) 100%)" }} />
         </div>
-        <motion.div initial={{ opacity: 0, y: -16, x: 16 }} animate={isActive ? { opacity: 1, y: 0, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.6 }} className="absolute top-8 right-8 bg-amber-400/20 backdrop-blur border border-amber-400/40 rounded-2xl p-3">
-          <p className="text-white text-sm font-bold">500+ Installations in Odisha</p>
-        </motion.div>
       </motion.div>
-      <div className="relative z-10 flex-1 flex items-center px-6 sm:px-10 lg:px-12 py-16">
+      <motion.div initial={{ opacity: 0, y: -16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.6 }} className="absolute top-24 right-8 z-20 bg-amber-400/20 backdrop-blur-xl border border-amber-400/40 rounded-2xl p-4 text-center">
+        <p className="text-amber-200 font-bold text-2xl leading-none">500+</p>
+        <p className="text-amber-200/80 text-xs mt-1">Installations in Odisha</p>
+      </motion.div>
+      <div className="relative z-10 flex-1 flex items-center px-6 sm:px-10 lg:px-12 pt-24 pr-16 sm:pr-20 py-16">
         <div className="w-full">
           <motion.p initial={{ opacity: 0, y: 12 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="text-amber-300 tracking-[0.3em] uppercase text-xs font-bold mb-5 text-right">☀️ Solar Energy</motion.p>
           <HeadlineLines isActive={isActive} align="right" size="text-5xl sm:text-6xl mb-6" lines={[
@@ -217,7 +207,7 @@ function SlideSolar({ isActive }) {
               </span>
             ))}
           </motion.div>
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.7 }} className="flex flex-wrap justify-end gap-4">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.7 }} className="flex flex-wrap gap-4 justify-end mt-8 pr-16">
             <Link href="/solutions/solar-rooftop" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-amber-400 text-black hover:scale-105 transition-all duration-300">Get Solar Quote</Link>
             <Link href="/projects" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-amber-400/60 text-amber-300 font-semibold text-sm hover:bg-amber-400/10 transition-all duration-300">See Installations</Link>
           </motion.div>
@@ -233,17 +223,16 @@ function SlideWind({ isActive }) {
     <section className="relative w-full h-full overflow-hidden" style={{ background: "#030f1c" }}>
       <div className="absolute inset-0" style={{ clipPath: "polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%)" }}>
         <Image src="/soumyasi/wind-power-plant.png" alt="Wind turbines in Odisha" fill sizes="100vw" loading="lazy" className="object-cover" />
-        <div className="absolute inset-0 bg-[#030f1c]/30" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(3,15,28,0.95) 0%, rgba(3,15,28,0.88) 45%, rgba(3,15,28,0.5) 100%)" }} />
       </div>
       <div className="absolute inset-0 pointer-events-none">
-        {PARTICLES.map((p, i) => (
-          <motion.span key={i} className="absolute rounded-full bg-sky-300/40" style={{ width: p.size, height: p.size, top: p.top, left: p.left }}
-            animate={{ y: [0, -24, 0], x: [0, 12, 0], opacity: [0.3, 0.8, 0.3] }}
-            transition={{ duration: p.dur, repeat: Infinity, ease: "easeInOut", delay: p.delay }} />
-        ))}
+        <span className="absolute h-1 w-1 rounded-full bg-sky-400/60 animate-float1" style={{ top: "22%", left: "8%" }} />
+        <span className="absolute h-1 w-1 rounded-full bg-sky-400/60 animate-float2" style={{ top: "40%", left: "24%" }} />
+        <span className="absolute h-1 w-1 rounded-full bg-sky-400/60 animate-float3" style={{ top: "64%", left: "13%" }} />
+        <span className="absolute h-1 w-1 rounded-full bg-sky-400/60 animate-float4" style={{ top: "80%", left: "32%" }} />
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 h-full flex items-center">
-        <div className="max-w-lg">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 pt-24 h-full flex items-center">
+        <div className="max-w-lg relative z-10 bg-[#030f1c]/60 backdrop-blur-sm rounded-2xl p-8">
           <motion.p initial={{ opacity: 0, y: 12 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="text-sky-400 tracking-[0.3em] uppercase text-xs font-bold mb-5">💨 Wind Power</motion.p>
           <HeadlineLines isActive={isActive} size="text-5xl sm:text-6xl mb-6" lines={[
             { text: "Ride the", cls: "text-sky-200", from: "left" },
@@ -275,8 +264,8 @@ function SlideIndustrial({ isActive }) {
   return (
     <section className="relative w-full h-full overflow-hidden" style={{ background: "#0f0800" }}>
       <Image src="/soumyasi/industrial-power.png" alt="Industrial power infrastructure" fill sizes="100vw" loading="lazy" className="object-cover object-center" />
-      <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(15,8,0,0.98) 0%, rgba(15,8,0,0.85) 30%, rgba(15,8,0,0.4) 60%, rgba(15,8,0,0.1) 100%)" }} />
-      <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={isActive ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute top-8 right-8 flex h-24 w-24 items-center justify-center rounded-full bg-orange-500/20 border-2 border-orange-500/40">
+      <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(15,8,0,0.98) 0%, rgba(15,8,0,0.92) 35%, rgba(15,8,0,0.7) 60%, rgba(15,8,0,0.3) 85%, rgba(15,8,0,0.1) 100%)" }} />
+      <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={isActive ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute top-20 right-8 flex h-24 w-24 items-center justify-center rounded-full bg-orange-500/20 border-2 border-orange-500/40">
         <motion.span animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="text-orange-300 font-bold text-xs text-center leading-tight">SINCE<br />2014</motion.span>
       </motion.div>
       <div className="absolute inset-x-0 bottom-0 pb-16 sm:pb-20">
@@ -309,11 +298,11 @@ function SlideIndustrial({ isActive }) {
 }
 /* ───────────────────── CAROUSEL CHROME ───────────────────── */
 
-function CarouselChrome({ current, total, accent, onPrev, onNext, onDot }) {
+function CarouselChrome({ current, total, onPrev, onNext, onDot }) {
   return (
     <>
-      <div className="absolute top-0 left-0 right-0 z-30 h-[3px] bg-white/20">
-        <motion.div key={current} initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: SLIDE_MS / 1000, ease: "linear" }} className="h-full" style={{ background: accent }} />
+      <div className="absolute top-0 left-0 right-0 z-50 h-1 bg-white/20">
+        <motion.div key={current} className="h-full bg-white" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: SLIDE_MS / 1000, ease: "linear" }} />
       </div>
       <div className="absolute top-6 right-6 z-30 text-white/60 text-sm font-mono">
         {String(current + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
@@ -392,7 +381,7 @@ export default function Hero() {
           <Slide isActive />
         </motion.div>
       </AnimatePresence>
-      <CarouselChrome current={currentSlide} total={SLIDES.length} accent={ACCENTS[currentSlide]} onPrev={prev} onNext={next} onDot={goTo} />
+      <CarouselChrome current={currentSlide} total={SLIDES.length} onPrev={prev} onNext={next} onDot={goTo} />
     </section>
   );
 }
