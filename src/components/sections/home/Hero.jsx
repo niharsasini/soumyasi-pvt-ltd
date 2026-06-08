@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Zap, Battery, ShieldCheck, Check, Wind, Factory } from "lucide-react";
 
 const EASE = [0.25, 0.46, 0.45, 0.94];
 
@@ -136,160 +136,183 @@ function SlideMain({ isActive }) {
 }
 /* ───────────────────── SLIDE 2 — EV CHARGING ───────────────────── */
 
+const EV_SPECS = [
+  { Icon: Zap, text: "60kW DC Output" },
+  { Icon: Battery, text: "Dual CCS2 + CHAdeMO" },
+  { Icon: ShieldCheck, text: "CMVR Certified" },
+];
+
 function SlideEV({ isActive }) {
   return (
-    <section className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ background: "#0d1117" }}>
-      <Image src="/soumyasi/ev-charger-ultra60.png" alt="EV charging station" fill sizes="100vw" loading="lazy" className="object-cover object-center" />
-      <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(13,17,23,0.92) 0%, rgba(13,17,23,0.75) 50%, rgba(16,185,129,0.15) 100%)" }} />
-      <div className="relative z-10 max-w-3xl mx-auto px-6 pt-24 text-center">
-        <motion.span initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold tracking-[0.25em] uppercase mb-6">
-          ⚡ EV Charging Network
-        </motion.span>
-        <HeadlineLines isActive={isActive} align="center" size="text-6xl sm:text-7xl lg:text-8xl mb-6" lines={[
-          { text: "Charge Faster.", cls: "text-white" },
-          { text: "Go Further.", cls: "bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent" },
-        ]} />
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.5 }} className="text-white/70 text-base sm:text-lg leading-relaxed mb-8 max-w-xl mx-auto">
-          60kW DC fast charging across Odisha. Our Ultra 60 Thunder Charge stations power your EV in under 30 minutes.
-        </motion.p>
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.6 }} className="flex flex-wrap justify-center gap-3 mb-8">
-          {["60kW Output", "Dual Connector", "CMVR Certified"].map((t) => (
-            <span key={t} className="bg-white/10 backdrop-blur border border-white/20 rounded-full px-4 py-2 text-white text-sm">{t}</span>
-          ))}
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.7 }} className="flex flex-wrap justify-center gap-4">
-          <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-emerald-500 text-white hover:bg-emerald-600 hover:scale-105 transition-all duration-300">Find a Station</Link>
-          <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-white/40 text-white font-semibold text-sm hover:bg-white/10 transition-all duration-300">Learn More</Link>
+    <section className="relative w-full h-screen overflow-hidden pt-20">
+      <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+        <div className="relative order-2 lg:order-1 h-auto lg:h-full bg-[#0a0f1a] flex flex-col px-8 sm:px-12 py-10 lg:py-20">
+          <div className="flex-1 flex flex-col justify-center">
+            <motion.span initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 }} className="inline-flex self-start items-center gap-2 bg-emerald-500/20 border border-emerald-500/40 rounded-full px-4 py-2 text-emerald-400 text-xs font-bold tracking-widest mb-5">
+              ⚡ EV CHARGING NETWORK
+            </motion.span>
+            <HeadlineLines isActive={isActive} size="text-5xl lg:text-6xl xl:text-7xl font-black mb-4" lines={[
+              { text: "Charge", cls: "text-white" },
+              { text: "Faster.", cls: "text-white" },
+              { text: "Go Further.", cls: "bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent" },
+            ]} />
+            <motion.p initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.4 }} className="text-white/60 text-base leading-relaxed max-w-sm">
+              60kW DC fast charging at locations across Odisha. Our Ultra 60 Thunder Charge powers most EVs in under 30 minutes.
+            </motion.p>
+            <div className="mt-8 space-y-3">
+              {EV_SPECS.map(({ Icon, text }, i) => (
+                <motion.div key={text} initial={{ opacity: 0, x: -30 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }} className="flex items-center gap-3">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/20"><Icon className="h-4 w-4 text-emerald-400" /></span>
+                  <span className="text-white text-sm font-medium">{text}</span>
+                </motion.div>
+              ))}
+            </div>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.85 }} className="flex flex-wrap gap-4 mt-10">
+              <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-emerald-500 text-black hover:bg-emerald-400 hover:scale-105 transition-all duration-300 shadow-lg shadow-emerald-500/25">Find a Station</Link>
+              <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/10 transition-all duration-300">Learn More</Link>
+            </motion.div>
+          </div>
+          <p className="hidden lg:block text-white/30 text-xs">Part of Odisha&apos;s growing EV infrastructure</p>
+        </div>
+        <motion.div initial={{ opacity: 0, x: 20 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }} className="relative order-1 lg:order-2 h-48 lg:h-full">
+          <Image src="/soumyasi/ev-charger-ultra60.png" alt="EV charging station" fill sizes="(max-width: 1024px) 100vw, 50vw" loading="lazy" className="object-cover object-center" />
         </motion.div>
       </div>
-      <motion.div initial={{ opacity: 0, x: -40 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.9 }} className="hidden sm:flex absolute bottom-8 left-8 items-center gap-3 bg-black/40 backdrop-blur-xl border border-white/20 border-l-4 border-l-emerald-400 rounded-2xl p-4 shadow-2xl max-w-xs">
-        <div className="relative h-12 w-12 rounded-lg overflow-hidden flex-shrink-0">
-          <Image src="/soumyasi/ev-charger-ultra60.png" alt="" fill sizes="48px" className="object-cover" />
-        </div>
-        <div>
-          <p className="text-white font-semibold text-sm">Ultra 60 Thunder Charge</p>
-          <p className="text-white/60 text-xs">60kW DC Fast Charger</p>
-        </div>
-      </motion.div>
     </section>
   );
 }
 /* ───────────────────── SLIDE 3 — SOLAR POWER ───────────────────── */
 
+const SOLAR_CHECKS = ["Up to 22% Efficiency", "25-Year Warranty", "MNRE Certified"];
+
 function SlideSolar({ isActive }) {
   return (
-    <section className="relative w-full h-full flex items-stretch overflow-hidden" style={{ background: "linear-gradient(135deg, #1a0a00 0%, #3d1f00 40%, #7c3d00 70%, #d97706 100%)" }}>
-      <motion.div initial={{ x: -20, opacity: 0 }} animate={isActive ? { x: 0, opacity: 1 } : {}} transition={{ duration: 0.8, ease: EASE }} className="relative hidden lg:block w-[55%] h-full">
-        <div className="relative h-full w-full rounded-r-3xl overflow-hidden">
-          <Image src="/soumyasi/solar-field-odisha.png" alt="Solar field in Odisha" fill sizes="55vw" loading="lazy" className="object-cover" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to right, transparent 60%, rgba(26,10,0,0.6) 100%)" }} />
+    <section className="relative w-full h-screen overflow-hidden pt-20">
+      <Image src="/soumyasi/solar-field-odisha.png" alt="Solar field in Odisha" fill sizes="100vw" loading="lazy" className="object-cover object-top" />
+
+      <motion.div
+        initial={{ x: -40, opacity: 0 }}
+        animate={isActive ? { x: 0, opacity: 1 } : {}}
+        transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 90, damping: 16 }}
+        className="absolute left-4 right-4 bottom-4 sm:left-8 sm:right-auto sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:w-[384px] md:left-16 lg:left-24 max-w-sm bg-white/90 backdrop-blur-xl rounded-3xl p-8 border border-white/60"
+        style={{ boxShadow: "0 25px 60px rgba(0,0,0,0.15)" }}
+      >
+        <span className="inline-flex items-center bg-amber-100 text-amber-700 rounded-full px-3 py-1 text-xs font-bold mb-4">☀️ SOLAR ENERGY</span>
+        <HeadlineLines isActive={isActive} size="text-4xl font-black" lines={[
+          { text: "Harvest the", cls: "text-[#1a1208]", from: "left" },
+          { text: "Odisha Sun.", cls: "text-amber-600", from: "left" },
+        ]} />
+        <span className="block w-12 h-1 bg-amber-400 rounded-full my-4" />
+        <p className="text-[#78614a] text-sm leading-relaxed">Monocrystalline panels engineered for tropical conditions. Up to 90% reduction in electricity bills.</p>
+        <div className="mt-4 space-y-2">
+          {SOLAR_CHECKS.map((t) => (
+            <div key={t} className="flex items-center gap-2">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-400"><Check className="h-3 w-3 text-white" /></span>
+              <span className="text-[#1a1208] text-sm font-medium">{t}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-3 mt-6">
+          <Link href="/solutions/solar-rooftop" className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-bold text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-lg shadow-amber-500/30 hover:scale-105 transition">Get Solar Quote</Link>
+          <Link href="/projects" className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium text-amber-600 border border-amber-200 hover:bg-amber-50 transition">Learn More</Link>
         </div>
       </motion.div>
-      <motion.div initial={{ opacity: 0, y: -16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.6 }} className="absolute top-24 right-8 z-20 bg-amber-400/20 backdrop-blur-xl border border-amber-400/40 rounded-2xl p-4 text-center">
-        <p className="text-amber-200 font-bold text-2xl leading-none">500+</p>
-        <p className="text-amber-200/80 text-xs mt-1">Installations in Odisha</p>
+
+      <motion.div initial={{ y: -20, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.5, delay: 0.5 }} className="hidden sm:block absolute right-8 top-28 bg-amber-400/90 backdrop-blur rounded-2xl p-4 shadow-xl text-center">
+        <p className="text-white font-black text-2xl">500+</p>
+        <p className="text-white/80 text-xs">Installations</p>
       </motion.div>
-      <div className="relative z-10 flex-1 flex items-center px-6 sm:px-10 lg:px-12 pt-24 pr-16 sm:pr-20 py-16">
-        <div className="w-full">
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="text-amber-300 tracking-[0.3em] uppercase text-xs font-bold mb-5 text-right">☀️ Solar Energy</motion.p>
-          <HeadlineLines isActive={isActive} align="right" size="text-5xl sm:text-6xl mb-6" lines={[
-            { text: "Harvest the", cls: "text-white", from: "right" },
-            { text: "Odisha Sun.", cls: "text-amber-300 italic", from: "right" },
-          ]} />
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.5 }} className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-md ml-auto text-right">
-            Monocrystalline panels engineered for tropical conditions. Up to 90% reduction in electricity bills. 25-year performance warranty.
-          </motion.p>
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.6 }} className="flex flex-col items-end gap-2 mb-8">
-            {["Up to 22% Efficiency", "25-Year Warranty", "MNRE Certified"].map((t) => (
-              <span key={t} className="inline-flex items-center gap-2 text-white">
-                {t}
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 text-black text-xs">✓</span>
-              </span>
-            ))}
-          </motion.div>
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.7 }} className="flex flex-wrap gap-4 justify-end mt-8 pr-16">
-            <Link href="/solutions/solar-rooftop" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-amber-400 text-black hover:scale-105 transition-all duration-300">Get Solar Quote</Link>
-            <Link href="/projects" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-amber-400/60 text-amber-300 font-semibold text-sm hover:bg-amber-400/10 transition-all duration-300">See Installations</Link>
-          </motion.div>
-        </div>
-      </div>
     </section>
   );
 }
 /* ───────────────────── SLIDE 4 — WIND POWER ───────────────────── */
 
+const WIND_PILLS = ["50kW–2MW", "20yr Life", "OPTCL Approved"];
+
 function SlideWind({ isActive }) {
   return (
-    <section className="relative w-full h-full overflow-hidden" style={{ background: "#030f1c" }}>
-      <div className="absolute inset-0" style={{ clipPath: "polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%)" }}>
-        <Image src="/soumyasi/wind-power-plant.png" alt="Wind turbines in Odisha" fill sizes="100vw" loading="lazy" className="object-cover" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(3,15,28,0.95) 0%, rgba(3,15,28,0.88) 45%, rgba(3,15,28,0.5) 100%)" }} />
-      </div>
-      <div className="absolute inset-0 pointer-events-none">
-        <span className="absolute h-1 w-1 rounded-full bg-sky-400/60 animate-float1" style={{ top: "22%", left: "8%" }} />
-        <span className="absolute h-1 w-1 rounded-full bg-sky-400/60 animate-float2" style={{ top: "40%", left: "24%" }} />
-        <span className="absolute h-1 w-1 rounded-full bg-sky-400/60 animate-float3" style={{ top: "64%", left: "13%" }} />
-        <span className="absolute h-1 w-1 rounded-full bg-sky-400/60 animate-float4" style={{ top: "80%", left: "32%" }} />
-      </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 pt-24 h-full flex items-center">
-        <div className="max-w-lg relative z-10 bg-[#030f1c]/60 backdrop-blur-sm rounded-2xl p-8">
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="text-sky-400 tracking-[0.3em] uppercase text-xs font-bold mb-5">💨 Wind Power</motion.p>
-          <HeadlineLines isActive={isActive} size="text-5xl sm:text-6xl mb-6" lines={[
-            { text: "Ride the", cls: "text-sky-200", from: "left" },
-            { text: "Odisha Wind.", cls: "text-white", from: "left" },
-          ]} />
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.5 }} className="text-blue-200/80 text-base sm:text-lg leading-relaxed mb-8">
-            Odisha&apos;s coastline offers some of India&apos;s best wind resources. We turn that natural advantage into reliable, large-scale clean energy.
-          </motion.p>
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.6 }} className="flex flex-col gap-3 mb-8 max-w-xs">
-            {["50kW–2MW Capacity", "20+ Year Design Life", "OPTCL Grid Approved"].map((t) => (
-              <div key={t} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3">
-                <span className="h-2 w-2 rounded-full bg-sky-400 flex-shrink-0" />
-                <span className="text-white text-sm">{t}</span>
-              </div>
-            ))}
-          </motion.div>
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.7 }} className="flex flex-wrap gap-4">
-            <Link href="/solutions/wind-power" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-sky-500 text-white hover:scale-105 transition-all duration-300">Explore Wind Solutions</Link>
-            <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-sky-400/50 text-sky-300 font-semibold text-sm hover:bg-sky-400/10 transition-all duration-300">Wind Assessment</Link>
-          </motion.div>
+    <section className="relative w-full h-screen overflow-hidden pt-20">
+      <Image src="/soumyasi/wind-power-plant.png" alt="Wind turbines in Odisha" fill sizes="100vw" loading="lazy" className="object-cover object-center" />
+
+      <motion.div initial={{ y: -20, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.5, delay: 0.4 }} className="hidden sm:block absolute top-24 right-8 bg-white/80 backdrop-blur-xl rounded-2xl p-4 border border-white/60 shadow-xl">
+        <Wind className="h-8 w-8 text-sky-500 mb-2" />
+        <p className="text-[#1a1208] font-bold text-sm">Wind Energy</p>
+        <p className="text-[#78614a] text-xs">Odisha Coast</p>
+      </motion.div>
+
+      <motion.div initial={{ y: 40, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-white/60 px-6 sm:px-16 lg:px-24 py-6 sm:py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
+        <div>
+          <p className="text-sky-600 text-xs font-bold tracking-widest uppercase mb-2">💨 Wind Power</p>
+          <HeadlineLines isActive={isActive} size="text-3xl sm:text-4xl font-black" lines={[{ text: "Ride the Odisha Wind.", cls: "text-[#1a1208]", from: "left" }]} />
+          <div className="md:hidden mt-3">
+            <Link href="/solutions/wind-power" className="inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-bold text-white bg-sky-500 hover:bg-sky-400 transition">Explore Wind</Link>
+          </div>
         </div>
-      </div>
+        <div className="hidden lg:flex items-center gap-3">
+          {WIND_PILLS.map((t) => (
+            <span key={t} className="inline-flex items-center gap-2 bg-sky-50 border border-sky-200 rounded-full px-4 py-2">
+              <Wind className="h-4 w-4 text-sky-500" />
+              <span className="text-[#1a1208] text-sm">{t}</span>
+            </span>
+          ))}
+        </div>
+        <div className="hidden md:block max-w-xs">
+          <p className="text-[#78614a] text-sm mb-3">Odisha&apos;s coastline offers some of India&apos;s best wind resources for clean energy generation.</p>
+          <Link href="/solutions/wind-power" className="inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-bold text-white bg-sky-500 hover:bg-sky-400 transition">Explore Wind</Link>
+        </div>
+      </motion.div>
     </section>
   );
 }
 /* ───────────────────── SLIDE 5 — INDUSTRIAL POWER ───────────────────── */
 
+const INDUSTRIAL_SPECS = [
+  { value: "10 MVA", label: "Up to" },
+  { value: "33kV", label: "Up to" },
+  { value: "IE Rules", label: "Certified" },
+  { value: "2yr", label: "Warranty" },
+];
+
 function SlideIndustrial({ isActive }) {
   return (
-    <section className="relative w-full h-full overflow-hidden" style={{ background: "#0f0800" }}>
-      <Image src="/soumyasi/industrial-power.png" alt="Industrial power infrastructure" fill sizes="100vw" loading="lazy" className="object-cover object-center" />
-      <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(15,8,0,0.98) 0%, rgba(15,8,0,0.92) 35%, rgba(15,8,0,0.7) 60%, rgba(15,8,0,0.3) 85%, rgba(15,8,0,0.1) 100%)" }} />
-      <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={isActive ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute top-20 right-8 flex h-24 w-24 items-center justify-center rounded-full bg-orange-500/20 border-2 border-orange-500/40">
-        <motion.span animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="text-orange-300 font-bold text-xs text-center leading-tight">SINCE<br />2014</motion.span>
-      </motion.div>
-      <div className="absolute inset-x-0 bottom-0 pb-16 sm:pb-20">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 grid grid-cols-1 lg:grid-cols-5 gap-8 items-end">
-          <div className="lg:col-span-3">
-            <motion.p initial={{ opacity: 0, y: 12 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="text-orange-400 tracking-[0.3em] uppercase text-xs font-bold mb-5">🏭 Industrial Power Supply</motion.p>
-            <HeadlineLines isActive={isActive} size="text-6xl sm:text-7xl mb-6" lines={[
-              { text: "Zero Downtime.", cls: "text-white" },
-              { text: "Total Control.", cls: "bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent" },
+    <section className="relative w-full h-screen overflow-hidden pt-20">
+      <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }} className="relative h-48 lg:h-full">
+          <Image src="/soumyasi/industrial-power.png" alt="Industrial power infrastructure" fill sizes="(max-width: 1024px) 100vw, 50vw" loading="lazy" className="object-cover object-center" />
+        </motion.div>
+
+        <div className="relative overflow-hidden bg-[#FFF8E7] flex flex-col justify-center px-8 sm:px-10 py-10 lg:py-20">
+          <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-orange-100 pointer-events-none" />
+          <div className="absolute -bottom-8 -left-8 h-48 w-48 rounded-full bg-amber-100 pointer-events-none" />
+
+          <div className="relative z-10">
+            <motion.span initial={{ opacity: 0, y: 12 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 }} className="inline-flex items-center gap-2 bg-orange-100 border border-orange-200 rounded-full px-4 py-2 text-orange-700 text-xs font-bold tracking-widest">
+              <Factory className="h-3.5 w-3.5" /> INDUSTRIAL POWER
+            </motion.span>
+
+            <HeadlineLines isActive={isActive} size="text-5xl lg:text-6xl font-black leading-none mt-4" lines={[
+              { text: "Zero", cls: "text-[#1a1208]" },
+              { text: "Downtime.", cls: "text-[#1a1208]" },
+              { text: "Total Control.", cls: "text-orange-500" },
             ]} />
-            <motion.p initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.5 }} className="text-white/70 text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
-              Complete electrical infrastructure for factories, plants, and commercial complexes across Odisha. From substations to smart switchgear.
-            </motion.p>
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.6 }} className="flex flex-wrap gap-4">
-              <Link href="/solutions/industrial-power" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-orange-500 text-white hover:scale-105 transition-all duration-300">Industrial Solutions</Link>
-              <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-orange-400/50 text-orange-300 font-semibold text-sm hover:bg-orange-400/10 transition-all duration-300">Get Assessment</Link>
-            </motion.div>
-          </div>
-          <div className="lg:col-span-2 grid grid-cols-2 gap-3">
-            {["Up to 10 MVA", "11kV – 33kV", "IE Rules", "2yr Warranty"].map((t, i) => (
-              <motion.div key={t} initial={{ opacity: 0, x: 30 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }} className="bg-white/8 border border-white/15 rounded-xl p-4 text-center">
-                <span className="text-white text-sm font-semibold">{t}</span>
-              </motion.div>
-            ))}
+
+            <span className="block w-16 h-1.5 bg-orange-400 rounded-full my-6" />
+
+            <p className="text-[#78614a] text-base leading-relaxed max-w-xs">Complete electrical infrastructure for factories and commercial complexes. From substations to smart switchgear — zero downtime guaranteed.</p>
+
+            <div className="grid grid-cols-2 gap-3 mt-8 max-w-sm">
+              {INDUSTRIAL_SPECS.map((s, i) => (
+                <motion.div key={s.value} initial={{ opacity: 0, scale: 0.9 }} animate={isActive ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }} className="bg-white rounded-2xl p-4 border border-[#e8d5b0]" style={{ boxShadow: "0 2px 8px rgba(120,80,20,0.06)" }}>
+                  <p className="text-orange-500 font-black text-xl">{s.value}</p>
+                  <p className="text-[#78614a] text-xs font-medium">{s.label}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3 mt-8">
+              <Link href="/solutions/industrial-power" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/25 hover:scale-105 transition">Industrial Solutions</Link>
+              <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium text-orange-600 border-2 border-orange-200 hover:bg-orange-50 transition">Get Assessment</Link>
+            </div>
           </div>
         </div>
       </div>

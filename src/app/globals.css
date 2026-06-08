@@ -65,32 +65,6 @@ body {
   animation: shimmer 0.7s ease forwards;
 }
 
-/* ── Wind slide floating particles ── */
-@keyframes float1 {
-  0%, 100% { transform: translate(0, 0); }
-  33%      { transform: translate(8px, -12px); }
-  66%      { transform: translate(-6px, -8px); }
-}
-@keyframes float2 {
-  0%, 100% { transform: translate(0, 0); }
-  33%      { transform: translate(-10px, -8px); }
-  66%      { transform: translate(6px, -15px); }
-}
-@keyframes float3 {
-  0%, 100% { transform: translate(0, 0); }
-  33%      { transform: translate(6px, 10px); }
-  66%      { transform: translate(-8px, 6px); }
-}
-@keyframes float4 {
-  0%, 100% { transform: translate(0, 0); }
-  33%      { transform: translate(-9px, 7px); }
-  66%      { transform: translate(7px, -10px); }
-}
-.animate-float1 { animation: float1 7s ease-in-out infinite; }
-.animate-float2 { animation: float2 8.5s ease-in-out infinite; }
-.animate-float3 { animation: float3 9.5s ease-in-out infinite; }
-.animate-float4 { animation: float4 6.5s ease-in-out infinite; }
-
 /* ── Swiper pagination — warm gold ── */
 .swiper-pagination-bullet {
   background: rgba(217,119,6,0.3) !important;
