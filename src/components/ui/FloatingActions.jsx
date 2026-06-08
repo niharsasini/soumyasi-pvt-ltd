@@ -18,6 +18,7 @@ const PhoneIcon = () => (
 
 export default function FloatingActions() {
   const [show, setShow] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [waHover, setWaHover] = useState(false);
   const [callHover, setCallHover] = useState(false);
   const [cookieAccepted, setCookieAccepted] = useState(true);
@@ -25,6 +26,14 @@ export default function FloatingActions() {
   useEffect(() => {
     const t = setTimeout(() => setShow(true), 2000);
     return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setPastHero(window.scrollY > window.innerHeight * 0.8);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -37,7 +46,7 @@ export default function FloatingActions() {
 
   return (
     <AnimatePresence>
-      {show && (
+      {show && pastHero && (
         <>
           {/* Call button */}
           <motion.a
