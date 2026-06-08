@@ -183,46 +183,124 @@ function SlideEV({ isActive }) {
 }
 /* ───────────────────── SLIDE 3 — SOLAR POWER ───────────────────── */
 
-const SOLAR_CHECKS = ["Up to 22% Efficiency", "25-Year Warranty", "MNRE Certified"];
-
 function SlideSolar({ isActive }) {
   return (
-    <section className="relative w-full h-[100svh] min-h-[600px] overflow-hidden pt-20">
-      <Image src="/soumyasi/solar-field-odisha.png" alt="Solar field in Odisha" fill sizes="100vw" loading="lazy" className="object-cover object-top" />
+    <div className="relative w-full h-[100svh] min-h-[600px] overflow-hidden">
 
+      {/* Full bleed image — NO overlay */}
+      <Image
+        src="/soumyasi/solar-field-odisha.png"
+        alt="Soumyashi Power solar installation at sunrise"
+        fill
+        className="object-cover object-center"
+        priority={false}
+        sizes="100vw"
+      />
+
+      {/* Floating compact card — desktop: left center, mobile: bottom sheet */}
       <motion.div
-        initial={{ x: -40, opacity: 0 }}
-        animate={isActive ? { x: 0, opacity: 1 } : {}}
-        transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 90, damping: 16 }}
-        className="absolute left-3 right-3 bottom-6 sm:left-8 sm:right-auto sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:w-[384px] md:left-16 lg:left-24 max-w-sm max-h-[62vh] sm:max-h-[70vh] overflow-y-auto bg-white/90 backdrop-blur-xl rounded-3xl px-5 pt-5 pb-12 sm:p-8 border border-white/60"
-        style={{ boxShadow: "0 25px 60px rgba(0,0,0,0.15)" }}
+        initial={{ opacity: 0, x: -30 }}
+        animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+        transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="absolute z-20 bottom-8 left-3 right-3 lg:bottom-auto lg:left-12 lg:right-auto lg:top-1/2 lg:-translate-y-1/2 lg:w-[340px]"
       >
-        <span className="inline-flex items-center bg-amber-100 text-amber-700 rounded-full px-3 py-1 text-xs font-bold mb-4">☀️ SOLAR ENERGY</span>
-        <HeadlineLines isActive={isActive} size="text-4xl font-black" lines={[
-          { text: "Harvest the", cls: "text-[#1a1208]", from: "left" },
-          { text: "Odisha Sun.", cls: "text-amber-600", from: "left" },
-        ]} />
-        <span className="block w-12 h-1 bg-amber-400 rounded-full my-4" />
-        <p className="text-[#78614a] text-sm leading-relaxed line-clamp-2 sm:line-clamp-none">Monocrystalline panels engineered for tropical conditions. Up to 90% reduction in electricity bills.</p>
-        <div className="mt-4 space-y-2">
-          {SOLAR_CHECKS.map((t) => (
-            <div key={t} className="flex items-center gap-2">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-400"><Check className="h-3 w-3 text-white" /></span>
-              <span className="text-[#1a1208] text-sm font-medium">{t}</span>
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3 mt-6">
-          <Link href="/solutions/solar-rooftop" className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-bold text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-lg shadow-amber-500/30 hover:scale-105 transition w-full text-center sm:w-auto">Get Solar Quote</Link>
-          <Link href="/projects" className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-medium text-amber-600 border border-amber-200 hover:bg-amber-50 transition w-full text-center sm:w-auto">Learn More</Link>
+        <div className="bg-white/92 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-white/80 p-5 sm:p-6">
+
+          {/* Eyebrow */}
+          <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5 mb-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            <span className="text-amber-700 text-xs font-bold tracking-widest uppercase">Solar Energy</span>
+          </div>
+
+          {/* Headline */}
+          <h2 className="font-display font-black text-[#1a1208] text-2xl sm:text-3xl lg:text-3xl leading-tight mb-1">
+            {isActive && ["Harvest", "the"].map((word, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+                className="inline-block mr-2"
+              >
+                {word}
+              </motion.span>
+            ))}
+          </h2>
+          <h2 className="font-display font-black text-amber-600 text-2xl sm:text-3xl lg:text-3xl leading-tight mb-3">
+            {isActive && (
+              <motion.span
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="inline-block"
+              >
+                Odisha Sun.
+              </motion.span>
+            )}
+          </h2>
+
+          {/* Amber divider */}
+          <div className="w-10 h-1 bg-amber-400 rounded-full mb-3" />
+
+          {/* Description — short */}
+          <p className="text-[#78614a] text-sm leading-relaxed mb-4">
+            Monocrystalline panels built for Odisha&apos;s climate. Cut bills by up to 90%. 25-year warranty.
+          </p>
+
+          {/* 3 check items — compact */}
+          <ul className="space-y-1.5 mb-5">
+            {[
+              "Up to 22% Efficiency",
+              "25-Year Performance Warranty",
+              "MNRE India Certified",
+            ].map((item, i) => (
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                animate={isActive ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.6 + i * 0.08 }}
+                className="flex items-center gap-2.5"
+              >
+                <div className="w-4 h-4 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
+                  <Check className="w-2.5 h-2.5 text-white" />
+                </div>
+                <span className="text-[#1a1208] text-xs font-medium">{item}</span>
+              </motion.li>
+            ))}
+          </ul>
+
+          {/* CTAs — side by side, compact */}
+          <div className="flex gap-2">
+            <Link
+              href="/solutions/solar-rooftop"
+              className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full py-2.5 text-xs font-bold text-center hover:scale-105 transition shadow-md shadow-amber-500/20"
+            >
+              Get Solar Quote
+            </Link>
+            <Link
+              href="/solutions/solar-rooftop"
+              className="flex-1 border border-amber-300 text-amber-700 rounded-full py-2.5 text-xs font-medium text-center hover:bg-amber-50 transition"
+            >
+              Learn More
+            </Link>
+          </div>
         </div>
       </motion.div>
 
-      <motion.div initial={{ y: -20, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.5, delay: 0.5 }} className="hidden sm:block absolute right-8 top-28 bg-amber-400/90 backdrop-blur rounded-2xl p-4 shadow-xl text-center">
-        <p className="text-white font-black text-2xl">500+</p>
-        <p className="text-white/80 text-xs">Installations</p>
+      {/* Stats badge — top right, desktop only */}
+      <motion.div
+        initial={{ opacity: 0, y: -15 }}
+        animate={isActive ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.7 }}
+        className="hidden sm:block absolute top-24 right-8 z-20"
+      >
+        <div className="bg-amber-500/90 backdrop-blur-xl rounded-xl p-3 text-center shadow-lg border border-amber-400/50">
+          <p className="text-white font-black text-xl leading-none">500+</p>
+          <p className="text-amber-100 text-[10px] font-medium mt-0.5">Installations</p>
+        </div>
       </motion.div>
-    </section>
+
+    </div>
   );
 }
 /* ───────────────────── SLIDE 4 — WIND POWER ───────────────────── */
@@ -240,7 +318,7 @@ function SlideWind({ isActive }) {
         <p className="text-[#78614a] text-xs">Odisha Coast</p>
       </motion.div>
 
-      <motion.div initial={{ y: 40, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute bottom-0 left-0 right-0 z-20 bg-white/95 backdrop-blur-xl border-t border-white/60 px-6 pt-3 pb-10 sm:px-8 sm:py-8 lg:px-16 xl:px-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
+      <motion.div initial={{ y: 40, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute bottom-0 left-0 right-0 z-20 bg-white/95 lg:bg-white/85 backdrop-blur-xl border-t border-white/60 px-6 pt-3 pb-10 sm:px-8 sm:py-8 lg:px-16 xl:px-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
         <div>
           <p className="text-sky-600 text-xs font-bold tracking-widest uppercase mb-2">💨 Wind Power</p>
           <HeadlineLines isActive={isActive} size="text-xl sm:text-2xl font-black" lines={[{ text: "Ride the Odisha Wind.", cls: "text-[#1a1208]", from: "left" }]} />
@@ -320,11 +398,11 @@ function SlideIndustrial({ isActive }) {
 }
 /* ───────────────────── CAROUSEL CHROME ───────────────────── */
 
-function CarouselChrome({ current, total, onPrev, onNext, onDot }) {
+function CarouselChrome({ current, total, onPrev, onNext, onDot, isPlaying }) {
   return (
     <>
       <div className="absolute top-[64px] sm:top-0 left-0 right-0 z-50 h-1 bg-white/20">
-        <motion.div key={current} className="h-full bg-white" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: SLIDE_MS / 1000, ease: "linear" }} />
+        <motion.div key={current} className="h-full bg-white" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: isPlaying ? SLIDE_MS / 1000 : 0, ease: "linear" }} />
       </div>
       <div className="hidden sm:block absolute top-6 right-6 z-30 text-white/60 text-sm font-mono">
         {String(current + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
@@ -405,7 +483,7 @@ export default function Hero() {
           <Slide isActive />
         </motion.div>
       </AnimatePresence>
-      <CarouselChrome current={currentSlide} total={SLIDES.length} onPrev={prev} onNext={next} onDot={goTo} />
+      <CarouselChrome current={currentSlide} total={SLIDES.length} onPrev={prev} onNext={next} onDot={goTo} isPlaying={isAutoPlaying} />
     </section>
   );
 }
