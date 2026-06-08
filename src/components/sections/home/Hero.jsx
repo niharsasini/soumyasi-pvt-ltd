@@ -146,7 +146,7 @@ function SlideEV({ isActive }) {
   return (
     <section className="relative w-full h-[100svh] min-h-[600px] overflow-hidden pt-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
-        <div className="relative order-2 lg:order-1 h-auto lg:h-full bg-[#0a0f1a] flex flex-col px-8 sm:px-12 pt-28 pb-10 lg:pt-20 lg:pb-20">
+        <div className="relative order-2 lg:order-1 h-auto lg:h-full bg-[#0a0f1a] flex flex-col px-8 sm:px-12 pt-28 pb-16 lg:pt-20 lg:pb-20">
           <div className="flex-1 flex flex-col justify-center">
             <motion.span initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 }} className="inline-flex self-start items-center gap-2 bg-emerald-500/20 border border-emerald-500/40 rounded-full px-4 py-2 text-emerald-400 text-xs font-bold tracking-widest mb-5">
               ⚡ EV CHARGING NETWORK
@@ -167,7 +167,7 @@ function SlideEV({ isActive }) {
                 </motion.div>
               ))}
             </div>
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.85 }} className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4 mt-10">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.85 }} className="flex flex-col gap-2 w-full sm:flex-row sm:flex-wrap sm:gap-4 sm:w-auto mt-10">
               <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-emerald-500 text-black hover:bg-emerald-400 hover:scale-105 transition-all duration-300 shadow-lg shadow-emerald-500/25 w-full text-center sm:w-auto">Find a Station</Link>
               <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/10 transition-all duration-300 w-full text-center sm:w-auto">Learn More</Link>
             </motion.div>
@@ -194,7 +194,7 @@ function SlideSolar({ isActive }) {
         initial={{ x: -40, opacity: 0 }}
         animate={isActive ? { x: 0, opacity: 1 } : {}}
         transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 90, damping: 16 }}
-        className="absolute left-0 right-0 bottom-8 sm:left-8 sm:right-auto sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:w-[384px] md:left-16 lg:left-24 max-w-sm max-h-[55vh] sm:max-h-[70vh] overflow-y-auto bg-white/90 backdrop-blur-xl rounded-3xl p-5 sm:p-8 border border-white/60"
+        className="absolute left-3 right-3 bottom-6 sm:left-8 sm:right-auto sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:w-[384px] md:left-16 lg:left-24 max-w-sm max-h-[62vh] sm:max-h-[70vh] overflow-y-auto bg-white/90 backdrop-blur-xl rounded-3xl px-5 pt-5 pb-12 sm:p-8 border border-white/60"
         style={{ boxShadow: "0 25px 60px rgba(0,0,0,0.15)" }}
       >
         <span className="inline-flex items-center bg-amber-100 text-amber-700 rounded-full px-3 py-1 text-xs font-bold mb-4">☀️ SOLAR ENERGY</span>
@@ -240,10 +240,10 @@ function SlideWind({ isActive }) {
         <p className="text-[#78614a] text-xs">Odisha Coast</p>
       </motion.div>
 
-      <motion.div initial={{ y: 40, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute bottom-0 left-0 right-0 z-20 bg-white/90 backdrop-blur-xl border-t border-white/60 px-6 pt-3 pb-20 sm:px-8 sm:py-8 lg:px-16 xl:px-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
+      <motion.div initial={{ y: 40, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute bottom-0 left-0 right-0 z-20 bg-white/95 backdrop-blur-xl border-t border-white/60 px-6 pt-3 pb-10 sm:px-8 sm:py-8 lg:px-16 xl:px-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
         <div>
           <p className="text-sky-600 text-xs font-bold tracking-widest uppercase mb-2">💨 Wind Power</p>
-          <HeadlineLines isActive={isActive} size="text-2xl sm:text-3xl font-black" lines={[{ text: "Ride the Odisha Wind.", cls: "text-[#1a1208]", from: "left" }]} />
+          <HeadlineLines isActive={isActive} size="text-xl sm:text-2xl font-black" lines={[{ text: "Ride the Odisha Wind.", cls: "text-[#1a1208]", from: "left" }]} />
           <div className="lg:hidden mt-3">
             <Link href="/solutions/wind-power" className="inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-bold text-white bg-sky-500 hover:bg-sky-400 transition w-full sm:w-auto">Explore Wind</Link>
           </div>
@@ -276,12 +276,12 @@ const INDUSTRIAL_SPECS = [
 function SlideIndustrial({ isActive }) {
   return (
     <section className="relative w-full h-[100svh] min-h-[600px] overflow-hidden pt-20">
-      <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }} className="relative order-1 lg:order-none h-48 w-full sm:h-64 lg:h-full">
+      <div className="relative w-full h-full flex flex-col lg:grid lg:grid-cols-2">
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }} className="relative flex-none h-[45vw] min-h-[180px] max-h-[220px] lg:h-full lg:max-h-none order-1 lg:order-none">
           <Image src="/soumyasi/industrial-power.png" alt="Industrial power infrastructure" fill sizes="(max-width: 1024px) 100vw, 50vw" loading="lazy" className="object-cover object-center" />
         </motion.div>
 
-        <div className="relative order-2 lg:order-none overflow-hidden bg-[#FFF8E7] flex flex-col justify-center px-6 py-6 min-h-[60vh] overflow-y-auto sm:px-10 sm:py-10 lg:py-20 lg:min-h-0 lg:overflow-visible">
+        <div className="relative flex-1 bg-[#FFF8E7] overflow-y-auto order-2 lg:order-none px-6 py-5 lg:px-10 lg:py-0 lg:flex lg:flex-col lg:justify-center">
           <div className="hidden lg:block absolute -top-16 -right-16 h-64 w-64 rounded-full bg-orange-100 pointer-events-none" />
           <div className="hidden lg:block absolute -bottom-8 -left-8 h-48 w-48 rounded-full bg-amber-100 pointer-events-none" />
 
@@ -326,7 +326,7 @@ function CarouselChrome({ current, total, onPrev, onNext, onDot }) {
       <div className="absolute top-[64px] sm:top-0 left-0 right-0 z-50 h-1 bg-white/20">
         <motion.div key={current} className="h-full bg-white" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: SLIDE_MS / 1000, ease: "linear" }} />
       </div>
-      <div className="absolute top-6 right-6 z-30 text-white/60 text-sm font-mono">
+      <div className="hidden sm:block absolute top-6 right-6 z-30 text-white/60 text-sm font-mono">
         {String(current + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
       </div>
       <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={onPrev} aria-label="Previous slide" className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 items-center justify-center rounded-full bg-white/10 backdrop-blur border border-white/20 hover:bg-white/20 transition cursor-pointer text-white">
@@ -335,18 +335,10 @@ function CarouselChrome({ current, total, onPrev, onNext, onDot }) {
       <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={onNext} aria-label="Next slide" className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 items-center justify-center rounded-full bg-white/10 backdrop-blur border border-white/20 hover:bg-white/20 transition cursor-pointer text-white">
         <ChevronRight size={22} />
       </motion.button>
-      <div className="sm:hidden absolute bottom-16 left-0 right-0 z-40 flex items-center justify-center gap-6 px-4">
-        <button onClick={onPrev} aria-label="Previous slide" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 backdrop-blur border border-white/30">
-          <ChevronLeft className="w-5 h-5 text-white" />
-        </button>
-        <button onClick={onNext} aria-label="Next slide" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 backdrop-blur border border-white/30">
-          <ChevronRight className="w-5 h-5 text-white" />
-        </button>
-      </div>
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1">
+      <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1">
         {Array.from({ length: total }).map((_, i) => (
-          <button key={i} onClick={() => onDot(i)} aria-label={`Go to slide ${i + 1}`} className="p-2 group">
-            <span className={`block h-2 rounded-full transition-all duration-300 ${i === current ? "w-8 bg-white" : "w-2 bg-white/40 group-hover:bg-white/60"}`} />
+          <button key={i} onClick={() => onDot(i)} aria-label={`Go to slide ${i + 1}`} className="p-1.5 sm:p-2 group">
+            <span className={`block h-2 rounded-full transition-all duration-300 ${i === current ? "w-5 sm:w-8 bg-white" : "w-2 bg-white/40 group-hover:bg-white/60"}`} />
           </button>
         ))}
       </div>
