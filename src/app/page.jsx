@@ -5,9 +5,10 @@ import StatsStrip  from "@/components/sections/home/StatsStrip";
 import WhyChooseUs from "@/components/sections/home/WhyChooseUs";
 import FinalCTA    from "@/components/sections/home/FinalCTA";
 
-const Industries   = dynamic(() => import("@/components/sections/home/Industries"),   { ssr: false });
-const Testimonials = dynamic(() => import("@/components/sections/home/Testimonials"), { ssr: false });
-const EVMapSection = dynamic(() => import("@/components/sections/home/EVMapSection"), { ssr: false });
+const Industries      = dynamic(() => import("@/components/sections/home/Industries"),      { ssr: false });
+const Testimonials    = dynamic(() => import("@/components/sections/home/Testimonials"),    { ssr: false });
+const EVMapSection    = dynamic(() => import("@/components/sections/home/EVMapSection"),    { ssr: false });
+const EVPartnerSection = dynamic(() => import("@/components/sections/home/EVPartnerSection"), { ssr: false });
 
 export const metadata = {
   title: "Soumyashi Power | Solar Panels & EV Charging Odisha",
@@ -25,6 +26,7 @@ export default function Page() {
   return (
     <div className="w-full bg-brand-bg antialiased text-brand-ink">
       <Hero />
+      <EVPartnerSection />
       <WhatWeDo />
       <StatsStrip />
       <EVMapSection />
