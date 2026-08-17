@@ -72,7 +72,7 @@ function MainStatCard({ Icon, value, label, i, isActive }) {
         <Icon className="w-4 h-4 text-amber-600" />
       </div>
       <p className="font-black text-xl sm:text-2xl text-[#1a1208]">{value}+</p>
-      <p className="text-[#a8917a] text-[10px] sm:text-xs mt-0.5">{label}</p>
+      <p className="text-[#a8917a] text-[10px] mt-0.5 whitespace-nowrap">{label}</p>
     </motion.div>
   );
 }
@@ -104,7 +104,7 @@ function SlideMain({ isActive }) {
 
       {/* Main content grid */}
       <div className="absolute inset-0 flex items-center">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-28 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* LEFT — content */}
           <div>
@@ -113,7 +113,7 @@ function SlideMain({ isActive }) {
               initial={{ opacity: 0, y: -10 }}
               animate={isActive ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0 }}
-              className="inline-flex items-center gap-2.5 bg-white border border-[#e8d5b0] rounded-full px-4 py-2 shadow-sm"
+              className="inline-flex items-center gap-2.5 bg-white border border-[#e8d5b0] rounded-full px-4 py-2 shadow-sm mb-4"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
               <span className="text-[#78614a] text-xs font-semibold">Odisha&apos;s Leading Energy Company</span>
@@ -122,7 +122,7 @@ function SlideMain({ isActive }) {
             </motion.div>
 
             {/* 2. Main headline */}
-            <h1 className="font-display font-black leading-[1.1] mt-5 text-3xl sm:text-4xl lg:text-6xl">
+            <h1 className="font-display font-black leading-[1.05] text-3xl sm:text-4xl lg:text-5xl">
               {HEADLINE_LINES.map((line, i) => (
                 <motion.span
                   key={line.text}
@@ -141,7 +141,7 @@ function SlideMain({ isActive }) {
               initial={{ opacity: 0, y: 16 }}
               animate={isActive ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="mt-4 text-[#78614a] text-base sm:text-lg leading-relaxed max-w-lg"
+              className="mt-3 text-[#78614a] text-base sm:text-lg leading-relaxed max-w-lg"
             >
               Solar installations, EV charging networks, wind power, and industrial electrical infrastructure — built for Odisha, engineered to last decades.
             </motion.p>
@@ -151,7 +151,7 @@ function SlideMain({ isActive }) {
               initial={{ opacity: 0, y: 16 }}
               animate={isActive ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.75 }}
-              className="mt-5 flex flex-wrap gap-2"
+              className="mt-4 flex flex-wrap gap-2"
             >
               {FEATURE_PILLS.map(({ Icon, iconCls, label }) => (
                 <span
@@ -169,7 +169,7 @@ function SlideMain({ isActive }) {
               initial={{ opacity: 0, y: 16 }}
               animate={isActive ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.85 }}
-              className="mt-7 flex flex-col sm:flex-row gap-3"
+              className="mt-5 flex flex-col sm:flex-row gap-3"
             >
               <Link
                 href="/solutions"
@@ -188,7 +188,7 @@ function SlideMain({ isActive }) {
             </motion.div>
 
             {/* 6. Stats row */}
-            <div className="mt-8 grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
+            <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
               {mainStats.map((s, i) => (
                 <MainStatCard key={s.label} {...s} i={i} isActive={isActive} />
               ))}
@@ -203,16 +203,17 @@ function SlideMain({ isActive }) {
                 ▶ Watch our story
               </button>
               {showMobileVideo && (
-                <div className="mt-3 rounded-2xl overflow-hidden border border-amber-200/60 shadow-lg">
+                <div className="mt-3 rounded-2xl overflow-hidden border border-amber-200/60 shadow-lg h-[220px]">
                   <video
-                    src="/video/3738727067-preview.mp4"
                     autoPlay
                     muted
                     loop
                     playsInline
                     preload="none"
-                    className="w-full aspect-video object-cover"
-                  />
+                    className="w-full h-full object-cover"
+                  >
+                    <source src="/video/3738727067-preview.mp4" type="video/mp4" />
+                  </video>
                 </div>
               )}
             </div>
@@ -227,17 +228,18 @@ function SlideMain({ isActive }) {
                 initial={{ opacity: 0, x: 40 }}
                 animate={isActive ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.9, delay: 0.3 }}
-                className="relative rounded-[1.5rem] overflow-hidden border border-amber-200/60 shadow-[0_30px_80px_rgba(120,80,20,0.2)] aspect-video"
+                className="relative w-full rounded-[1.5rem] overflow-hidden border border-amber-200/60 shadow-[0_30px_80px_rgba(120,80,20,0.2)] h-[280px] sm:h-[320px] lg:h-[360px]"
               >
                 <video
-                  src="/video/3738727067-preview.mp4"
                   autoPlay
                   muted
                   loop
                   playsInline
                   preload="none"
                   className="w-full h-full object-cover"
-                />
+                >
+                  <source src="/video/3738727067-preview.mp4" type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#FFFBF0]/20 via-transparent to-transparent" />
               </motion.div>
 
