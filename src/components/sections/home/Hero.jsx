@@ -3,51 +3,13 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Zap, Battery, ShieldCheck, Check, Wind, Factory, CheckCircle, MapPin } from "lucide-react";
+import { ChevronLeft, ChevronRight, Zap, Battery, ShieldCheck, Check, Wind, Factory, MapPin, Sun, ArrowRight, PhoneCall, ChevronDown, Star } from "lucide-react";
 import { STATS as SITE_STATS } from "@/lib/config/stats.config";
+import { CONTACT } from "@/lib/config/site.config";
 
 const EASE = [0.25, 0.46, 0.45, 0.94];
 
 const SLIDE_MS = 6000;
-
-const STATS = [
-  { value: SITE_STATS.installations, suffix: "+", label: "Installations", Icon: CheckCircle },
-  { value: SITE_STATS.evStations, suffix: "+", label: "EV Stations", Icon: Zap },
-  { value: SITE_STATS.cities, suffix: "+", label: "Cities", Icon: MapPin },
-];
-
-function useCountUp(to, active) {
-  const [n, setN] = useState(0);
-  useEffect(() => {
-    if (!active) { setN(0); return; }
-    const start = performance.now();
-    const dur = 2000;
-    const tick = (now) => {
-      const p = Math.min((now - start) / dur, 1);
-      setN(Math.floor((1 - Math.pow(1 - p, 3)) * to));
-      if (p < 1) requestAnimationFrame(tick);
-      else setN(to);
-    };
-    requestAnimationFrame(tick);
-  }, [to, active]);
-  return n;
-}
-
-function StatBadge({ value, suffix, label, active, i, Icon }) {
-  const n = useCountUp(value, active);
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={active ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay: i * 0.12 }}
-      className="flex flex-col items-center p-4 rounded-2xl bg-white shadow-md"
-    >
-      {Icon && <Icon className="h-4 w-4 text-amber-600 mb-1.5" />}
-      <span className="text-2xl font-black font-display text-amber-600 tabular-nums">{n}{suffix}</span>
-      <span className="text-xs text-[#78614a] mt-1 text-center">{label}</span>
-    </motion.div>
-  );
-}
 
 function Word({ children, i, isActive, from = "bottom", className = "" }) {
   const initial = from === "left" ? { opacity: 0, x: -40 } : from === "right" ? { opacity: 0, x: 40 } : { opacity: 0, y: 30 };
@@ -85,51 +47,261 @@ function HeadlineLines({ lines, isActive, size, align = "left" }) {
 }
 /* ───────────────────── SLIDE 1 — MAIN BRAND HERO ───────────────────── */
 
-function SlideMain({ isActive }) {
-  const [statsOn, setStatsOn] = useState(false);
-  useEffect(() => {
-    if (!isActive) { setStatsOn(false); return; }
-    const t = setTimeout(() => setStatsOn(true), 900);
-    return () => clearTimeout(t);
-  }, [isActive]);
+const HEADLINE_LINES = [
+  { text: "Powering", cls: "text-[#1a1208]" },
+  { text: "Industry.", cls: "text-[#1a1208]" },
+  { text: "Enabling", cls: "text-[#1a1208]" },
+  { text: "Clean Energy.", cls: "bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent" },
+];
+
+const FEATURE_PILLS = [
+  { Icon: Sun, iconCls: "text-amber-600", label: "Solar Energy" },
+  { Icon: Zap, iconCls: "text-emerald-600", label: "EV Charging" },
+  { Icon: Factory, iconCls: "text-orange-600", label: "Industrial Power" },
+];
+
+function MainStatCard({ Icon, value, label, i, isActive }) {
   return (
-    <section className="relative w-full h-full flex items-center bg-[#FFFBF0] lg:bg-brand-bg overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 20% 50%, rgba(245,158,11,0.05), transparent), radial-gradient(ellipse 60% 50% at 80% 50%, rgba(217,119,6,0.04), transparent)" }} />
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div animate={{ x: [0, 30, 0], y: [0, -20, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[15%] left-[5%] h-80 w-80 rounded-full bg-amber-400/8 blur-3xl" />
-        <motion.div animate={{ x: [0, -25, 0], y: [0, 20, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-[20%] right-[10%] h-64 w-64 rounded-full bg-emerald-300/6 blur-3xl" />
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={isActive ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 1 + i * 0.1 }}
+      className="bg-white rounded-2xl p-3 sm:p-4 border border-[#e8d5b0] shadow-[0_4px_16px_rgba(120,80,20,0.06)] text-center hover:border-amber-300 transition-colors"
+    >
+      <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center mx-auto mb-2">
+        <Icon className="w-4 h-4 text-amber-600" />
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-12 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <p className="font-black text-xl sm:text-2xl text-[#1a1208]">{value}+</p>
+      <p className="text-[#a8917a] text-[10px] sm:text-xs mt-0.5">{label}</p>
+    </motion.div>
+  );
+}
+
+function SlideMain({ isActive }) {
+  const [showMobileVideo, setShowMobileVideo] = useState(false);
+
+  const mainStats = [
+    { Icon: Sun, value: SITE_STATS.installations, label: "Solar Installs" },
+    { Icon: Zap, value: SITE_STATS.evStations, label: "EV Stations" },
+    { Icon: MapPin, value: SITE_STATS.cities, label: "Cities Served" },
+  ];
+
+  return (
+    <section className="relative w-full h-[90vh] min-h-[550px] overflow-hidden bg-[#FFFBF0]">
+      {/* Background decorative elements */}
+      <div
+        className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(252,211,133,0.3), transparent 70%)" }}
+      />
+      <div className="absolute bottom-0 -left-16 w-64 h-64 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none" />
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, #d97706 0px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #d97706 0px, transparent 1px, transparent 40px)",
+        }}
+      />
+
+      {/* Main content grid */}
+      <div className="absolute inset-0 flex items-center">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          {/* LEFT — content */}
           <div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-200 mb-6">
-              <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              <span className="text-xs font-bold tracking-[0.25em] uppercase text-brand-gold">Odisha&apos;s Energy Future</span>
+            {/* 1. Top badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={isActive ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0 }}
+              className="inline-flex items-center gap-2.5 bg-white border border-[#e8d5b0] rounded-full px-4 py-2 shadow-sm"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+              <span className="text-[#78614a] text-xs font-semibold">Odisha&apos;s Leading Energy Company</span>
+              <span className="w-px h-3 bg-[#e8d5b0]" />
+              <span className="text-[#a8917a] text-xs">Est. Bhubaneswar</span>
             </motion.div>
-            <HeadlineLines isActive={isActive} size="text-4xl sm:text-5xl mb-6" lines={[
-              { text: "Powering Industry.", cls: "text-brand-ink" },
-              { text: "Enabling Clean", cls: "text-brand-ink" },
-              { text: "Energy.", cls: "bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent" },
-            ]} />
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.5 }} className="text-base sm:text-lg text-brand-brown leading-relaxed mb-8 max-w-lg">
-              Solar installations, EV charging networks, and industrial power — built for Odisha, engineered to last.
+
+            {/* 2. Main headline */}
+            <h1 className="font-display font-black leading-[1.1] mt-5 text-3xl sm:text-4xl lg:text-6xl">
+              {HEADLINE_LINES.map((line, i) => (
+                <motion.span
+                  key={line.text}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={isActive ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease: EASE }}
+                  className={`block ${line.cls}`}
+                >
+                  {line.text}
+                </motion.span>
+              ))}
+            </h1>
+
+            {/* 3. Subtext */}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={isActive ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="mt-4 text-[#78614a] text-base sm:text-lg leading-relaxed max-w-lg"
+            >
+              Solar installations, EV charging networks, wind power, and industrial electrical infrastructure — built for Odisha, engineered to last decades.
             </motion.p>
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.62 }} className="flex flex-col gap-3 w-full lg:w-auto lg:flex-row lg:flex-wrap lg:gap-4 mb-10">
-              <Link href="/solutions" className="btn-shimmer inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-gold hover:shadow-gold-lg hover:scale-105 transition-all duration-300 w-full text-center lg:w-auto">Explore Solutions</Link>
-              <Link href="/projects" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border-2 border-amber-400 text-amber-700 font-semibold text-sm hover:bg-amber-50 hover:border-amber-500 transition-all duration-300 w-full text-center lg:w-auto">Our Projects</Link>
+
+            {/* 4. Feature pills */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={isActive ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.75 }}
+              className="mt-5 flex flex-wrap gap-2"
+            >
+              {FEATURE_PILLS.map(({ Icon, iconCls, label }) => (
+                <span
+                  key={label}
+                  className="bg-white border border-[#e8d5b0] rounded-full px-3 py-1.5 flex items-center gap-1.5 text-xs text-[#78614a] font-medium shadow-sm"
+                >
+                  <Icon className={`w-3.5 h-3.5 ${iconCls}`} />
+                  {label}
+                </span>
+              ))}
             </motion.div>
-            <div className="grid grid-cols-3 gap-2 max-w-sm">
-              {STATS.map((s, i) => <StatBadge key={s.label} {...s} active={statsOn} i={i} />)}
+
+            {/* 5. CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={isActive ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.85 }}
+              className="mt-7 flex flex-col sm:flex-row gap-3"
+            >
+              <Link
+                href="/solutions"
+                className="btn-shimmer inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-full px-8 py-3.5 text-sm sm:text-base shadow-[0_8px_30px_rgba(217,119,6,0.35)] hover:shadow-[0_12px_40px_rgba(217,119,6,0.5)] hover:scale-105 transition-all duration-300"
+              >
+                Explore Our Solutions
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a
+                href={CONTACT.phoneHref}
+                className="inline-flex items-center justify-center gap-2 border-2 border-[#e8d5b0] text-[#1a1208] font-semibold rounded-full px-8 py-3.5 text-sm sm:text-base hover:border-amber-400 hover:bg-amber-50 transition-all duration-300"
+              >
+                <PhoneCall className="w-4 h-4 text-amber-600" />
+                Call Us Now
+              </a>
+            </motion.div>
+
+            {/* 6. Stats row */}
+            <div className="mt-8 grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
+              {mainStats.map((s, i) => (
+                <MainStatCard key={s.label} {...s} i={i} isActive={isActive} />
+              ))}
+            </div>
+
+            {/* Mobile-only: watch story */}
+            <div className="lg:hidden mt-4 text-center">
+              <button
+                onClick={() => setShowMobileVideo((v) => !v)}
+                className="inline-flex items-center gap-1.5 text-amber-600 text-xs font-semibold"
+              >
+                ▶ Watch our story
+              </button>
+              {showMobileVideo && (
+                <div className="mt-3 rounded-2xl overflow-hidden border border-amber-200/60 shadow-lg">
+                  <video
+                    src="/video/3738727067-preview.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="none"
+                    className="w-full aspect-video object-cover"
+                  />
+                </div>
+              )}
             </div>
           </div>
-          <motion.div initial={{ opacity: 0, x: 40 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.9, delay: 0.3 }} className="relative hidden lg:block">
-            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-amber-500/20 to-emerald-500/10 blur-xl pointer-events-none" />
-            <div className="relative rounded-2xl overflow-hidden border border-amber-200/60 animate-float" style={{ boxShadow: "0 30px 80px rgba(217,119,6,0.18)" }}>
-              <video src="/video/3738727067-preview.mp4" autoPlay muted loop playsInline preload="none" className="w-full h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px] object-cover" />
+
+          {/* RIGHT — video + social proof */}
+          <div className="hidden lg:flex items-center justify-center relative">
+            <div className="relative w-full max-w-[520px] mx-auto">
+              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-amber-200/40 to-emerald-200/30 blur-xl -z-10 pointer-events-none" />
+
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={isActive ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.9, delay: 0.3 }}
+                className="relative rounded-[1.5rem] overflow-hidden border border-amber-200/60 shadow-[0_30px_80px_rgba(120,80,20,0.2)] aspect-video"
+              >
+                <video
+                  src="/video/3738727067-preview.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#FFFBF0]/20 via-transparent to-transparent" />
+              </motion.div>
+
+              {/* Floating card 1 — active now */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={isActive ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                className="absolute -top-4 -left-4 bg-white rounded-2xl p-3.5 shadow-xl border border-[#e8d5b0] flex items-center gap-3 min-w-[160px]"
+              >
+                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-5 h-5 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="text-[#a8917a] text-[10px]">Active Right Now</p>
+                  <p className="text-[#1a1208] font-bold text-sm">{SITE_STATS.evStations}+ EV Stations</p>
+                </div>
+              </motion.div>
+
+              {/* Floating card 3 — years badge */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={isActive ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.9 }}
+                className="absolute top-1/2 -right-6 -translate-y-1/2 bg-amber-500 rounded-xl p-3 shadow-lg text-center"
+              >
+                <p className="text-white font-black text-lg leading-none">{SITE_STATS.yearsExperience}+</p>
+                <p className="text-amber-100 text-[10px]">Years</p>
+              </motion.div>
+
+              {/* Floating card 2 — satisfaction */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={isActive ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1 }}
+                className="absolute -bottom-4 -right-4 bg-white rounded-2xl p-3.5 shadow-xl border border-[#e8d5b0] min-w-[180px]"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-[#78614a] text-[10px]">Client Satisfaction</p>
+                  <p className="font-black text-sm text-amber-600">{SITE_STATS.satisfaction}%</p>
+                </div>
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="text-[#a8917a] text-[10px] mt-1">Based on {SITE_STATS.installations}+ projects</p>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isActive ? { opacity: 1 } : {}}
+        transition={{ duration: 0.5, delay: 1.1 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 animate-bounce"
+      >
+        <ChevronDown className="w-5 h-5 text-[#a8917a]" />
+        <span className="text-[#a8917a] text-[10px] tracking-widest uppercase">Scroll</span>
+      </motion.div>
     </section>
   );
 }
