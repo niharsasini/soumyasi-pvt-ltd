@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Lightbulb, Leaf, TrendingUp, MapPin, Clock, X } from "lucide-react";
 import SectionHeading from '@/components/ui/SectionHeading';
 import { VARIANTS } from "@/lib/animations/variants";
+import FormFallback, { FORM_ERROR_MESSAGE } from "@/components/forms/FormFallback";
 
 const CULTURE = [
   { icon: Lightbulb, title: "Innovation", desc: "We build with the latest technology — from smart solar systems to IoT-enabled EV infrastructure. Push boundaries every day." },
@@ -71,7 +72,7 @@ function ApplyModal({ role, onClose }) {
       if (!res.ok) throw new Error("formspree error");
       setSubmitted(true);
     } catch {
-      setSubmitError("Something went wrong. Please try again.");
+      setSubmitError(FORM_ERROR_MESSAGE);
     } finally {
       setSubmitting(false);
     }
@@ -133,6 +134,7 @@ function ApplyModal({ role, onClose }) {
                 className="btn-shimmer w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-gold-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                 {submitting ? "Submitting..." : "Submit Application →"}
               </button>
+              <FormFallback className="justify-center" />
             </form>
           </>
         )}

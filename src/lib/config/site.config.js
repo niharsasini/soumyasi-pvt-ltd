@@ -1,11 +1,17 @@
 /**
  * Single source of truth for site-wide brand, contact, social, and nav data.
  * Consumed by Navbar, Footer, layout metadata, contact page, etc.
+ *
+ * ⚠️  BEFORE LAUNCH: Replace all placeholder values below
+ *   Phone:   +91 98765 43210        → real number
+ *   Email:   info@soumyashipower.in → verify this inbox is monitored
+ *   Address: Plot No. 123...        → real office address
+ *   Social:  Facebook/LinkedIn/Twitter URLs → confirm they resolve to real, owned profiles
  */
 
 export const BRAND = {
   name: "Soumyashi Power Limited",
-  shortName: "SOUMYASI POWER",
+  shortName: "SOUMYASHI POWER",
   tagline: "Electrical & Power Solutions",
   description:
     "Delivering innovative and sustainable power solutions with excellence, reliability, and cutting-edge technology across industries.",
@@ -13,7 +19,7 @@ export const BRAND = {
 };
 
 export const CONTACT = {
-  email: "info@soumyasipower.com",
+  email: "info@soumyashipower.in",
   phone: "+91 98765 43210",
   phoneHref: "tel:+919876543210",
   address: {

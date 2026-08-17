@@ -163,25 +163,19 @@ export default function WhyChooseUs() {
 
         </div>
 
-        {/* CTA */}
+        {/* CTA — single primary action; FinalCTA below is the page's main conversion point */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 flex flex-col sm:flex-row gap-4 justify-center"
+          className="mt-16 flex justify-center"
         >
-          <Link
-            href="/contact"
-            className="btn-shimmer inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-[0_12px_40px_rgba(217,119,6,0.35)] hover:scale-105 transition-all duration-300"
-          >
-            Get Free Assessment <ArrowRight size={15} />
-          </Link>
           <Link
             href="/projects"
             className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border-2 border-amber-400 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition-all duration-300"
           >
-            See Our Projects
+            See Our Projects <ArrowRight size={15} />
           </Link>
         </motion.div>
       </div>

@@ -14,30 +14,21 @@ const TESTIMONIALS = [
   {
     name:    "Rajesh Mohanty",
     role:    "Business Owner, Bhubaneswar",
+    detail:  "50kW system · Installed Oct 2023",
     message: "Soumyashi installed solar panels for our factory. Electricity bills dropped 70% in the first month. Outstanding quality and professionalism.",
     stars:   5,
   },
   {
     name:    "Priya Nanda",
     role:    "IT Park Manager, Cuttack",
+    detail:  "2 × 60kW chargers · Installed Jan 2024",
     message: "They set up our EV charging stations flawlessly. The team was efficient and the after-sales support has been excellent.",
-    stars:   5,
-  },
-  {
-    name:    "Suresh Pattnaik",
-    role:    "Hospital Administrator, Puri",
-    message: "Our solar and power backup has run without issues for 2 years. Truly reliable with exceptional support whenever needed.",
-    stars:   5,
-  },
-  {
-    name:    "Anita Behera",
-    role:    "Homeowner, Rourkela",
-    message: "The rooftop solar installation was seamless. The team explained everything clearly and the system already pays for itself.",
     stars:   5,
   },
   {
     name:    "Debashis Rath",
     role:    "Factory Director, Sambalpur",
+    detail:  "2MW substation · 18 months live",
     message: "Industrial power solutions from Soumyashi have been top-notch. They understood our requirements and delivered beyond expectations.",
     stars:   5,
   },
@@ -120,6 +111,7 @@ export default function Testimonials() {
                     <div>
                       <div className="text-brand-ink font-semibold text-sm">{t.name}</div>
                       <div className="text-brand-gold text-xs mt-0.5">{t.role}</div>
+                      {t.detail && <div className="text-brand-muted text-[11px] mt-0.5">{t.detail}</div>}
                     </div>
                   </div>
                 </div>

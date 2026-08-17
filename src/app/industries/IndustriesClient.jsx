@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { INDUSTRIES } from "@/lib/data/industries";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 import SectionHeading from '@/components/ui/SectionHeading';
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 export default function IndustriesClient() {
   const { ref, isInView } = useScrollReveal();
@@ -22,6 +23,9 @@ export default function IndustriesClient() {
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10" ref={ref}>
+          <div className="mb-5 flex justify-center">
+            <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Industries" }]} />
+          </div>
           <motion.p initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5 }}
             className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
             Industries We Serve

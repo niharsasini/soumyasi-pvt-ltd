@@ -1,7 +1,11 @@
+// ⚠️  PLACEHOLDER DATA — Replace with real station locations before launch.
+// Coordinates are approximate Odisha locations; station names, statuses, and
+// power ratings below are illustrative and do not represent live deployments.
+
 export const EV_STATIONS = [
   {
     id: 1,
-    name: "Soumyashi EV Hub – Patia",
+    name: "Soumyashi Charging Point – Patia, Bhubaneswar",
     city: "Bhubaneswar",
     address: "Patia Square, Bhubaneswar, Odisha 751024",
     lat: 20.3536,
@@ -12,7 +16,7 @@ export const EV_STATIONS = [
   },
   {
     id: 2,
-    name: "Soumyashi EV Hub – Saheed Nagar",
+    name: "Soumyashi Charging Point – Saheed Nagar, Bhubaneswar",
     city: "Bhubaneswar",
     address: "Saheed Nagar, Bhubaneswar, Odisha 751007",
     lat: 20.2743,
@@ -23,7 +27,7 @@ export const EV_STATIONS = [
   },
   {
     id: 3,
-    name: "Soumyashi EV Charge – Infocity",
+    name: "Soumyashi Charging Point – Infocity, Bhubaneswar",
     city: "Bhubaneswar",
     address: "Infocity Area, Bhubaneswar, Odisha 751024",
     lat: 20.3474,
@@ -34,7 +38,7 @@ export const EV_STATIONS = [
   },
   {
     id: 4,
-    name: "Soumyashi EV Charge – Nayapalli",
+    name: "Soumyashi Charging Point – Nayapalli, Bhubaneswar",
     city: "Bhubaneswar",
     address: "Nayapalli, Bhubaneswar, Odisha 751012",
     lat: 20.2961,
@@ -45,7 +49,7 @@ export const EV_STATIONS = [
   },
   {
     id: 5,
-    name: "Soumyashi EV Hub – Kalinga Stadium",
+    name: "Soumyashi Charging Point – Kalinga Stadium, Bhubaneswar",
     city: "Bhubaneswar",
     address: "Kalinga Stadium Rd, Bhubaneswar, Odisha 751003",
     lat: 20.2658,
@@ -56,7 +60,7 @@ export const EV_STATIONS = [
   },
   {
     id: 6,
-    name: "Soumyashi EV Hub – Cuttack City",
+    name: "Soumyashi Charging Point – Buxi Bazar, Cuttack",
     city: "Cuttack",
     address: "Buxi Bazar, Cuttack, Odisha 753001",
     lat: 20.4625,
@@ -67,7 +71,7 @@ export const EV_STATIONS = [
   },
   {
     id: 7,
-    name: "Soumyashi EV Charge – Cuttack NH16",
+    name: "Soumyashi Charging Point – NH-16, Cuttack",
     city: "Cuttack",
     address: "NH-16 Service Rd, Cuttack, Odisha 753012",
     lat: 20.4186,
@@ -78,7 +82,7 @@ export const EV_STATIONS = [
   },
   {
     id: 8,
-    name: "Soumyashi EV Hub – Puri Beach",
+    name: "Soumyashi Charging Point – Marine Drive, Puri",
     city: "Puri",
     address: "Marine Drive, Puri, Odisha 752001",
     lat: 19.7998,
@@ -89,7 +93,7 @@ export const EV_STATIONS = [
   },
   {
     id: 9,
-    name: "Soumyashi EV Charge – Puri Temple Rd",
+    name: "Soumyashi Charging Point – Grand Road, Puri",
     city: "Puri",
     address: "Grand Rd, Puri, Odisha 752001",
     lat: 19.8047,
@@ -100,7 +104,7 @@ export const EV_STATIONS = [
   },
   {
     id: 10,
-    name: "Soumyashi EV Hub – Rourkela Steel City",
+    name: "Soumyashi Charging Point – Sector 19, Rourkela",
     city: "Rourkela",
     address: "Sector 19, Rourkela, Odisha 769003",
     lat: 22.2604,
@@ -111,7 +115,7 @@ export const EV_STATIONS = [
   },
   {
     id: 11,
-    name: "Soumyashi EV Charge – Rourkela NH",
+    name: "Soumyashi Charging Point – NH-143, Rourkela",
     city: "Rourkela",
     address: "NH-143, Rourkela, Odisha 769004",
     lat: 22.2270,
@@ -122,7 +126,7 @@ export const EV_STATIONS = [
   },
   {
     id: 12,
-    name: "Soumyashi EV Hub – Sambalpur",
+    name: "Soumyashi Charging Point – Ainthapali, Sambalpur",
     city: "Sambalpur",
     address: "Ainthapali, Sambalpur, Odisha 768004",
     lat: 21.4669,
@@ -133,7 +137,7 @@ export const EV_STATIONS = [
   },
   {
     id: 13,
-    name: "Soumyashi EV Hub – Berhampur",
+    name: "Soumyashi Charging Point – Gandhi Nagar, Berhampur",
     city: "Berhampur",
     address: "Gandhi Nagar, Berhampur, Odisha 760001",
     lat: 19.3150,
@@ -144,7 +148,7 @@ export const EV_STATIONS = [
   },
   {
     id: 14,
-    name: "Soumyashi EV Charge – Konark",
+    name: "Soumyashi Charging Point – Sun Temple Road, Konark",
     city: "Konark",
     address: "Near Sun Temple, Konark, Odisha 752111",
     lat: 19.8876,
@@ -155,7 +159,7 @@ export const EV_STATIONS = [
   },
   {
     id: 15,
-    name: "Soumyashi EV Hub – Balasore",
+    name: "Soumyashi Charging Point – Station Bazar, Balasore",
     city: "Balasore",
     address: "Station Bazar, Balasore, Odisha 756001",
     lat: 21.4927,

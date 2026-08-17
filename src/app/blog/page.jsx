@@ -1,7 +1,7 @@
 import BlogClient from "./BlogClient";
 
 export const metadata = {
-  title: "Energy Insights Blog | Soumyasi Power",
+  title: "Energy Insights Blog | Soumyashi Power",
   description:
     "Latest news and insights on solar energy, EV charging, and power infrastructure in Odisha.",
 };

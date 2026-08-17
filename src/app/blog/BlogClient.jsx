@@ -4,69 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Calendar, ArrowRight, Tag } from "lucide-react";
 import { VARIANTS } from "@/lib/animations/variants";
-
-const ARTICLES = [
-  {
-    slug: "solar-savings-guide",
-    title: "How Solar Power Can Cut Your Electricity Bill by 70%",
-    excerpt: "A practical guide to understanding net metering, government subsidies, and ROI calculations for rooftop solar in Odisha.",
-    category: "Solar",
-    date: "May 28, 2026",
-    readTime: "5 min",
-    catColor: "bg-amber-100 text-amber-700",
-    gradient: "from-amber-400 to-orange-500",
-  },
-  {
-    slug: "ev-adoption-odisha-2026",
-    title: "EV Adoption in Odisha: 2026 State of the Market",
-    excerpt: "Electric vehicle registrations in Odisha surged 3x in the past year. Here's what's driving the growth and where the infrastructure is heading.",
-    category: "EV",
-    date: "May 15, 2026",
-    readTime: "7 min",
-    catColor: "bg-indigo-100 text-indigo-700",
-    gradient: "from-indigo-400 to-blue-500",
-  },
-  {
-    slug: "net-metering-odisha-guide",
-    title: "Net Metering in Odisha: Complete 2026 Guide",
-    excerpt: "CESU and SOUTHCO policies, step-by-step application process, and how to maximize credits from your solar installation.",
-    category: "Policy",
-    date: "May 5, 2026",
-    readTime: "9 min",
-    catColor: "bg-emerald-100 text-emerald-700",
-    gradient: "from-emerald-400 to-teal-500",
-  },
-  {
-    slug: "industrial-power-quality",
-    title: "Industrial Power Quality: Why It Matters for Manufacturing",
-    excerpt: "Voltage fluctuations, harmonics, and power factor issues cost Odisha manufacturers crores annually. Here's how to fix it.",
-    category: "Industrial",
-    date: "April 22, 2026",
-    readTime: "6 min",
-    catColor: "bg-orange-100 text-orange-700",
-    gradient: "from-orange-400 to-amber-600",
-  },
-  {
-    slug: "solar-myths-debunked",
-    title: "Top 5 Myths About Solar Energy in India — Debunked",
-    excerpt: "From 'solar doesn't work on cloudy days' to 'it's too expensive' — we bust the most common solar myths with real data from Odisha installations.",
-    category: "Solar",
-    date: "April 10, 2026",
-    readTime: "4 min",
-    catColor: "bg-amber-100 text-amber-700",
-    gradient: "from-yellow-400 to-amber-500",
-  },
-  {
-    slug: "choosing-ev-charger-business",
-    title: "Choosing the Right EV Charger for Your Business",
-    excerpt: "AC vs DC fast chargers, installation requirements, and cost-benefit analysis for commercial EV charging stations in Odisha.",
-    category: "EV",
-    date: "March 30, 2026",
-    readTime: "8 min",
-    catColor: "bg-indigo-100 text-indigo-700",
-    gradient: "from-violet-400 to-indigo-500",
-  },
-];
+import { BLOG_POSTS as ARTICLES } from "@/lib/data/blog-posts";
 
 export default function BlogClient() {
   return (
@@ -111,7 +49,7 @@ export default function BlogClient() {
           <div className="section-divider mb-14" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {ARTICLES.map((art, i) => (
-              <Link key={art.title} href={`/blog/${art.slug}`}>
+              <Link key={art.slug} href={`/blog/${art.slug}`}>
               <motion.article
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

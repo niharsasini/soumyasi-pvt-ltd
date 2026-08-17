@@ -1,6 +1,6 @@
 export default function robots() {
   return {
     rules: { userAgent: "*", allow: "/", disallow: "/api/" },
-    sitemap: "https://soumyasipower.com/sitemap.xml",
+    sitemap: "https://www.soumyashipower.in/sitemap.xml",
   };
 }

@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
   const dotRef  = useRef(null);
   const ringRef = useRef(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    setIsTouchDevice(window.matchMedia("(hover: none)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (isTouchDevice) return;
     const dot  = dotRef.current;
     const ring = ringRef.current;
     if (!dot || !ring) return;
@@ -31,14 +37,18 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [isTouchDevice]);
+
+  // Never render on touch devices — matches the `cursor: none` rule in
+  // globals.css, which is keyed off the same (hover: none) media query.
+  if (isTouchDevice) return null;
 
   return (
     <>
       {/* Gold dot */}
       <div
         ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] -translate-x-1/2 -translate-y-1/2 hidden lg:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] -translate-x-1/2 -translate-y-1/2"
       >
         <div className="h-2 w-2 rounded-full bg-amber-400" />
       </div>
@@ -46,7 +56,7 @@ export default function CustomCursor() {
       {/* Lagging ring */}
       <div
         ref={ringRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] -translate-x-1/2 -translate-y-1/2 hidden lg:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9998] -translate-x-1/2 -translate-y-1/2"
       >
         <div
           className="h-8 w-8 rounded-full border border-amber-400/50"

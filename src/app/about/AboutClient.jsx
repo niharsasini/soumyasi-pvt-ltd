@@ -4,9 +4,11 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Target, Leaf, Lightbulb, Shield, Users, MapPin, Award } from "lucide-react";
+import { Target, Leaf, Lightbulb, Shield, Users, MapPin, Award, Settings, Zap } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+import { STATS } from "@/lib/config/stats.config";
 
 /* ── CountUp ─────────────────────────────────────── */
 function useCountUp(to, active) {
@@ -72,12 +74,15 @@ function TimelineItem({ year, title, desc, side, active, delay }) {
   );
 }
 
-/* ── TEAM DATA ── */
+/* ── LEADERSHIP TEAM ──
+ * Roles only — no invented names or bios. Real leadership profiles to be
+ * added once the company is ready to publish them.
+ */
 const TEAM = [
-  { initials: "SP", name: "Suresh Kumar Pattnaik", title: "CEO & Founder", bio: "20 years in electrical engineering. Built SPL from a single installation in 2014.", gradient: "from-amber-400 to-amber-600" },
-  { initials: "AB", name: "Anita Behera",           title: "Chief Technology Officer", bio: "IIT Kharagpur alumna. Leads solar design and smart energy automation.", gradient: "from-emerald-400 to-emerald-600" },
-  { initials: "RM", name: "Rajesh Mohanty",          title: "Head of EV Infrastructure", bio: "Pioneered Odisha's first commercial EV charging hub in Bhubaneswar.", gradient: "from-indigo-400 to-indigo-600" },
-  { initials: "PN", name: "Priya Nanda",              title: "Head of Operations",        bio: "Ensures 500+ installations run without a hitch, day and night.", gradient: "from-amber-500 to-orange-500" },
+  { icon: Award,    title: "Founder & Managing Director", bio: "Sets the company's direction and leads its growth across Odisha's solar, EV, and industrial power markets.", gradient: "from-amber-400 to-amber-600" },
+  { icon: Settings, title: "Chief Technical Officer",      bio: "Oversees engineering standards across every solar, EV, and industrial installation we deliver.", gradient: "from-emerald-400 to-emerald-600" },
+  { icon: Zap,       title: "Head of EV Operations",        bio: "Runs the EV charging network end-to-end — site surveys, installation, and station uptime.", gradient: "from-indigo-400 to-indigo-600" },
+  { icon: Users,     title: "Head of Projects",              bio: "Coordinates project delivery so every installation lands on schedule and on budget.", gradient: "from-amber-500 to-orange-500" },
 ];
 
 /* ── VALUES ── */
@@ -88,13 +93,12 @@ const VALUES = [
   { icon: Users,      title: "Community",      desc: "Built in Odisha, for Odisha. We hire locally, partner locally, and give back to the communities we serve." },
 ];
 
-/* ── MILESTONES ── */
+/* ── OUR JOURNEY ── */
 const MILESTONES = [
-  { year: "2014", title: "Founded in Bhubaneswar", desc: "Started with a team of 5 engineers and a single solar rooftop installation for a local factory." },
-  { year: "2016", title: "100th Solar Installation", desc: "Reached our first milestone — 100 solar installations across Bhubaneswar and Cuttack." },
-  { year: "2019", title: "Launched EV Division",      desc: "Commissioned Odisha's first commercial EV fast-charging hub in Bhubaneswar." },
-  { year: "2022", title: "50 EV Stations Live",        desc: "Expanded the EV network to Puri, Rourkela, Sambalpur and Berhampur — 50 stations operational." },
-  { year: "2024", title: "15 Cities, 500+ Projects",   desc: "Today we power homes, hospitals, factories and highways across 15 cities in Odisha." },
+  { year: "The Beginning", title: "Our Founding Story",     desc: "Soumyashi Power started with a single rooftop solar installation in Bhubaneswar — and a commitment to bring reliable clean power to Odisha." },
+  { year: "Milestone",     title: "First Solar Installations", desc: "Early rooftop solar projects across Bhubaneswar and Cuttack built the foundation for everything that followed." },
+  { year: "Expansion",     title: "Launched EV Charging",    desc: "We expanded into EV charging infrastructure, installing fast chargers to support Odisha's growing electric vehicle adoption." },
+  { year: "Today",         title: "15+ Cities Across Odisha", desc: "We now serve homes, businesses, and industries across Odisha — powering the state's transition to clean energy." },
 ];
 
 /* ═══════════════════════════════════════════════════ */
@@ -126,6 +130,9 @@ export default function AboutClient() {
         <div className="max-w-6xl mx-auto relative z-10 grid lg:grid-cols-2 gap-12 items-center">
           {/* Left text */}
           <div ref={heroRef}>
+            <div className="mb-5">
+              <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About Us" }]} />
+            </div>
             <motion.p initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5 }}
               className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
               About Us
@@ -164,7 +171,7 @@ export default function AboutClient() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400/30 to-amber-600/20 blur-3xl" />
               <div className="absolute inset-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-[0_20px_60px_rgba(217,119,6,0.3)]">
                 <div className="text-center text-white">
-                  <div className="text-5xl font-bold font-display">10+</div>
+                  <div className="text-5xl font-bold font-display">{STATS.yearsExperience}+</div>
                   <div className="text-sm font-semibold tracking-wider mt-1">Years of Excellence</div>
                 </div>
               </div>
@@ -201,9 +208,9 @@ export default function AboutClient() {
               From One Rooftop to an <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">Odisha-wide Network</span>
             </h2>
             <div className="space-y-4 text-brand-brown leading-relaxed">
-              <p>In 2014, founder Suresh Kumar Pattnaik installed his first solar system on a Bhubaneswar factory rooftop. The client's electricity bill fell by 68%. Word spread fast.</p>
-              <p>By 2019, Soumyashi Power had completed 200+ installations and launched Odisha's first commercial EV charging hub — anticipating the electric vehicle wave years before it arrived.</p>
-              <p>Today, with 500+ projects, 50+ EV stations, and operations in 15 cities, we remain what we've always been: a local team with deep Odisha roots, building infrastructure that will last decades.</p>
+              <p>Soumyashi Power began with a single rooftop solar installation in Bhubaneswar — powering a local factory and proving that clean energy could mean real, measurable savings from day one.</p>
+              <p>As demand grew, we expanded into EV charging infrastructure, building out charging stations to meet Odisha's growing electric vehicle adoption.</p>
+              <p>Today, with 500+ projects, 50+ EV stations, and operations in 15+ cities, we remain what we've always been: a local team with deep Odisha roots, building infrastructure that will last decades.</p>
             </div>
           </motion.div>
 
@@ -215,7 +222,7 @@ export default function AboutClient() {
           >
             <Image
               src="/soumyasi/solar-field-odisha.png"
-              alt="Soumyasi Power solar installation in Odisha"
+              alt="Soumyashi Power solar installation in Odisha"
               fill
               className="object-cover object-center"
             />
@@ -224,10 +231,10 @@ export default function AboutClient() {
             {/* 2×2 stat cards */}
             <div className="relative z-10 grid grid-cols-2 gap-3 p-4 pb-14">
               {[
-                { value:2014, suffix:"", label:"Year Founded" },
-                { value:500,  suffix:"+", label:"Projects Completed" },
-                { value:15,   suffix:"+", label:"Cities Covered" },
-                { value:50,   suffix:"+", label:"Team Members" },
+                { value:STATS.yearsExperience, suffix:"+", label:"Years Experience" },
+                { value:STATS.installations,   suffix:"+", label:"Projects Completed" },
+                { value:STATS.cities,          suffix:"+", label:"Cities Covered" },
+                { value:STATS.evStations,      suffix:"+", label:"EV Stations Live" },
               ].map((s, i) => (
                 <div key={s.label} className="bg-white/95 backdrop-blur-sm rounded-xl shadow-warm">
                   <StatCard {...s} active={statsOn} delay={i * 0.1} />
@@ -300,18 +307,20 @@ export default function AboutClient() {
       <section className="py-24 px-4 bg-brand-bg">
         <div className="max-w-5xl mx-auto">
           <SectionHeading badge="The People Behind It" words={["Our", "Leadership"]} goldWords={["Leadership"]} />
+          <p className="text-center text-brand-brown max-w-xl mx-auto -mt-6 mb-10 text-sm leading-relaxed">
+            Our leadership team brings decades of combined experience in electrical engineering, renewable energy, and project management.
+          </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {TEAM.map(({ initials, name, title, bio, gradient }, i) => (
-              <motion.div key={name}
+            {TEAM.map(({ icon: Icon, title, bio, gradient }, i) => (
+              <motion.div key={title}
                 initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.5, delay:i*0.1 }}
                 whileHover={{ y:-6 }}
                 className="bg-white border border-brand-border rounded-2xl shadow-warm p-6 text-center hover:border-amber-400 hover:shadow-card-hover transition-all duration-300">
-                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-white font-bold text-xl font-display mx-auto mb-4 shadow-gold`}>
-                  {initials}
+                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-white mx-auto mb-4 shadow-gold`}>
+                  <Icon size={26} />
                 </div>
-                <h3 className="font-bold font-display text-brand-ink text-sm">{name}</h3>
-                <p className="text-brand-gold text-xs font-semibold mt-1 mb-3">{title}</p>
-                <p className="text-brand-muted text-xs leading-relaxed">{bio}</p>
+                <h3 className="font-bold font-display text-brand-ink text-sm">{title}</h3>
+                <p className="text-brand-muted text-xs leading-relaxed mt-2">{bio}</p>
               </motion.div>
             ))}
           </div>

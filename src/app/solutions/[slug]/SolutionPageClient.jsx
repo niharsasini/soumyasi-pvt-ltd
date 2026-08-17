@@ -12,6 +12,7 @@ import {
   DollarSign, Clock, Settings, Headphones, Check,
 } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 import { VARIANTS } from "@/lib/animations/variants";
 import dynamic from 'next/dynamic'
 
@@ -179,6 +180,9 @@ export default function SolutionPageClient({ solution }) {
         <div ref={heroRef} className="max-w-7xl mx-auto w-full relative z-10 grid lg:grid-cols-[55%_45%] gap-12 items-center">
           {/* Left — text */}
           <div>
+            <div className="mb-5">
+              <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Solutions", href: "/solutions" }, { label: solution.title }]} />
+            </div>
             {/* Animated "Now serving Odisha" badge */}
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
               className="inline-flex items-center gap-2 bg-white border border-[#e8d5b0] rounded-full px-4 py-2 text-sm text-[#78614a] mb-6 shadow-sm">
@@ -473,9 +477,16 @@ export default function SolutionPageClient({ solution }) {
                   ))}
                 </div>
                 <p className="text-[#78614a] text-sm leading-relaxed mb-5 italic">&ldquo;{t.text}&rdquo;</p>
-                <div>
-                  <p className="font-bold font-display text-[#1a1208] text-sm">{t.name}</p>
-                  <p className="text-[#a8917a] text-xs mt-0.5">{t.location}</p>
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="font-bold font-display text-[#1a1208] text-sm">{t.name}</p>
+                    <p className="text-[#a8917a] text-xs mt-0.5">{t.location}</p>
+                  </div>
+                  {t.detail && (
+                    <span className="text-[10px] font-semibold text-[#78614a] bg-[#FFF8E7] border border-[#e8d5b0] rounded-full px-2.5 py-1 whitespace-nowrap">
+                      {t.detail}
+                    </span>
+                  )}
                 </div>
               </motion.div>
             ))}

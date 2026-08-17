@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -59,10 +60,12 @@ const HamburgerIcon = ({ open }) => (
 );
 
 export default function Navbar() {
+  const router = useRouter();
   const [scrolled,  setScrolled]  = useState(false);
   const [open,      setOpen]      = useState(false);
   const [progress,  setProgress]  = useState(0);
   const [megaOpen,  setMegaOpen]  = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const megaTimeout = useRef(null);
 
   useEffect(() => {
@@ -76,12 +79,23 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    setIsTouchDevice(window.matchMedia("(hover: none)").matches);
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  const openMega  = () => { clearTimeout(megaTimeout.current); setMegaOpen(true); };
-  const closeMega = () => { megaTimeout.current = setTimeout(() => setMegaOpen(false), 120); };
+  const openMega  = () => { if (isTouchDevice) return; clearTimeout(megaTimeout.current); setMegaOpen(true); };
+  const closeMega = () => { if (isTouchDevice) return; megaTimeout.current = setTimeout(() => setMegaOpen(false), 120); };
+
+  // Touch/tablet devices without hover: tapping "Solutions" navigates directly
+  // instead of relying on hover to reveal the mega dropdown.
+  const handleSolutionsClick = () => {
+    if (isTouchDevice) router.push("/solutions");
+    else setMegaOpen((v) => !v);
+  };
 
   return (
     <>
@@ -135,6 +149,9 @@ export default function Navbar() {
                     whileHover={{ y: -2, scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    onClick={handleSolutionsClick}
+                    aria-haspopup="true"
+                    aria-expanded={megaOpen}
                     className={`flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                       megaOpen
                         ? "bg-amber-100 text-[#d97706] border border-amber-300 shadow-[0_4px_12px_rgba(217,119,6,0.2)]"

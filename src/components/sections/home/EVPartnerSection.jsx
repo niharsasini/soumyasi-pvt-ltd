@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 import { CONTACT } from "@/lib/config/site.config";
+import { STATS as SITE_STATS } from "@/lib/config/stats.config";
 
 /* ── Data ───────────────────────────────────────────────── */
 
@@ -32,7 +33,7 @@ const BENEFITS = [
 const STATS = [
   { value: "₹8K–15K", label: "Monthly Revenue" },
   { value: "60kW", label: "Charger Output" },
-  { value: "50+", label: "Active Stations", countTo: 50, suffix: "+" },
+  { value: `${SITE_STATS.evStations}+`, label: "Active Stations", countTo: SITE_STATS.evStations, suffix: "+" },
   { value: "6 Weeks", label: "Survey to Live" },
 ];
 
@@ -98,8 +99,12 @@ function BecomePartnerSection() {
   const { ref, isInView } = useScrollReveal();
   const [sessions, setSessions] = useState(15);
   const [duration, setDuration] = useState(30);
-  const kwhPerSession = (duration / 60) * 60;
-  const monthlyRevenue = Math.round(sessions * 30 * kwhPerSession * 12);
+  // Revenue basis: average utilized draw per session (~5kW across ramp-up/taper),
+  // not the 60kW charger's peak nameplate rating — sessions rarely sustain peak power throughout.
+  const AVG_SESSION_KW = 5;
+  const kwhDelivered = (duration / 60) * AVG_SESSION_KW * 0.85; // 85% efficiency
+  const revenuePerSession = kwhDelivered * 12; // ₹12/kWh standard rate
+  const monthlyRevenue = Math.round(sessions * 30 * revenuePerSession);
 
   return (
     <section className="w-full bg-[#FFF8E7] py-24">
@@ -188,7 +193,9 @@ function BecomePartnerSection() {
             <div className="border-t border-emerald-100 mt-6 pt-6 text-center">
               <p className="text-[#78614a] text-sm">Estimated monthly revenue</p>
               <p className="text-4xl font-black text-emerald-600 mt-1 tabular-nums">₹{monthlyRevenue.toLocaleString("en-IN")}</p>
-              <p className="text-[#a8917a] text-xs mt-2">*Based on ₹12/kWh standard rate</p>
+              <p className="text-[#a8917a] text-xs mt-2">
+                At {sessions} sessions/day × {duration} min avg × ₹12/kWh
+              </p>
             </div>
             <Link
               href="/contact"
@@ -310,27 +317,21 @@ function HowItWorksSection() {
               <h3 className="text-2xl sm:text-3xl font-black font-display text-white">Ready to Get Started?</h3>
               <p className="text-white/80 mt-2 max-w-md">No upfront cost. No technical knowledge needed. We earn only when you earn.</p>
             </div>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-wrap">
-              <a
-                href={CONTACT.phoneHref}
-                className="inline-flex items-center justify-center gap-2 bg-white/20 border border-white/30 rounded-full px-5 py-3 text-white font-medium hover:bg-white/30 transition-colors duration-300"
-              >
-                <PhoneCall size={17} /> Call Us
-              </a>
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-white/20 border border-white/30 rounded-full px-5 py-3 text-white font-medium hover:bg-white/30 transition-colors duration-300"
-              >
-                <MessageCircle size={17} /> WhatsApp
-              </a>
+            <div className="flex flex-col items-center sm:items-end gap-3">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center bg-white text-emerald-700 font-bold rounded-full px-8 py-3 hover:scale-105 transition-transform duration-300"
+                className="btn-shimmer inline-flex items-center justify-center bg-white text-emerald-700 font-bold rounded-full px-8 py-3 hover:scale-105 transition-transform duration-300"
               >
                 Apply as Partner
               </Link>
+              <div className="flex items-center gap-4 text-sm">
+                <a href={CONTACT.phoneHref} className="inline-flex items-center gap-1.5 text-white/80 hover:text-white transition-colors">
+                  <PhoneCall size={14} /> Call Us
+                </a>
+                <a href={waHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-white/80 hover:text-white transition-colors">
+                  <MessageCircle size={14} /> WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         </motion.div>

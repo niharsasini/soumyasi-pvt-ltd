@@ -1,103 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Zap, Sun, Factory } from "lucide-react";
+import { MapPin, Zap, Sun, Factory, Wind } from "lucide-react";
 import { VARIANTS } from "@/lib/animations/variants";
+import { PROJECTS } from "@/lib/data/projects";
 
-const CATEGORIES = ["All", "Solar", "EV", "Industrial"];
+const CATEGORIES = ["All", "Solar", "EV", "Industrial", "Wind"];
 
-const PROJECTS = [
-  {
-    title: "Bhubaneswar Corporate Solar Rooftop",
-    location: "Bhubaneswar, Odisha",
-    scale: "500 kW",
-    category: "Solar",
-    badge: "Completed",
-    badgeColor: "bg-emerald-100 text-emerald-700",
-    gradient: "from-amber-400 to-amber-600",
-    icon: Sun,
-    year: "2024",
-  },
-  {
-    title: "Cuttack EV Charging Hub",
-    location: "Cuttack, Odisha",
-    scale: "24 Stations",
-    category: "EV",
-    badge: "Live",
-    badgeColor: "bg-indigo-100 text-indigo-700",
-    gradient: "from-indigo-400 to-indigo-600",
-    icon: Zap,
-    year: "2024",
-  },
-  {
-    title: "NALCO Industrial Substation",
-    location: "Angul, Odisha",
-    scale: "33 kV",
-    category: "Industrial",
-    badge: "Completed",
-    badgeColor: "bg-emerald-100 text-emerald-700",
-    gradient: "from-emerald-400 to-emerald-600",
-    icon: Factory,
-    year: "2023",
-  },
-  {
-    title: "Puri Temple Town Solar Initiative",
-    location: "Puri, Odisha",
-    scale: "200 kW",
-    category: "Solar",
-    badge: "Completed",
-    badgeColor: "bg-emerald-100 text-emerald-700",
-    gradient: "from-amber-500 to-orange-500",
-    icon: Sun,
-    year: "2023",
-  },
-  {
-    title: "Rourkela EV Network Expansion",
-    location: "Rourkela, Odisha",
-    scale: "15 Stations",
-    category: "EV",
-    badge: "Live",
-    badgeColor: "bg-indigo-100 text-indigo-700",
-    gradient: "from-violet-400 to-indigo-600",
-    icon: Zap,
-    year: "2024",
-  },
-  {
-    title: "Sambalpur Industrial Park Electrification",
-    location: "Sambalpur, Odisha",
-    scale: "2 MW",
-    category: "Industrial",
-    badge: "In Progress",
-    badgeColor: "bg-amber-100 text-amber-700",
-    gradient: "from-emerald-500 to-teal-600",
-    icon: Factory,
-    year: "2025",
-  },
-  {
-    title: "AIIMS Bhubaneswar Solar Backup",
-    location: "Bhubaneswar, Odisha",
-    scale: "350 kW",
-    category: "Solar",
-    badge: "Completed",
-    badgeColor: "bg-emerald-100 text-emerald-700",
-    gradient: "from-amber-400 to-yellow-500",
-    icon: Sun,
-    year: "2023",
-  },
-  {
-    title: "Berhampur Smart EV Corridor",
-    location: "Berhampur, Odisha",
-    scale: "10 Stations",
-    category: "EV",
-    badge: "Coming Soon",
-    badgeColor: "bg-amber-100 text-amber-700",
-    gradient: "from-indigo-500 to-blue-600",
-    icon: Zap,
-    year: "2025",
-  },
-];
+const CATEGORY_ICON = { Solar: Sun, EV: Zap, Industrial: Factory, Wind: Wind };
+
+const STATUS_COLOR = {
+  Completed: "bg-emerald-100 text-emerald-700",
+  "In Progress": "bg-amber-100 text-amber-700",
+  "Coming Soon": "bg-amber-100 text-amber-700",
+};
 
 export default function ProjectsClient() {
   const [active, setActive] = useState("All");
@@ -161,31 +80,40 @@ export default function ProjectsClient() {
 
           <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <AnimatePresence mode="popLayout">
-              {filtered.map((p) => {
-                const Icon = p.icon;
+              {filtered.map((p, i) => {
+                const Icon = CATEGORY_ICON[p.category] || Sun;
                 return (
-                  <motion.div key={p.title}
-                    layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                  <motion.div key={p.slug}
+                    layout initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                    viewport={{ once: true }}
                     whileHover={{ y: -6 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                    className="bg-white border border-brand-border rounded-2xl shadow-warm overflow-hidden hover:border-amber-400 hover:shadow-card-hover transition-all duration-300 cursor-default">
-                    {/* Image placeholder */}
-                    <div className={`h-40 bg-gradient-to-br ${p.gradient} flex items-center justify-center relative`}>
-                      <Icon size={40} className="text-white/80" />
-                      <span className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full ${p.badgeColor}`}>
-                        {p.badge}
-                      </span>
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-bold text-brand-ink text-sm leading-snug mb-2">{p.title}</h3>
-                      <div className="flex items-center gap-1 text-brand-muted text-xs mb-1">
-                        <MapPin size={11} /> {p.location}
+                    transition={{ type: "spring", stiffness: 260, damping: 18, delay: (i % 8) * 0.06 }}
+                  >
+                    <Link
+                      href={`/projects/${p.slug}`}
+                      className="block bg-white border border-brand-border rounded-2xl shadow-warm overflow-hidden hover:border-amber-400 hover:shadow-card-hover transition-all duration-300"
+                    >
+                      <div className="h-40 relative">
+                        <Image src={p.image} alt={p.title} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover" />
+                        <div className="absolute inset-0 bg-black/15" />
+                        <span className="absolute top-3 left-3 h-8 w-8 rounded-lg bg-white/90 flex items-center justify-center">
+                          <Icon size={16} className="text-amber-600" />
+                        </span>
+                        <span className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full ${STATUS_COLOR[p.status] || "bg-amber-100 text-amber-700"}`}>
+                          {p.status}
+                        </span>
                       </div>
-                      <div className="flex items-center justify-between mt-3">
-                        <span className="text-xs font-semibold text-brand-gold">{p.scale}</span>
-                        <span className="text-xs text-brand-muted">{p.year}</span>
+                      <div className="p-5">
+                        <h3 className="font-bold text-brand-ink text-sm leading-snug mb-2">{p.title}</h3>
+                        <div className="flex items-center gap-1 text-brand-muted text-xs mb-1">
+                          <MapPin size={11} /> {p.location}
+                        </div>
+                        <div className="flex items-center justify-between mt-3">
+                          <span className="text-xs font-semibold text-brand-gold">{p.capacity}</span>
+                          <span className="text-xs text-brand-muted">{p.completedDate}</span>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   </motion.div>
                 );
               })}

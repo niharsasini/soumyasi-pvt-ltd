@@ -3,12 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { STATS as SITE_STATS } from "@/lib/config/stats.config";
 
 const STATS = [
-  { value: 500, suffix: "+", label: "Projects Completed",  href: "/projects" },
-  { value: 50,  suffix: "+", label: "EV Stations Live",    href: "/solutions/ev-charging" },
-  { value: 15,  suffix: "+", label: "Cities Covered",      href: "/about" },
-  { value: 98,  suffix: "%", label: "Client Satisfaction", href: null },
+  { value: SITE_STATS.installations, suffix: "+", label: "Projects Completed",  href: "/projects" },
+  { value: SITE_STATS.evStations,    suffix: "+", label: "EV Stations Live",    href: "/solutions/ev-charging" },
+  { value: SITE_STATS.cities,        suffix: "+", label: "Cities Covered",      href: "/about" },
+  { value: SITE_STATS.satisfaction,  suffix: "%", label: "Client Satisfaction", href: null },
 ];
 
 function CountUp({ to, suffix, active }) {

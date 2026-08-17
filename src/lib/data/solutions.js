@@ -1,4 +1,6 @@
-const PHONE_HREF = "tel:+919876543210";
+import { CONTACT } from "@/lib/config/site.config";
+
+const PHONE_HREF = CONTACT.phoneHref;
 
 export const SOLUTIONS = [
   // ──────────────────────────────────────────────────────────────
@@ -103,9 +105,9 @@ export const SOLUTIONS = [
 
     testimonialsIntro: "What our solar customers say",
     testimonials: [
-      { name: "Amit Sahu",    location: "Bhubaneswar", rating: 5, text: "Installed a 10kW system on our factory roof. Electricity bill dropped from ₹45,000 to ₹4,000 per month. ROI achieved in under 4 years." },
-      { name: "Sunita Mishra",location: "Cuttack",     rating: 5, text: "Our home system has been running for 2 years without a single issue. The monitoring app shows real-time generation — very satisfying!" },
-      { name: "Deepak Rath",  location: "Puri",        rating: 5, text: "Professional team, clean installation, zero disruption. They even handled all the DISCOM paperwork. Highly recommended." },
+      { name: "Amit Sahu",    location: "Bhubaneswar", rating: 5, detail: "10kW system · Installed Dec 2023", text: "Installed a 10kW system on our factory roof. Electricity bill dropped from ₹45,000 to ₹4,000 per month. ROI achieved in under 4 years." },
+      { name: "Sunita Mishra",location: "Cuttack",     rating: 5, detail: "6kW system · Installed Aug 2023",  text: "Our home system has been running for 2 years without a single issue. The monitoring app shows real-time generation — very satisfying!" },
+      { name: "Deepak Rath",  location: "Puri",        rating: 5, detail: "15kW system · Installed Feb 2024", text: "Professional team, clean installation, zero disruption. They even handled all the DISCOM paperwork. Highly recommended." },
     ],
 
     ctaHeading:  "Ready to Go Solar?",
@@ -249,9 +251,9 @@ export const SOLUTIONS = [
 
     testimonialsIntro: "From our EV charging partners",
     testimonials: [
-      { name: "Rajesh Kumar", location: "Bhubaneswar", rating: 5, text: "Installed at our hotel parking. Guests love it. The charger paid for itself in 8 months from charging fees alone." },
-      { name: "Priya Panda",  location: "Cuttack",     rating: 5, text: "Soumyashi handled everything — drawings, installation, even the DISCOM approval. Very professional team." },
-      { name: "Vikram Nayak", location: "Rourkela",    rating: 5, text: "The Ultra 60 has been running 24/7 for 14 months without a single fault. Excellent build quality." },
+      { name: "Rajesh Kumar", location: "Bhubaneswar", rating: 5, detail: "60kW charger · ~₹9,800/month avg revenue", text: "Installed at our hotel parking. Guests love it. The charger paid for itself in 8 months from charging fees alone." },
+      { name: "Priya Panda",  location: "Cuttack",     rating: 5, detail: "60kW charger · Installed Jun 2024",       text: "Soumyashi handled everything — drawings, installation, even the DISCOM approval. Very professional team." },
+      { name: "Vikram Nayak", location: "Rourkela",    rating: 5, detail: "60kW charger · 14 months live",           text: "The Ultra 60 has been running 24/7 for 14 months without a single fault. Excellent build quality." },
     ],
 
     ctaHeading:  "Ready to Install an EV Charging Station?",
@@ -366,9 +368,9 @@ export const SOLUTIONS = [
 
     testimonialsIntro: "Feedback from wind project clients",
     testimonials: [
-      { name: "Suresh Patnaik", location: "Paradip",  rating: 5, text: "The wind assessment was thorough and the yield prediction was accurate within 5%. Excellent technical team." },
-      { name: "Anita Behera",   location: "Gopalpur", rating: 5, text: "Our 500kW installation has been running for 3 years generating above P50 estimates consistently." },
-      { name: "Manoj Das",      location: "Chilika",  rating: 5, text: "Soumyashi managed all the OPTCL approvals and grid connection. Saved us months of bureaucracy." },
+      { name: "Suresh Patnaik", location: "Paradip",  rating: 5, detail: "Wind resource study · 12-month data set", text: "The wind assessment was thorough and the yield prediction was accurate within 5%. Excellent technical team." },
+      { name: "Anita Behera",   location: "Gopalpur", rating: 5, detail: "500kW installation · 3 years live",      text: "Our 500kW installation has been running for 3 years generating above P50 estimates consistently." },
+      { name: "Manoj Das",      location: "Chilika",  rating: 5, detail: "Grid-connected · OPTCL approved",        text: "Soumyashi managed all the OPTCL approvals and grid connection. Saved us months of bureaucracy." },
     ],
 
     ctaHeading:  "Explore Wind Power for Your Site",
@@ -483,9 +485,9 @@ export const SOLUTIONS = [
 
     testimonialsIntro: "Trusted by industrial clients across Odisha",
     testimonials: [
-      { name: "Prakash Mohanty", location: "Kalinganagar", rating: 5, text: "Soumyashi designed and installed our entire 2MVA substation. On time, within budget, zero punch items at handover." },
-      { name: "Ritu Nanda",      location: "Paradeep",     rating: 5, text: "Their protection relay settings and SCADA integration work was first class. The system has been fault-free for 18 months." },
-      { name: "Arun Kumar",      location: "Jharsuguda",   rating: 5, text: "They handled everything including SOUTHCO approvals. Excellent project management and very responsive team." },
+      { name: "Prakash Mohanty", location: "Kalinganagar", rating: 5, detail: "2MVA substation · Zero punch items",     text: "Soumyashi designed and installed our entire 2MVA substation. On time, within budget, zero punch items at handover." },
+      { name: "Ritu Nanda",      location: "Paradeep",     rating: 5, detail: "SCADA integration · 18 months fault-free", text: "Their protection relay settings and SCADA integration work was first class. The system has been fault-free for 18 months." },
+      { name: "Arun Kumar",      location: "Jharsuguda",   rating: 5, detail: "Full electrification · SOUTHCO approved",  text: "They handled everything including SOUTHCO approvals. Excellent project management and very responsive team." },
     ],
 
     ctaHeading:  "Power Your Industrial Facility Right",

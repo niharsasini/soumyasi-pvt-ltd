@@ -36,11 +36,11 @@ export const metadata = {
   ],
   authors: [{ name: "Soumyashi Power" }],
   creator: "Soumyashi Power",
-  metadataBase: new URL("https://soumyasipower.com"),
+  metadataBase: new URL("https://www.soumyashipower.in"),
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://soumyasipower.com",
+    url: "https://www.soumyashipower.in",
     siteName: "Soumyashi Power",
     title: "Soumyashi Power | Solar & EV Charging Odisha",
     description:

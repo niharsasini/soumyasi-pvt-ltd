@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import FormFallback, { FORM_ERROR_MESSAGE } from "./FormFallback";
 
 const SERVICES = [
   "Solar Power Installation",
@@ -185,7 +186,7 @@ export default function ContactForm() {
           {status === "error" && (
             <motion.p initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
               className="text-sm text-red-500 flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
-              <AlertCircle size={15} /> Something went wrong. Please try again.
+              <AlertCircle size={15} className="flex-shrink-0" /> {FORM_ERROR_MESSAGE}
             </motion.p>
           )}
         </AnimatePresence>
@@ -202,6 +203,8 @@ export default function ContactForm() {
             : "Send Message →"}
         </button>
       </motion.div>
+
+      <FormFallback className="justify-center pt-1" />
     </motion.form>
   );
 }

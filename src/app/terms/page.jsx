@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Terms of Service | Soumyasi Power",
-  description: "Terms of service for Soumyasi Power — conditions governing use of our website and services.",
+  title: "Terms of Service | Soumyashi Power",
+  description: "Terms of service for Soumyashi Power — conditions governing use of our website and services.",
 };
 
 const SECTIONS = [
@@ -24,7 +24,7 @@ const SECTIONS = [
   },
   {
     title: "4. Intellectual Property",
-    content: `All content on this website — including text, images, graphics, logos, and the Soumyasi Power brand — is the property of Soumyashi Power Limited and protected under applicable intellectual property laws. Unauthorised use is prohibited.`,
+    content: `All content on this website — including text, images, graphics, logos, and the Soumyashi Power brand — is the property of Soumyashi Power Limited and protected under applicable intellectual property laws. Unauthorised use is prohibited.`,
   },
   {
     title: "5. Quotations & Project Proposals",
@@ -48,7 +48,7 @@ const SECTIONS = [
   },
   {
     title: "10. Contact",
-    content: `For questions about these Terms, contact us at info@soumyasipower.com or write to: Soumyashi Power Limited, Plot No. 123, Industrial Area, Bhubaneswar, Odisha, India.`,
+    content: `For questions about these Terms, contact us at info@soumyashipower.in or write to: Soumyashi Power Limited, Plot No. 123, Industrial Area, Bhubaneswar, Odisha, India.`,
   },
 ];
 

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import ContactForm from "@/components/forms/ContactForm";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 import { CONTACT } from "@/lib/config/site.config";
 import { VARIANTS } from "@/lib/animations/variants";
 
@@ -59,6 +60,9 @@ export default function ContactClient() {
             className="absolute bottom-[8%] left-[50%] h-48 w-48 rounded-full bg-amber-400/15 blur-3xl" />
         </div>
         <div className="relative z-10">
+          <div className="mb-5 flex justify-center">
+            <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
+          </div>
           <motion.p
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
             className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4"

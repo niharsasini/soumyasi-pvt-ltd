@@ -42,9 +42,9 @@ const STEPS = [
 ];
 
 const TESTIMONIALS = [
-  { name: "Amit Sahu",    location: "Bhubaneswar", type: "Solar",      rating: 5, quote: "Soumyasi Power cut my factory's electricity bill by 72%. The installation was seamless — they handled everything from permits to commissioning." },
-  { name: "Deepak Rath",  location: "Cuttack",     type: "EV Charging", rating: 5, quote: "The charging station at our mall has been running flawlessly for 18 months. Reliable hardware, smart access, zero downtime." },
-  { name: "Sunita Mishra", location: "Puri",        type: "Industrial",  rating: 5, quote: "Their team upgraded our entire substation infrastructure. Professional execution, on-time delivery, and excellent post-install support." },
+  { name: "Amit Sahu",   location: "Bhubaneswar", type: "Solar",       rating: 5, detail: "10kW system · Dec 2023",       quote: "Soumyashi Power cut my factory's electricity bill by 72%. The installation was seamless — they handled everything from permits to commissioning." },
+  { name: "Deepak Rath", location: "Cuttack",     type: "EV Charging", rating: 5, detail: "60kW charger · 18 months live", quote: "The charging station at our mall has been running flawlessly for 18 months. Reliable hardware, smart access, zero downtime." },
+  { name: "Bijay Nayak", location: "Puri",        type: "Industrial",  rating: 5, detail: "1.5MVA substation · Sep 2023",  quote: "Their team upgraded our entire substation infrastructure. Professional execution, on-time delivery, and excellent post-install support." },
 ];
 
 const FLOAT = {
@@ -127,7 +127,7 @@ function HeroSection() {
         >
           <Image
             src="/soumyasi/solar-field-odisha.png"
-            alt="Soumyasi Power solar installation in Odisha"
+            alt="Soumyashi Power solar installation in Odisha"
             width={680}
             height={500}
             className="w-full h-auto object-cover object-center"
@@ -266,7 +266,7 @@ function EVChargerSection() {
         >
           <Image
             src="/soumyasi/ev-charger-ultra60.png"
-            alt="Soumyasi Power Ultra 60 EV fast charger"
+            alt="Soumyashi Power Ultra 60 EV fast charger"
             width={620}
             height={520}
             className="w-full h-auto object-cover object-center"
@@ -401,8 +401,9 @@ function TestimonialsSection() {
                 <div>
                   <p className="font-bold font-display text-brand-ink text-sm">{t.name}</p>
                   <p className="text-brand-muted text-xs mt-0.5">{t.location}</p>
+                  {t.detail && <p className="text-brand-muted/80 text-[11px] mt-0.5">{t.detail}</p>}
                 </div>
-                <span className="text-[10px] font-bold tracking-wide uppercase text-amber-600 bg-amber-50 border border-amber-200 rounded-full px-3 py-1">
+                <span className="text-[10px] font-bold tracking-wide uppercase text-amber-600 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 whitespace-nowrap">
                   {t.type}
                 </span>
               </div>

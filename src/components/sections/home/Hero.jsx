@@ -4,15 +4,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Zap, Battery, ShieldCheck, Check, Wind, Factory } from "lucide-react";
+import { STATS as SITE_STATS } from "@/lib/config/stats.config";
 
 const EASE = [0.25, 0.46, 0.45, 0.94];
 
 const SLIDE_MS = 6000;
 
 const STATS = [
-  { value: 500, suffix: "+", label: "Installations" },
-  { value: 50, suffix: "+", label: "EV Stations" },
-  { value: 15, suffix: "+", label: "Cities" },
+  { value: SITE_STATS.installations, suffix: "+", label: "Installations" },
+  { value: SITE_STATS.evStations, suffix: "+", label: "EV Stations" },
+  { value: SITE_STATS.cities, suffix: "+", label: "Cities" },
 ];
 
 function useCountUp(to, active) {

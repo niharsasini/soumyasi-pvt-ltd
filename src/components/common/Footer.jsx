@@ -63,7 +63,7 @@ function Newsletter() {
       if (!res.ok) throw new Error("formspree error");
       setStatus("success");
     } catch {
-      setErrMsg("Something went wrong. Please try again.");
+      setErrMsg(`Couldn't subscribe. Reach us directly at ${CONTACT.phone} instead.`);
       setStatus("error");
     }
   };

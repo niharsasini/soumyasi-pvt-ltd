@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy | Soumyasi Power",
-  description: "Privacy policy for Soumyasi Power — how we collect, use, and protect your personal data.",
+  title: "Privacy Policy | Soumyashi Power",
+  description: "Privacy policy for Soumyashi Power — how we collect, use, and protect your personal data.",
 };
 
 const SECTIONS = [
@@ -47,7 +47,7 @@ const SECTIONS = [
   },
   {
     title: "7. Contact & Grievance",
-    content: `For privacy-related queries or to exercise your rights, contact us at info@soumyasipower.com or write to: Soumyashi Power Limited, Plot No. 123, Industrial Area, Bhubaneswar, Odisha, India.`,
+    content: `For privacy-related queries or to exercise your rights, contact us at info@soumyashipower.in or write to: Soumyashi Power Limited, Plot No. 123, Industrial Area, Bhubaneswar, Odisha, India.`,
   },
   {
     title: "8. Changes to This Policy",
@@ -75,7 +75,7 @@ export default function PrivacyPolicyPage() {
       <section className="pb-24 px-4">
         <div className="max-w-3xl mx-auto space-y-8">
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-sm text-[#78614a] leading-relaxed">
-            Soumyashi Power Limited (&quot;Soumyasi Power&quot;, &quot;we&quot;, &quot;our&quot;) is committed to protecting your personal data and respecting your privacy. This policy explains how we collect, use, and protect information when you interact with our website or services.
+            Soumyashi Power Limited (&quot;Soumyashi Power&quot;, &quot;we&quot;, &quot;our&quot;) is committed to protecting your personal data and respecting your privacy. This policy explains how we collect, use, and protect information when you interact with our website or services.
           </div>
 
           {SECTIONS.map(({ title, content }) => (
