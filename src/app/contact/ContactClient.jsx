@@ -19,14 +19,14 @@ const INFO_CARDS = [
     icon: Mail,
     title: "Email Us",
     info: CONTACT.email,
-    href: `mailto:${CONTACT.email}`,
+    href: CONTACT.emailHref,
     color: "text-brand-gold bg-amber-50",
   },
   {
     icon: MapPin,
     title: "Office Address",
-    info: `${CONTACT.address.line1} ${CONTACT.address.line2}`,
-    href: "https://maps.google.com/?q=Bhubaneswar,Odisha",
+    info: CONTACT.address,
+    href: CONTACT.mapLink,
     color: "text-brand-gold bg-amber-50",
   },
   {
@@ -40,7 +40,7 @@ const INFO_CARDS = [
     icon: MessageCircle,
     title: "Chat on WhatsApp",
     info: "Quick response during business hours",
-    href: `https://wa.me/${CONTACT.phone.replace(/\D/g, "")}`,
+    href: CONTACT.whatsapp,
     color: "text-emerald-600 bg-emerald-50",
     external: true,
   },
@@ -146,8 +146,8 @@ export default function ContactClient() {
             <div className="space-y-4">
               {[
                 { icon: Phone, label: "24/7 Support Line", val: CONTACT.phone, href: CONTACT.phoneHref },
-                { icon: Mail,  label: "Email Response < 2h", val: CONTACT.email, href: `mailto:${CONTACT.email}` },
-                { icon: MapPin, label: "Visit Our Office", val: `${CONTACT.address.line1} ${CONTACT.address.line2}`, href: "https://maps.google.com/?q=Bhubaneswar,Odisha" },
+                { icon: Mail,  label: "Email Response < 2h", val: CONTACT.email, href: CONTACT.emailHref },
+                { icon: MapPin, label: "Visit Our Office", val: CONTACT.address, href: CONTACT.mapLink },
                 { icon: Clock, label: "Business Hours", val: CONTACT.hours, href: null },
               ].map(({ icon: Icon, label, val, href }) => (
                 <div key={label} className="flex gap-4 items-start">
@@ -189,7 +189,7 @@ export default function ContactClient() {
           <div className="rounded-2xl overflow-hidden border border-brand-border shadow-warm">
             <iframe
               title="Soumyashi Power Office Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29920.54841075549!2d85.798185!3d20.296058!"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.8!2d85.8!3d20.28!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBhimatangi%20Housing%20Colony%2C%20Bhubaneswar!5e0!3m2!1sen!2sin!4v1"
               width="100%"
               height="380"
               loading="lazy"

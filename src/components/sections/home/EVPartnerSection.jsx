@@ -252,7 +252,7 @@ function BecomePartnerSection() {
 
 function HowItWorksSection() {
   const { ref, isInView } = useScrollReveal();
-  const waHref = `https://wa.me/${CONTACT.phoneHref.replace(/\D/g, "")}`;
+  const waHref = CONTACT.whatsapp;
 
   return (
     <section className="w-full bg-[#FFFBF0] py-24">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import FormFallback, { FORM_ERROR_MESSAGE } from "./FormFallback";
+import { CONTACT } from "@/lib/config/site.config";
 
 const SERVICES = [
   "Solar Power Installation",
@@ -18,7 +19,7 @@ const SERVICES = [
 const FIELDS = [
   { name: "name",    label: "Full Name",    type: "text",  placeholder: "Rajesh Mohanty" },
   { name: "email",   label: "Email Address", type: "email", placeholder: "rajesh@example.com" },
-  { name: "phone",   label: "Phone Number",  type: "tel",   placeholder: "+91 98765 43210" },
+  { name: "phone",   label: "Phone Number",  type: "tel",   placeholder: CONTACT.phone },
 ];
 
 const fieldVariants = {

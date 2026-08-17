@@ -7,6 +7,7 @@ import { Lightbulb, Leaf, TrendingUp, MapPin, Clock, X } from "lucide-react";
 import SectionHeading from '@/components/ui/SectionHeading';
 import { VARIANTS } from "@/lib/animations/variants";
 import FormFallback, { FORM_ERROR_MESSAGE } from "@/components/forms/FormFallback";
+import { CONTACT } from "@/lib/config/site.config";
 
 const CULTURE = [
   { icon: Lightbulb, title: "Innovation", desc: "We build with the latest technology — from smart solar systems to IoT-enabled EV infrastructure. Push boundaries every day." },
@@ -114,7 +115,7 @@ function ApplyModal({ role, onClose }) {
               {[
                 { name: "name",  label: "Full Name",    type: "text",  ph: "Your name" },
                 { name: "email", label: "Email",         type: "email", ph: "you@example.com" },
-                { name: "phone", label: "Phone",         type: "tel",   ph: "+91 98765 43210" },
+                { name: "phone", label: "Phone",         type: "tel",   ph: CONTACT.phone },
               ].map((f) => (
                 <div key={f.name}>
                   <label className="block text-xs font-semibold text-brand-ink mb-1.5">{f.label}</label>

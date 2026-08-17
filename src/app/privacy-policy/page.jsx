@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONTACT } from "@/lib/config/site.config";
 
 export const metadata = {
   title: "Privacy Policy | Soumyashi Power",
@@ -47,7 +48,7 @@ const SECTIONS = [
   },
   {
     title: "7. Contact & Grievance",
-    content: `For privacy-related queries or to exercise your rights, contact us at info@soumyashipower.in or write to: Soumyashi Power Limited, Plot No. 123, Industrial Area, Bhubaneswar, Odisha, India.`,
+    content: `For privacy-related queries or to exercise your rights, contact us at ${CONTACT.email} or write to: Soumyashi Power Limited, ${CONTACT.address}.`,
   },
   {
     title: "8. Changes to This Policy",

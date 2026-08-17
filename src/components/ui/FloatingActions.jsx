@@ -79,7 +79,7 @@ export default function FloatingActions() {
 
           {/* WhatsApp button */}
           <motion.a
-            href={`https://wa.me/${CONTACT.phone.replace(/\D/g, "")}`}
+            href={CONTACT.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, x: -60 }}

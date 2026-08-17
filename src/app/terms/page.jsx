@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONTACT } from "@/lib/config/site.config";
 
 export const metadata = {
   title: "Terms of Service | Soumyashi Power",
@@ -48,7 +49,7 @@ const SECTIONS = [
   },
   {
     title: "10. Contact",
-    content: `For questions about these Terms, contact us at info@soumyashipower.in or write to: Soumyashi Power Limited, Plot No. 123, Industrial Area, Bhubaneswar, Odisha, India.`,
+    content: `For questions about these Terms, contact us at ${CONTACT.email} or write to: Soumyashi Power Limited, ${CONTACT.address}.`,
   },
 ];
 

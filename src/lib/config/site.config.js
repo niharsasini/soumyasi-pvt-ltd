@@ -2,11 +2,8 @@
  * Single source of truth for site-wide brand, contact, social, and nav data.
  * Consumed by Navbar, Footer, layout metadata, contact page, etc.
  *
- * ⚠️  BEFORE LAUNCH: Replace all placeholder values below
- *   Phone:   +91 98765 43210        → real number
- *   Email:   info@soumyashipower.in → verify this inbox is monitored
- *   Address: Plot No. 123...        → real office address
- *   Social:  Facebook/LinkedIn/Twitter URLs → confirm they resolve to real, owned profiles
+ * ⚠️  Social URLs below (Facebook/LinkedIn/Twitter) are still placeholders —
+ *   confirm they resolve to real, owned profiles before launch.
  */
 
 export const BRAND = {
@@ -16,16 +13,18 @@ export const BRAND = {
   description:
     "Delivering innovative and sustainable power solutions with excellence, reliability, and cutting-edge technology across industries.",
   logo: "/soumyasi/soumyasi.jpeg",
+  email: "soumyashipower@gmail.com",
 };
 
 export const CONTACT = {
-  email: "info@soumyashipower.in",
-  phone: "+91 98765 43210",
-  phoneHref: "tel:+919876543210",
-  address: {
-    line1: "Plot No. 123, Industrial Area,",
-    line2: "Bhubaneswar, Odisha, India",
-  },
+  email: "soumyashipower@gmail.com",
+  emailHref: "mailto:soumyashipower@gmail.com",
+  phone: "+91 94376 11129",
+  phoneHref: "tel:+919437611129",
+  whatsapp: "https://wa.me/919437611129",
+  address: "Plot No. MI-26, Bhimatangi Housing Colony, Bhubaneswar, Odisha 751002",
+  addressShort: "Bhimatangi, Bhubaneswar, Odisha",
+  mapLink: "https://maps.google.com/?q=Bhimatangi+Housing+Colony+Bhubaneswar+Odisha+751002",
   hours: "Mon - Sat : 9:00 AM - 6:00 PM",
 };
 

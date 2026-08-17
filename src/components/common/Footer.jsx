@@ -203,7 +203,7 @@ export default function Footer() {
                 <div className="flex items-start gap-3">
                   <MapPin size={15} className="text-amber-500 mt-0.5 shrink-0" />
                   <p className="text-[#c4b8a8]">
-                    {CONTACT.address.line1}<br />{CONTACT.address.line2}
+                    {CONTACT.address}
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -214,7 +214,7 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail size={15} className="text-amber-500 shrink-0" />
-                  <a href={`mailto:${CONTACT.email}`} className="hover:text-amber-400 transition-colors break-all">
+                  <a href={CONTACT.emailHref} className="hover:text-amber-400 transition-colors break-all">
                     {CONTACT.email}
                   </a>
                 </div>
