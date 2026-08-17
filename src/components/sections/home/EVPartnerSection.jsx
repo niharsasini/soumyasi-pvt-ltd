@@ -5,10 +5,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Zap, Check, Phone, PhoneCall, MapPin, FileText, Wrench, MessageCircle,
+  CheckCircle, Loader2,
 } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 import { CONTACT } from "@/lib/config/site.config";
 import { STATS as SITE_STATS } from "@/lib/config/stats.config";
+import FormFallback, { FORM_ERROR_MESSAGE } from "@/components/forms/FormFallback";
 
 /* ── Data ───────────────────────────────────────────────── */
 
@@ -35,6 +37,11 @@ const STATS = [
   { value: "60kW", label: "Charger Output" },
   { value: `${SITE_STATS.evStations}+`, label: "Active Stations", countTo: SITE_STATS.evStations, suffix: "+" },
   { value: "6 Weeks", label: "Survey to Live" },
+];
+
+const LOCATION_TYPES = [
+  "Hotel/Resort", "Petrol Pump", "Shopping Mall", "Highway Stop",
+  "Office Complex", "Industrial Park", "Other",
 ];
 
 const STEPS = [
@@ -93,9 +100,141 @@ function StepCard({ step }) {
   );
 }
 
-/* ── Section 1: Become an EV Partner ────────────────────── */
+/* ── Partner Enquiry Form (center column) ───────────────── */
 
-function BecomePartnerSection() {
+function PartnerEnquiryForm() {
+  const [form, setForm] = useState({ name: "", phone: "", locationType: "", city: "", message: "" });
+  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("loading");
+    try {
+      // TODO: replace xpwzgkqr with your real Formspree EV-partner form ID
+      const res = await fetch("https://formspree.io/f/xpwzgkqr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("formspree error");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <div
+        id="partner-enquiry-form"
+        className="order-1 lg:order-2 bg-white rounded-3xl p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)] flex flex-col items-center justify-center text-center min-h-[420px]"
+      >
+        <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
+          <CheckCircle size={30} className="text-emerald-600" />
+        </div>
+        <h3 className="text-lg font-bold text-[#1a1208] mb-2">Request Received!</h3>
+        <p className="text-[#78614a] text-sm">We&apos;ll contact you within 48 hours!</p>
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      id="partner-enquiry-form"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.15 }}
+      className="order-1 lg:order-2 bg-white rounded-3xl p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)] scroll-mt-28"
+    >
+      <h3 className="text-xl font-bold text-[#1a1208] mb-2">Apply as EV Partner</h3>
+      <p className="text-[#78614a] text-sm mb-6">Get a free site assessment within 48 hours</p>
+
+      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <input
+          type="text"
+          name="name"
+          required
+          value={form.name}
+          onChange={handleChange}
+          placeholder="Your name"
+          aria-label="Full Name"
+          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all"
+        />
+        <input
+          type="tel"
+          name="phone"
+          required
+          value={form.phone}
+          onChange={handleChange}
+          placeholder="+91 XXXXX XXXXX"
+          aria-label="Phone Number"
+          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all"
+        />
+        <select
+          name="locationType"
+          required
+          value={form.locationType}
+          onChange={handleChange}
+          aria-label="Location Type"
+          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all bg-white appearance-none cursor-pointer"
+        >
+          <option value="">Location type...</option>
+          {LOCATION_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+        </select>
+        <input
+          type="text"
+          name="city"
+          required
+          value={form.city}
+          onChange={handleChange}
+          placeholder="City or area name"
+          aria-label="City or Area"
+          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all"
+        />
+        <textarea
+          name="message"
+          rows={3}
+          value={form.message}
+          onChange={handleChange}
+          placeholder="Tell us about your location and available space"
+          aria-label="Message"
+          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all resize-none"
+        />
+
+        {status === "error" && (
+          <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+            <p className="text-red-600 text-xs font-medium mb-2">{FORM_ERROR_MESSAGE}</p>
+            <FormFallback />
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="btn-shimmer bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full px-8 py-3.5 w-full font-bold hover:scale-105 transition shadow-lg shadow-emerald-500/25 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+        >
+          {status === "loading"
+            ? <><Loader2 size={16} className="animate-spin" /> Sending...</>
+            : "Get Free Assessment →"}
+        </button>
+      </form>
+
+      <p className="text-[#a8917a] text-xs text-center mt-3">
+        🔒 Your information is confidential. We&apos;ll call you within 48 hours.
+      </p>
+    </motion.div>
+  );
+}
+
+/* ── Revenue Calculator (full-width, below the 3-column grid) ───────── */
+
+function RevenueCalculator() {
   const { ref, isInView } = useScrollReveal();
   const [sessions, setSessions] = useState(15);
   const [duration, setDuration] = useState(30);
@@ -105,6 +244,74 @@ function BecomePartnerSection() {
   const kwhDelivered = (duration / 60) * AVG_SESSION_KW * 0.85; // 85% efficiency
   const revenuePerSession = kwhDelivered * 12; // ₹12/kWh standard rate
   const monthlyRevenue = Math.round(sessions * 30 * revenuePerSession);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      className="bg-white rounded-2xl border border-[#e8d5b0] shadow-warm p-8 mt-8 grid md:grid-cols-2 gap-8 items-center"
+    >
+      {/* Left: sliders */}
+      <div>
+        <h3 className="text-lg font-bold text-[#1a1208] mb-4">Estimate Your Revenue Potential</h3>
+        <div className="mb-6">
+          <label htmlFor="ev-sessions" className="flex items-center justify-between text-sm font-medium text-[#1a1208] mb-3">
+            <span>Daily charging sessions</span>
+            <span className="bg-emerald-100 text-emerald-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">{sessions}</span>
+          </label>
+          <input
+            id="ev-sessions"
+            type="range"
+            min={5}
+            max={50}
+            value={sessions}
+            onChange={(e) => setSessions(Number(e.target.value))}
+            aria-label="Daily charging sessions"
+            className="w-full accent-emerald-600"
+          />
+        </div>
+        <div>
+          <label htmlFor="ev-duration" className="flex items-center justify-between text-sm font-medium text-[#1a1208] mb-3">
+            <span>Avg. session duration (min)</span>
+            <span className="bg-emerald-100 text-emerald-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">{duration}</span>
+          </label>
+          <input
+            id="ev-duration"
+            type="range"
+            min={15}
+            max={60}
+            value={duration}
+            onChange={(e) => setDuration(Number(e.target.value))}
+            aria-label="Average session duration in minutes"
+            className="w-full accent-emerald-600"
+          />
+        </div>
+      </div>
+
+      {/* Right: result */}
+      <div className="text-center md:border-l md:border-emerald-100 md:pl-8">
+        <p className="text-5xl font-black text-emerald-600 tabular-nums">₹{monthlyRevenue.toLocaleString("en-IN")}</p>
+        <p className="text-[#78614a] text-sm mt-1">estimated monthly revenue</p>
+        <p className="text-[#a8917a] text-xs mt-2">
+          at ₹12/kWh · Based on {sessions} sessions/day
+        </p>
+        <a
+          href="#partner-enquiry-form"
+          className="btn-shimmer mt-6 inline-flex items-center justify-center bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full px-8 py-3 font-bold hover:scale-105 transition-transform duration-300"
+        >
+          Apply Now
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── Section 1: Become an EV Partner ────────────────────── */
+
+function BecomePartnerSection() {
+  const { ref, isInView } = useScrollReveal();
 
   return (
     <section className="w-full bg-[#FFF8E7] py-24">
@@ -150,60 +357,8 @@ function BecomePartnerSection() {
             ))}
           </motion.div>
 
-          {/* Revenue Calculator */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="order-1 lg:order-2 bg-white rounded-3xl p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)]"
-          >
-            <h3 className="text-xl font-bold text-[#1a1208] mb-6">Estimate Your Revenue</h3>
-            <div className="mb-6">
-              <label htmlFor="ev-sessions" className="flex items-center justify-between text-sm font-medium text-[#1a1208] mb-3">
-                <span>Daily charging sessions</span>
-                <span className="bg-emerald-100 text-emerald-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">{sessions}</span>
-              </label>
-              <input
-                id="ev-sessions"
-                type="range"
-                min={5}
-                max={50}
-                value={sessions}
-                onChange={(e) => setSessions(Number(e.target.value))}
-                aria-label="Daily charging sessions"
-                className="w-full accent-emerald-600"
-              />
-            </div>
-            <div className="mb-2">
-              <label htmlFor="ev-duration" className="flex items-center justify-between text-sm font-medium text-[#1a1208] mb-3">
-                <span>Avg. session duration (min)</span>
-                <span className="bg-emerald-100 text-emerald-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">{duration}</span>
-              </label>
-              <input
-                id="ev-duration"
-                type="range"
-                min={15}
-                max={60}
-                value={duration}
-                onChange={(e) => setDuration(Number(e.target.value))}
-                aria-label="Average session duration in minutes"
-                className="w-full accent-emerald-600"
-              />
-            </div>
-            <div className="border-t border-emerald-100 mt-6 pt-6 text-center">
-              <p className="text-[#78614a] text-sm">Estimated monthly revenue</p>
-              <p className="text-4xl font-black text-emerald-600 mt-1 tabular-nums">₹{monthlyRevenue.toLocaleString("en-IN")}</p>
-              <p className="text-[#a8917a] text-xs mt-2">
-                At {sessions} sessions/day × {duration} min avg × ₹12/kWh
-              </p>
-            </div>
-            <Link
-              href="/contact"
-              className="btn-shimmer mt-6 block w-full text-center bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full px-8 py-3 font-bold hover:scale-105 transition-transform duration-300"
-            >
-              Apply as Partner
-            </Link>
-          </motion.div>
+          {/* Partner Enquiry Form */}
+          <PartnerEnquiryForm />
 
           {/* What We Provide */}
           <motion.div
@@ -226,6 +381,9 @@ function BecomePartnerSection() {
             ))}
           </motion.div>
         </div>
+
+        {/* Revenue calculator — full width, below the 3-column grid */}
+        <RevenueCalculator />
 
         {/* Stats row */}
         <motion.div

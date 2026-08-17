@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Zap, Battery, ShieldCheck, Check, Wind, Factory } from "lucide-react";
+import { ChevronLeft, ChevronRight, Zap, Battery, ShieldCheck, Check, Wind, Factory, CheckCircle, MapPin } from "lucide-react";
 import { STATS as SITE_STATS } from "@/lib/config/stats.config";
 
 const EASE = [0.25, 0.46, 0.45, 0.94];
@@ -11,9 +11,9 @@ const EASE = [0.25, 0.46, 0.45, 0.94];
 const SLIDE_MS = 6000;
 
 const STATS = [
-  { value: SITE_STATS.installations, suffix: "+", label: "Installations" },
-  { value: SITE_STATS.evStations, suffix: "+", label: "EV Stations" },
-  { value: SITE_STATS.cities, suffix: "+", label: "Cities" },
+  { value: SITE_STATS.installations, suffix: "+", label: "Installations", Icon: CheckCircle },
+  { value: SITE_STATS.evStations, suffix: "+", label: "EV Stations", Icon: Zap },
+  { value: SITE_STATS.cities, suffix: "+", label: "Cities", Icon: MapPin },
 ];
 
 function useCountUp(to, active) {
@@ -33,17 +33,18 @@ function useCountUp(to, active) {
   return n;
 }
 
-function StatBadge({ value, suffix, label, active, i }) {
+function StatBadge({ value, suffix, label, active, i, Icon }) {
   const n = useCountUp(value, active);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={active ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, delay: i * 0.12 }}
-      className="flex flex-col items-center px-2 py-2 sm:px-4 sm:py-3 rounded-2xl bg-white border border-brand-border shadow-warm"
+      className="flex flex-col items-center p-4 rounded-2xl bg-white shadow-md"
     >
-      <span className="text-lg sm:text-xl font-bold font-display text-brand-gold tabular-nums">{n}{suffix}</span>
-      <span className="text-[9px] sm:text-[10px] text-brand-muted mt-1 text-center">{label}</span>
+      {Icon && <Icon className="h-4 w-4 text-amber-600 mb-1.5" />}
+      <span className="text-2xl font-black font-display text-amber-600 tabular-nums">{n}{suffix}</span>
+      <span className="text-xs text-[#78614a] mt-1 text-center">{label}</span>
     </motion.div>
   );
 }
@@ -96,19 +97,16 @@ function SlideMain({ isActive }) {
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 20% 50%, rgba(245,158,11,0.05), transparent), radial-gradient(ellipse 60% 50% at 80% 50%, rgba(217,119,6,0.04), transparent)" }} />
       <div className="absolute inset-0 pointer-events-none">
         <motion.div animate={{ x: [0, 30, 0], y: [0, -20, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[15%] left-[5%] h-80 w-80 rounded-full bg-amber-400/8 blur-3xl" />
-        <motion.div animate={{ x: [0, -25, 0], y: [0, 20, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-[20%] right-[10%] h-64 w-64 rounded-full bg-amber-300/6 blur-3xl" />
+        <motion.div animate={{ x: [0, -25, 0], y: [0, 20, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-[20%] right-[10%] h-64 w-64 rounded-full bg-emerald-300/6 blur-3xl" />
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-28 lg:pt-20 pb-24 lg:pb-16 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-12 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-200 mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
+              <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               <span className="text-xs font-bold tracking-[0.25em] uppercase text-brand-gold">Odisha&apos;s Energy Future</span>
             </motion.div>
-            <HeadlineLines isActive={isActive} size="text-3xl sm:text-4xl lg:text-5xl mb-6" lines={[
+            <HeadlineLines isActive={isActive} size="text-4xl sm:text-5xl mb-6" lines={[
               { text: "Powering Industry.", cls: "text-brand-ink" },
               { text: "Enabling Clean", cls: "text-brand-ink" },
               { text: "Energy.", cls: "bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent" },
@@ -126,7 +124,7 @@ function SlideMain({ isActive }) {
           </div>
           <motion.div initial={{ opacity: 0, x: 40 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.9, delay: 0.3 }} className="relative hidden lg:block">
             <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-amber-500/20 to-emerald-500/10 blur-xl pointer-events-none" />
-            <div className="relative rounded-3xl overflow-hidden border border-amber-200/60 animate-float" style={{ boxShadow: "0 30px 80px rgba(217,119,6,0.18)" }}>
+            <div className="relative rounded-2xl overflow-hidden border border-amber-200/60 animate-float" style={{ boxShadow: "0 30px 80px rgba(217,119,6,0.18)" }}>
               <video src="/video/3738727067-preview.mp4" autoPlay muted loop playsInline preload="none" className="w-full h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px] object-cover" />
             </div>
           </motion.div>
@@ -145,7 +143,7 @@ const EV_SPECS = [
 
 function SlideEV({ isActive }) {
   return (
-    <section className="relative w-full h-[100svh] min-h-[600px] overflow-hidden pt-20">
+    <section className="relative w-full h-[90vh] min-h-[550px] overflow-hidden pt-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
         <div className="relative order-2 lg:order-1 h-auto lg:h-full bg-[#0a0f1a] flex flex-col px-8 sm:px-12 pt-28 pb-16 lg:pt-20 lg:pb-20">
           <div className="flex-1 flex flex-col justify-center">
@@ -186,7 +184,7 @@ function SlideEV({ isActive }) {
 
 function SlideSolar({ isActive }) {
   return (
-    <div className="relative w-full h-[100svh] min-h-[600px] overflow-hidden">
+    <div className="relative w-full h-[90vh] min-h-[550px] overflow-hidden">
 
       {/* Full bleed image — NO overlay */}
       <Image
@@ -198,39 +196,37 @@ function SlideSolar({ isActive }) {
         sizes="100vw"
       />
 
-      {/* Floating compact card — desktop: left center, mobile: bottom sheet */}
+      {/* Floating compact card — desktop: right center (clear of the logo sign, bottom-left of image), mobile: bottom sheet */}
       <motion.div
-        initial={{ opacity: 0, x: -30 }}
-        animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+        initial={{ opacity: 0, x: 30 }}
+        animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
         transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="absolute z-20 bottom-8 left-3 right-3 lg:bottom-auto lg:left-12 lg:right-auto lg:top-1/2 lg:-translate-y-1/2 lg:w-[340px]"
+        className="absolute z-20 bottom-6 left-3 right-3 max-h-[50vh] overflow-y-auto lg:bottom-auto lg:left-auto lg:max-h-none lg:overflow-visible lg:right-12 lg:top-1/2 lg:-translate-y-1/2 lg:w-[320px]"
       >
-        <div className="bg-white/92 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-white/80 p-5 sm:p-6">
+        <div className="bg-white/95 backdrop-blur-2xl rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.2)] border border-white/80 p-6">
 
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5 mb-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-            <span className="text-amber-700 text-xs font-bold tracking-widest uppercase">Solar Energy</span>
+            <span className="text-amber-700 text-xs font-bold tracking-widest uppercase">☀️ SOLAR ENERGY</span>
           </div>
 
           {/* Headline */}
-          <h2 className="font-display font-black text-[#1a1208] text-2xl sm:text-3xl lg:text-3xl leading-tight mb-1">
-            {isActive && ["Harvest", "the"].map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, x: -15 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                className="inline-block mr-2"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </h2>
-          <h2 className="font-display font-black text-amber-600 text-2xl sm:text-3xl lg:text-3xl leading-tight mb-3">
+          <h2 className="font-display font-black text-[#1a1208] text-2xl leading-tight mb-0.5">
             {isActive && (
               <motion.span
-                initial={{ opacity: 0, x: -15 }}
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="inline-block"
+              >
+                Harvest the
+              </motion.span>
+            )}
+          </h2>
+          <h2 className="font-display font-black text-amber-600 text-2xl leading-tight mb-3">
+            {isActive && (
+              <motion.span
+                initial={{ opacity: 0, x: 15 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
                 className="inline-block"
@@ -241,10 +237,10 @@ function SlideSolar({ isActive }) {
           </h2>
 
           {/* Amber divider */}
-          <div className="w-10 h-1 bg-amber-400 rounded-full mb-3" />
+          <div className="w-8 h-1 bg-amber-400 rounded-full mb-3" />
 
           {/* Description — short */}
-          <p className="text-[#78614a] text-sm leading-relaxed mb-4">
+          <p className="text-[#78614a] text-xs leading-relaxed mb-4 line-clamp-2">
             Monocrystalline panels built for Odisha&apos;s climate. Cut bills by up to 90%. 25-year warranty.
           </p>
 
@@ -257,7 +253,7 @@ function SlideSolar({ isActive }) {
             ].map((item, i) => (
               <motion.li
                 key={i}
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: 10 }}
                 animate={isActive ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.6 + i * 0.08 }}
                 className="flex items-center gap-2.5"
@@ -310,7 +306,7 @@ const WIND_PILLS = ["50kW–2MW", "20yr Life", "OPTCL Approved"];
 
 function SlideWind({ isActive }) {
   return (
-    <section className="relative w-full h-[100svh] min-h-[600px] overflow-hidden pt-20">
+    <section className="relative w-full h-[90vh] min-h-[550px] overflow-hidden pt-20">
       <Image src="/soumyasi/wind-power-plant.png" alt="Wind turbines in Odisha" fill sizes="100vw" loading="lazy" className="object-cover object-center" />
 
       <motion.div initial={{ y: -20, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.5, delay: 0.4 }} className="hidden sm:block absolute top-24 right-8 bg-white/80 backdrop-blur-xl rounded-2xl p-4 border border-white/60 shadow-xl">
@@ -354,7 +350,7 @@ const INDUSTRIAL_SPECS = [
 
 function SlideIndustrial({ isActive }) {
   return (
-    <section className="relative w-full h-[100svh] min-h-[600px] overflow-hidden pt-20">
+    <section className="relative w-full h-[90vh] min-h-[550px] overflow-hidden pt-20">
       <div className="relative w-full h-full flex flex-col lg:grid lg:grid-cols-2">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }} className="relative flex-none h-[45vw] min-h-[180px] max-h-[220px] lg:h-full lg:max-h-none order-1 lg:order-none">
           <Image src="/soumyasi/industrial-power.png" alt="Industrial power infrastructure" fill sizes="(max-width: 1024px) 100vw, 50vw" loading="lazy" className="object-cover object-center" />
@@ -472,7 +468,7 @@ export default function Hero() {
   const Slide = SLIDES[currentSlide];
   return (
     <section
-      className="relative w-full h-[100svh] min-h-[600px] overflow-hidden"
+      className="relative w-full h-[90vh] min-h-[550px] overflow-hidden"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
       onTouchStart={onTouchStart}
