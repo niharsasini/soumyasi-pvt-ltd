@@ -79,19 +79,19 @@ function Newsletter() {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <input
           type="email"
           value={email}
           onChange={(e) => { setEmail(e.target.value); setStatus("idle"); setErrMsg(""); }}
           placeholder="Your email"
           aria-label="Email for newsletter"
-          className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-white/8 border border-white/10 focus:outline-none focus:border-amber-500/60 text-sm text-[#FFFBF0] placeholder-[#a8917a]/50 transition-colors"
+          className="w-full sm:flex-1 sm:min-w-0 px-3 py-2 rounded-lg bg-white/8 border border-white/10 focus:outline-none focus:border-amber-500/60 text-sm text-[#FFFBF0] placeholder-[#a8917a]/50 transition-colors"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold text-xs hover:shadow-gold transition-all duration-300 whitespace-nowrap disabled:opacity-70 flex items-center gap-1"
+          className="w-full sm:w-auto px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold text-xs hover:shadow-gold transition-all duration-300 whitespace-nowrap disabled:opacity-70 flex items-center justify-center gap-1"
         >
           {status === "loading" ? <Loader2 size={12} className="animate-spin" /> : "Join"}
         </button>
@@ -126,7 +126,7 @@ export default function Footer() {
           </div>
           <Link
             href="/contact"
-            className="btn-shimmer inline-flex items-center justify-center px-8 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold text-sm shadow-gold hover:shadow-gold-lg hover:scale-105 transition-all duration-300 whitespace-nowrap"
+            className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold text-sm shadow-gold hover:shadow-gold-lg hover:scale-105 transition-all duration-300 whitespace-nowrap"
           >
             Get Free Quote →
           </Link>
@@ -138,10 +138,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
           {/* Company info */}
-          <div className="space-y-5">
+          <div className="space-y-5 text-center sm:text-left">
             <h2 className="text-base font-bold font-display text-[#FFFBF0]">{BRAND.name}</h2>
             <p className="text-sm text-[#a8917a] leading-relaxed">{BRAND.description}</p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-center sm:justify-start">
               {[
                 { href: SOCIAL.facebook, Icon: SocialIcons.Facebook, label: "Facebook" },
                 { href: SOCIAL.linkedin, Icon: SocialIcons.Linkedin, label: "LinkedIn" },
@@ -230,11 +230,12 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative z-10 border-t border-white/5 text-center py-5 text-xs text-[#a8917a]/60 px-4">
-        © {new Date().getFullYear()} {BRAND.name}. All Rights Reserved.
-        &nbsp;·&nbsp; Made with ☀️ in Odisha
-        &nbsp;·&nbsp; <Link href="/privacy-policy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link>
-        &nbsp;·&nbsp; <Link href="/terms" className="hover:text-amber-400 transition-colors">Terms</Link>
+      <div className="relative z-10 border-t border-white/5 py-5 px-4 flex flex-col items-center gap-2 text-center text-xs text-[#a8917a]/60">
+        <p>© {new Date().getFullYear()} {BRAND.name}. All Rights Reserved. &nbsp;·&nbsp; Made with ☀️ in Odisha</p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link href="/privacy-policy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-amber-400 transition-colors">Terms</Link>
+        </div>
       </div>
     </footer>
   );

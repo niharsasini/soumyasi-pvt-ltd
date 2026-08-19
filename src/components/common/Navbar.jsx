@@ -140,7 +140,7 @@ export default function Navbar() {
               <span className="text-sm sm:text-[15px] font-bold font-display text-[#1a1208] tracking-wide">
                 {BRAND.shortName}
               </span>
-              <span className="text-[9px] font-semibold tracking-widest uppercase text-[#a8917a]">
+              <span className="hidden sm:block text-[9px] font-semibold tracking-widest uppercase text-[#a8917a]">
                 {BRAND.tagline}
               </span>
             </div>
@@ -250,7 +250,7 @@ export default function Navbar() {
           {/* ── Mobile toggle ── */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2.5 text-[#1a1208]"
+            className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center -mr-1.5 text-[#1a1208]"
             aria-label="Toggle menu"
           >
             <HamburgerIcon open={open} />
