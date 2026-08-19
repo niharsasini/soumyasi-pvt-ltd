@@ -42,20 +42,21 @@ export default function WhyChooseUs() {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="w-full py-24 bg-brand-section relative overflow-hidden">
+    <section className="w-full py-16 sm:py-20 lg:py-24 bg-brand-section relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
           {/* LEFT — feature list */}
           <div ref={ref}>
+            <div className="w-8 h-1 bg-amber-500 rounded-full mb-3 sm:hidden" />
             <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
               Why Choose Us
             </p>
 
             <motion.h2
-              className="text-4xl sm:text-5xl font-bold font-display text-brand-ink leading-tight mb-5"
+              className="text-2xl sm:text-4xl lg:text-5xl font-bold font-display text-brand-ink leading-tight mb-5"
               variants={VARIANTS.container}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
@@ -73,7 +74,7 @@ export default function WhyChooseUs() {
               variants={VARIANTS.para}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="text-brand-brown leading-relaxed mb-10"
+              className="text-brand-brown text-sm sm:text-base leading-relaxed mb-8 sm:mb-10"
             >
               We deliver high-performance power solutions built for efficiency, reliability, and long-term excellence.
             </motion.p>
@@ -82,18 +83,18 @@ export default function WhyChooseUs() {
               variants={VARIANTS.cardGrid}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="space-y-6"
+              className="space-y-4 sm:space-y-6"
             >
               {FEATURES.map((f) => {
                 const Icon = f.icon;
                 return (
-                  <motion.div key={f.title} variants={VARIANTS.card} className="flex gap-4 group">
-                    <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center transition-colors duration-300">
+                  <motion.div key={f.title} variants={VARIANTS.card} className="flex gap-3 group">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center transition-colors duration-300">
                       <Icon size={20} className="text-brand-gold" />
                     </div>
                     <div>
-                      <h3 className="text-base font-semibold text-brand-ink">{f.title}</h3>
-                      <p className="text-sm text-brand-brown mt-1 leading-relaxed">{f.desc}</p>
+                      <h3 className="text-sm font-bold text-brand-ink">{f.title}</h3>
+                      <p className="text-xs text-brand-brown mt-1 leading-relaxed">{f.desc}</p>
                     </div>
                   </motion.div>
                 );
@@ -169,11 +170,11 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 flex justify-center"
+          className="mt-10 sm:mt-16 flex justify-center px-4 sm:px-0"
         >
           <Link
             href="/projects"
-            className="btn-shimmer inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-full px-8 py-3.5 text-sm hover:scale-105 transition shadow-lg shadow-amber-500/20"
+            className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-full px-8 py-3.5 text-sm hover:scale-105 transition shadow-lg shadow-amber-500/20"
           >
             See Our Projects <ArrowRight size={15} />
           </Link>

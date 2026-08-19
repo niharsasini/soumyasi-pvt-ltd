@@ -127,6 +127,7 @@ function ServiceCard({ card, index, isInView }) {
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.12 }}
       whileHover={{ y: -10, transition: { type: "spring", stiffness: 300, damping: 20 } }}
+      whileTap={{ scale: 0.98 }}
       className={`group bg-white rounded-3xl overflow-hidden border border-[#e8d5b0] shadow-[0_4px_24px_rgba(120,80,20,0.08)] cursor-pointer transition-all duration-300 ${card.hoverBorderClass} ${card.hoverShadowClass}`}
     >
       <Link href={card.href} className="block">
@@ -146,29 +147,29 @@ function ServiceCard({ card, index, isInView }) {
         </div>
 
         {/* Content */}
-        <div className="p-6 pt-4">
+        <div className="p-4 sm:p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${card.iconBgClass}`}>
               <Icon className={`w-5 h-5 ${card.iconClass}`} />
             </div>
-            <h3 className="font-display font-bold text-[#1a1208] text-lg leading-snug">{card.title}</h3>
+            <h3 className="font-display font-bold text-[#1a1208] text-base sm:text-lg leading-snug">{card.title}</h3>
           </div>
 
-          <p className="text-[#78614a] text-sm leading-relaxed line-clamp-3 mb-4">{card.desc}</p>
+          <p className="text-[#78614a] text-xs sm:text-sm leading-relaxed line-clamp-2 sm:line-clamp-3 mb-4">{card.desc}</p>
 
           {/* Stats row */}
-          <div className="flex gap-3 mb-5">
+          <div className="flex gap-2 mb-5">
             {card.stats.map((s) => (
-              <div key={s.label} className="bg-[#FFFBF0] rounded-xl px-3 py-2 flex-1 text-center">
-                <p className={`font-black text-sm ${card.accentTextClass}`}>{s.value}</p>
-                <p className="text-[#a8917a] text-[10px] mt-0.5">{s.label}</p>
+              <div key={s.label} className="bg-[#FFFBF0] rounded-xl px-2 py-2 flex-1 text-center">
+                <p className={`font-black text-xs ${card.accentTextClass}`}>{s.value}</p>
+                <p className="text-[#a8917a] text-[9px] mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
 
           {/* Bottom row */}
           <div className="flex items-center justify-between">
-            <span className={`inline-flex items-center gap-1 font-semibold text-sm transition-all group-hover:gap-2 ${card.accentTextClass}`}>
+            <span className={`inline-flex items-center gap-1 font-semibold text-xs sm:text-sm transition-all group-hover:gap-2 ${card.accentTextClass}`}>
               Learn More
               <ArrowRight className="w-4 h-4" />
             </span>
@@ -185,12 +186,13 @@ export default function WhatWeDo() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="w-full bg-[#FFF8E7] py-24">
+    <section className="w-full bg-[#FFF8E7] py-16 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={ref}>
 
         {/* Header row */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
           <div>
+            <div className="w-8 h-1 bg-amber-500 rounded-full mb-3 sm:hidden" />
             <motion.span
               initial={{ opacity: 0, y: 12 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -201,7 +203,7 @@ export default function WhatWeDo() {
             </motion.span>
 
             <motion.h2
-              className="font-display font-black text-[#1a1208] text-3xl sm:text-4xl lg:text-5xl leading-tight"
+              className="font-display font-black text-[#1a1208] text-2xl sm:text-4xl lg:text-5xl leading-tight"
               variants={VARIANTS.container}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
@@ -217,16 +219,16 @@ export default function WhatWeDo() {
               variants={subtitleVariant}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="text-[#78614a] text-base max-w-lg mt-3"
+              className="text-[#78614a] text-sm sm:text-base max-w-lg mt-3"
             >
               Four pillars of clean energy infrastructure — from your rooftop to the open road.
             </motion.p>
           </div>
 
-          <motion.div variants={linkFadeIn} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+          <motion.div variants={linkFadeIn} initial="hidden" animate={isInView ? "visible" : "hidden"} className="text-center lg:text-left">
             <Link
               href="/solutions"
-              className="group inline-flex items-center gap-2 text-amber-600 font-semibold hover:gap-3 transition-all duration-300"
+              className="group inline-flex items-center gap-2 text-amber-600 font-semibold text-sm sm:text-base hover:gap-3 transition-all duration-300"
             >
               View All Solutions
               <ArrowRight className="w-4 h-4" />

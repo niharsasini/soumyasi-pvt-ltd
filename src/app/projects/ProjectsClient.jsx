@@ -26,14 +26,14 @@ export default function ProjectsClient() {
   return (
     <div className="bg-brand-bg text-brand-ink min-h-screen">
       {/* Hero */}
-      <section className="pt-32 pb-16 px-4 text-center relative overflow-hidden">
+      <section className="pt-28 sm:pt-32 lg:pt-36 pb-16 px-4 text-center relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <motion.div animate={{ x:[0,25,0], y:[0,-18,0] }} transition={{ duration:10, repeat:Infinity, ease:"easeInOut" }}
-            className="absolute top-[8%] left-[4%] h-80 w-80 rounded-full bg-amber-400/25 blur-3xl" />
+            className="absolute top-[8%] left-[4%] h-48 w-48 sm:h-64 sm:w-64 lg:h-80 lg:w-80 rounded-full bg-amber-400/25 blur-3xl" />
           <motion.div animate={{ x:[0,-20,0], y:[0,15,0] }} transition={{ duration:13, repeat:Infinity, ease:"easeInOut", delay:3 }}
-            className="absolute top-[10%] right-[6%] h-64 w-64 rounded-full bg-amber-300/20 blur-3xl" />
+            className="absolute top-[10%] right-[6%] h-40 w-40 sm:h-52 sm:w-52 lg:h-64 lg:w-64 rounded-full bg-amber-300/20 blur-3xl" />
           <motion.div animate={{ x:[0,15,0], y:[0,-12,0] }} transition={{ duration:11, repeat:Infinity, ease:"easeInOut", delay:6 }}
-            className="absolute bottom-[8%] left-[50%] h-48 w-48 rounded-full bg-amber-400/15 blur-3xl" />
+            className="absolute bottom-[8%] left-[50%] h-32 w-32 sm:h-40 sm:w-40 lg:h-48 lg:w-48 rounded-full bg-amber-400/15 blur-3xl" />
         </div>
         <div className="relative z-10">
           <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
@@ -53,19 +53,19 @@ export default function ProjectsClient() {
             ))}
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-            className="mt-5 max-w-xl mx-auto text-brand-brown text-base sm:text-lg">
+            className="mt-5 max-w-xl mx-auto text-brand-brown text-sm sm:text-base lg:text-lg">
             500+ installations across solar, EV infrastructure, and industrial power.
           </motion.p>
         </div>
       </section>
 
       {/* Filter tabs */}
-      <section className="py-24 px-4">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
+          <div className="flex overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center gap-2 mb-10 sm:mb-12 pb-1 sm:pb-0 no-scrollbar">
             {CATEGORIES.map((cat) => (
               <button key={cat} onClick={() => setActive(cat)}
-                className={`relative px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                className={`relative flex-none px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap ${
                   active === cat
                     ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-gold"
                     : "bg-white border border-brand-border text-brand-brown hover:border-amber-400 hover:text-brand-ink"
@@ -78,7 +78,7 @@ export default function ProjectsClient() {
             ))}
           </div>
 
-          <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             <AnimatePresence mode="popLayout">
               {filtered.map((p, i) => {
                 const Icon = CATEGORY_ICON[p.category] || Sun;
@@ -87,14 +87,15 @@ export default function ProjectsClient() {
                     layout initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                     viewport={{ once: true }}
                     whileHover={{ y: -6 }}
+                    whileTap={{ scale: 0.98 }}
                     transition={{ type: "spring", stiffness: 260, damping: 18, delay: (i % 8) * 0.06 }}
                   >
                     <Link
                       href={`/projects/${p.slug}`}
                       className="block bg-white border border-brand-border rounded-2xl shadow-warm overflow-hidden hover:border-amber-400 hover:shadow-card-hover transition-all duration-300"
                     >
-                      <div className="h-40 relative">
-                        <Image src={p.image} alt={p.title} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover" />
+                      <div className="h-44 sm:h-48 relative">
+                        <Image src={p.image} alt={p.title} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" />
                         <div className="absolute inset-0 bg-black/15" />
                         <span className="absolute top-3 left-3 h-8 w-8 rounded-lg bg-white/90 flex items-center justify-center">
                           <Icon size={16} className="text-amber-600" />
@@ -103,8 +104,8 @@ export default function ProjectsClient() {
                           {p.status}
                         </span>
                       </div>
-                      <div className="p-5">
-                        <h3 className="font-bold text-brand-ink text-sm leading-snug mb-2">{p.title}</h3>
+                      <div className="p-4 sm:p-5">
+                        <h3 className="font-bold text-brand-ink text-sm sm:text-base leading-snug mb-2">{p.title}</h3>
                         <div className="flex items-center gap-1 text-brand-muted text-xs mb-1">
                           <MapPin size={11} /> {p.location}
                         </div>
@@ -123,31 +124,31 @@ export default function ProjectsClient() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-4 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.08), transparent)" }} />
         <motion.div animate={{ scale:[1,1.3,1], opacity:[0.15,0.3,0.15] }} transition={{ duration:6, repeat:Infinity }}
-          className="absolute top-1/2 left-[6%] -translate-y-1/2 h-64 w-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+          className="absolute top-1/2 left-[6%] -translate-y-1/2 h-40 w-40 sm:h-56 sm:w-56 lg:h-64 lg:w-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-200 mb-4">Start Your Project</p>
           <motion.h2
             initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}
-            className="text-4xl sm:text-5xl font-bold font-display text-white leading-tight mb-5"
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-white leading-tight mb-5"
           >
             Ready to Start Your Project?
           </motion.h2>
           <motion.p initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:0.2 }}
-            className="text-amber-100 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+            className="text-amber-100 text-sm sm:text-base lg:text-lg mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed">
             Join 500+ satisfied customers across Odisha.
           </motion.p>
           <motion.div initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:0.35 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center">
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link href="/contact"
-              className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-700 bg-white hover:bg-amber-50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+              className="btn-shimmer inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base text-amber-700 bg-white hover:bg-amber-50 hover:shadow-xl hover:scale-105 active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
               Request a Quote
             </Link>
             <Link href="/solutions"
-              className="inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300">
+              className="inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full border-2 border-white/70 text-white font-semibold text-sm sm:text-base hover:bg-white/10 hover:border-white active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
               View Our Solutions
             </Link>
           </motion.div>

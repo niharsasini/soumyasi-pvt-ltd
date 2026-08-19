@@ -90,7 +90,7 @@ function WordHeading({ isInView, lines, className }) {
 function StepCard({ step }) {
   const Icon = step.icon;
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#e8d5b0] border-t-4 border-t-emerald-500 shadow-warm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 relative overflow-hidden h-full">
+    <div className="bg-white rounded-2xl p-5 border border-[#e8d5b0] border-t-4 border-t-emerald-500 shadow-warm hover:-translate-y-1 hover:shadow-lg active:scale-[0.98] transition-all duration-300 relative overflow-hidden h-full">
       <span className="absolute top-1 right-3 font-black text-5xl text-emerald-100 leading-none select-none">{step.n}</span>
       <Icon size={22} className="text-emerald-500 relative" />
       <h3 className="font-bold text-[#1a1208] text-sm mt-2 relative">{step.title}</h3>
@@ -132,7 +132,7 @@ function PartnerEnquiryForm() {
     return (
       <div
         id="partner-enquiry-form"
-        className="order-1 lg:order-2 bg-white rounded-3xl p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)] flex flex-col items-center justify-center text-center min-h-[420px]"
+        className="order-1 lg:order-2 bg-white rounded-3xl p-5 sm:p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)] flex flex-col items-center justify-center text-center min-h-[420px]"
       >
         <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
           <CheckCircle size={30} className="text-emerald-600" />
@@ -150,7 +150,7 @@ function PartnerEnquiryForm() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: 0.15 }}
-      className="order-1 lg:order-2 bg-white rounded-3xl p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)] scroll-mt-28"
+      className="order-1 lg:order-2 bg-white rounded-3xl p-5 sm:p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)] scroll-mt-28"
     >
       <h3 className="text-xl font-bold text-[#1a1208] mb-2">Apply as EV Partner</h3>
       <p className="text-[#78614a] text-sm mb-6">Get a free site assessment within 48 hours</p>
@@ -251,11 +251,11 @@ function RevenueCalculator() {
       initial={{ opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6 }}
-      className="bg-white rounded-2xl border border-[#e8d5b0] shadow-warm p-8 mt-8 grid md:grid-cols-2 gap-8 items-center"
+      className="bg-white rounded-2xl border border-[#e8d5b0] shadow-warm p-5 sm:p-8 mt-8 grid md:grid-cols-2 gap-6 md:gap-8 items-center"
     >
       {/* Left: sliders */}
       <div>
-        <h3 className="text-lg font-bold text-[#1a1208] mb-4">Estimate Your Revenue Potential</h3>
+        <h3 className="text-base sm:text-lg font-bold text-[#1a1208] mb-4">Estimate Your Revenue Potential</h3>
         <div className="mb-6">
           <label htmlFor="ev-sessions" className="flex items-center justify-between text-sm font-medium text-[#1a1208] mb-3">
             <span>Daily charging sessions</span>
@@ -292,7 +292,7 @@ function RevenueCalculator() {
 
       {/* Right: result */}
       <div className="text-center md:border-l md:border-emerald-100 md:pl-8">
-        <p className="text-5xl font-black text-emerald-600 tabular-nums">₹{monthlyRevenue.toLocaleString("en-IN")}</p>
+        <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-emerald-600 tabular-nums">₹{monthlyRevenue.toLocaleString("en-IN")}</p>
         <p className="text-[#78614a] text-sm mt-1">estimated monthly revenue</p>
         <p className="text-[#a8917a] text-xs mt-2">
           at ₹12/kWh · Based on {sessions} sessions/day
@@ -314,10 +314,11 @@ function BecomePartnerSection() {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="w-full bg-[#FFF8E7] py-24">
+    <section className="w-full bg-[#FFF8E7] py-16 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={ref}>
         {/* Intro */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+          <div className="w-8 h-1 bg-amber-500 rounded-full mb-3 mx-auto sm:hidden" />
           <span className="inline-flex items-center gap-2 bg-emerald-100 border border-emerald-200 rounded-full px-4 py-2 text-xs font-bold tracking-[0.2em] uppercase text-emerald-700 mb-4">
             <Zap size={14} className="text-emerald-600" />
             EV Charging Partner Programme
@@ -325,19 +326,19 @@ function BecomePartnerSection() {
           <WordHeading
             isInView={isInView}
             lines={[{ text: "Own a Charging Station." }, { text: "Earn Every Month.", emerald: true }]}
-            className="text-3xl sm:text-4xl lg:text-5xl font-black font-display text-[#1a1208] leading-tight"
+            className="text-2xl sm:text-4xl lg:text-5xl font-black font-display text-[#1a1208] leading-tight"
           />
           <motion.p
             variants={VARIANTS.para}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="mt-5 text-[#78614a] text-base max-w-2xl mx-auto leading-relaxed"
+            className="mt-5 text-[#78614a] text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
           >
             No technical expertise. No upfront equipment cost. Just your location — we handle everything else.
           </motion.p>
         </div>
         {/* 3-column grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           {/* Who Can Partner */}
           <motion.div
             variants={VARIANTS.slideRight}
@@ -390,14 +391,14 @@ function BecomePartnerSection() {
           variants={VARIANTS.cardGrid}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="mt-12 bg-white rounded-2xl border border-[#e8d5b0] shadow-warm p-6 grid grid-cols-2 sm:grid-cols-4 gap-6"
+          className="mt-8 sm:mt-12 bg-white rounded-2xl border border-[#e8d5b0] shadow-warm p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6"
         >
           {STATS.map((s) => (
             <motion.div key={s.label} variants={VARIANTS.card} className="text-center">
-              <span className="block text-3xl font-black text-emerald-600 tabular-nums">
+              <span className="block text-2xl sm:text-3xl font-black text-emerald-600 tabular-nums">
                 {s.countTo ? <CountUpStat to={s.countTo} suffix={s.suffix} active={isInView} /> : s.value}
               </span>
-              <span className="block text-[#78614a] text-sm mt-1">{s.label}</span>
+              <span className="block text-[#78614a] text-xs sm:text-sm mt-1">{s.label}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -413,19 +414,20 @@ function HowItWorksSection() {
   const waHref = CONTACT.whatsapp;
 
   return (
-    <section className="w-full bg-[#FFFBF0] py-24">
+    <section className="w-full bg-[#FFFBF0] py-16 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={ref}>
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+          <div className="w-8 h-1 bg-amber-500 rounded-full mb-3 mx-auto sm:hidden" />
           <WordHeading
             isInView={isInView}
             lines={[{ text: "From First Call to First Charge" }]}
-            className="text-3xl sm:text-4xl font-black font-display text-[#1a1208] leading-tight"
+            className="text-2xl sm:text-4xl font-black font-display text-[#1a1208] leading-tight"
           />
           <motion.p
             variants={VARIANTS.para}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="mt-4 text-[#78614a] text-base"
+            className="mt-4 text-[#78614a] text-sm sm:text-base"
           >
             We make it simple. Here&rsquo;s exactly what happens when you partner with us.
           </motion.p>
@@ -440,7 +442,7 @@ function HowItWorksSection() {
             className="space-y-6"
           >
             {STEPS.map((s) => (
-              <motion.div key={s.n} variants={VARIANTS.card} className="relative">
+              <motion.div key={s.n} variants={VARIANTS.card} whileTap={{ scale: 0.98 }} className="relative">
                 <span className="absolute -left-8 top-2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white shadow" />
                 <StepCard step={s} />
               </motion.div>
@@ -468,21 +470,21 @@ function HowItWorksSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-3xl p-8 sm:p-12"
+          className="mt-10 sm:mt-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-3xl p-6 sm:p-8 lg:p-12 text-center lg:text-left"
         >
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-8">
             <div>
-              <h3 className="text-2xl sm:text-3xl font-black font-display text-white">Ready to Get Started?</h3>
-              <p className="text-white/80 mt-2 max-w-md">No upfront cost. No technical knowledge needed. We earn only when you earn.</p>
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black font-display text-white">Ready to Get Started?</h3>
+              <p className="text-white/80 mt-2 max-w-md mx-auto lg:mx-0 text-sm sm:text-base">No upfront cost. No technical knowledge needed. We earn only when you earn.</p>
             </div>
-            <div className="flex flex-col items-center sm:items-end gap-3">
+            <div className="flex flex-col items-center lg:items-end gap-3">
               <Link
                 href="/contact"
-                className="btn-shimmer inline-flex items-center justify-center bg-white text-emerald-700 font-bold rounded-full px-8 py-3 hover:scale-105 transition-transform duration-300"
+                className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center bg-white text-emerald-700 font-bold rounded-full px-8 py-3.5 hover:scale-105 transition-transform duration-300"
               >
                 Apply as Partner
               </Link>
-              <div className="flex items-center gap-4 text-sm">
+              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm">
                 <a href={CONTACT.phoneHref} className="inline-flex items-center gap-1.5 text-white/80 hover:text-white transition-colors">
                   <PhoneCall size={14} /> Call Us
                 </a>

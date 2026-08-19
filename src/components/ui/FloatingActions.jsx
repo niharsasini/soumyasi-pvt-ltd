@@ -57,7 +57,9 @@ export default function FloatingActions() {
             transition={{ type: "spring", stiffness: 300, damping: 22, delay: 0.1 }}
             onMouseEnter={() => setCallHover(true)}
             onMouseLeave={() => setCallHover(false)}
-            className="fixed bottom-20 sm:bottom-24 left-4 sm:left-6 z-50 flex items-center gap-2 overflow-hidden transition-all duration-300"
+            className={`fixed left-4 sm:left-6 z-50 flex items-center gap-2 overflow-hidden transition-all duration-300 ${
+              cookieAccepted ? "bottom-24 sm:bottom-28" : "bottom-36 sm:bottom-40"
+            }`}
             aria-label="Call now"
           >
             <AnimatePresence>
@@ -72,7 +74,7 @@ export default function FloatingActions() {
                 </motion.span>
               )}
             </AnimatePresence>
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-gold hover:shadow-gold-lg hover:scale-110 transition-all duration-300">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-gold hover:shadow-gold-lg hover:scale-110 transition-all duration-300">
               <PhoneIcon />
             </div>
           </motion.a>
@@ -107,7 +109,7 @@ export default function FloatingActions() {
             <motion.div
               animate={{ boxShadow: ["0 0 0 0 rgba(34,197,94,0.4)", "0 0 0 10px rgba(34,197,94,0)", "0 0 0 0 rgba(34,197,94,0)"] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }}
-              className="w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:scale-110 transition-transform duration-300"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:scale-110 transition-transform duration-300"
             >
               <WhatsAppIcon />
             </motion.div>

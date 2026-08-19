@@ -38,7 +38,7 @@ export default function Testimonials() {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="w-full py-24 bg-brand-bg relative overflow-hidden">
+    <section className="w-full py-16 sm:py-20 lg:py-24 bg-brand-bg relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 section-divider" />
       <div
         className="absolute inset-0 pointer-events-none"
@@ -47,12 +47,13 @@ export default function Testimonials() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-14" ref={ref}>
+        <div className="text-center mb-10 sm:mb-14" ref={ref}>
+          <div className="w-8 h-1 bg-amber-500 rounded-full mb-3 mx-auto sm:hidden" />
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
             Testimonials
           </p>
           <motion.h2
-            className="text-4xl sm:text-5xl font-bold font-display text-brand-ink"
+            className="text-2xl sm:text-4xl lg:text-5xl font-bold font-display text-brand-ink"
             variants={VARIANTS.container}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -69,7 +70,7 @@ export default function Testimonials() {
             variants={VARIANTS.para}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="mt-4 text-brand-brown max-w-xl mx-auto text-base"
+            className="mt-4 text-brand-brown max-w-xl mx-auto text-sm sm:text-base"
           >
             Real results from real clients — from Bhubaneswar to Sambalpur.
           </motion.p>
@@ -92,7 +93,7 @@ export default function Testimonials() {
           >
             {TESTIMONIALS.map((t, i) => (
               <SwiperSlide key={i} className="h-auto">
-                <div className="flex flex-col h-full p-7 rounded-2xl bg-white border border-brand-border shadow-warm hover:border-amber-400 hover:shadow-card-hover transition-all duration-300">
+                <div className="flex flex-col h-full p-5 sm:p-6 rounded-2xl bg-white border border-brand-border shadow-warm hover:border-amber-400 hover:shadow-card-hover active:scale-[0.98] transition-all duration-300">
                   {/* Stars */}
                   <div className="flex gap-1 mb-4">
                     {Array(t.stars).fill(0).map((_, j) => (

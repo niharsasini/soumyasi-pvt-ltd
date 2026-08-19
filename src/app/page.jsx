@@ -22,17 +22,29 @@ export const metadata = {
   },
 };
 
+const Divider = () => (
+  <div className="h-px bg-gradient-to-r from-transparent via-[#e8d5b0] to-transparent" />
+);
+
 export default function Page() {
   return (
     <div className="w-full bg-brand-bg antialiased text-brand-ink">
       <Hero />
+      <Divider />
       <EVPartnerSection />
+      <Divider />
       <WhatWeDo />
+      <Divider />
       <StatsStrip />
+      <Divider />
       <EVMapSection />
+      <Divider />
       <Industries />
+      <Divider />
       <WhyChooseUs />
+      <Divider />
       <Testimonials />
+      <Divider />
       <FinalCTA />
     </div>
   );

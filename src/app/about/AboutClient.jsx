@@ -118,13 +118,13 @@ export default function AboutClient() {
     <div className="bg-brand-bg text-brand-ink overflow-hidden">
 
       {/* ══ HERO ══ */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden bg-brand-bg">
+      <section className="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-brand-bg">
         {/* Amber orbs */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.div animate={{ x: [0,30,0], y:[0,-20,0] }} transition={{ duration:10, repeat:Infinity, ease:"easeInOut" }}
-            className="absolute top-[10%] left-[5%] h-72 w-72 rounded-full bg-amber-400/25 blur-3xl" />
+            className="absolute top-[10%] left-[5%] h-48 w-48 sm:h-72 sm:w-72 lg:h-96 lg:w-96 rounded-full bg-amber-400/25 blur-3xl" />
           <motion.div animate={{ x: [0,-25,0], y:[0,20,0] }} transition={{ duration:12, repeat:Infinity, ease:"easeInOut", delay:3 }}
-            className="absolute bottom-[10%] right-[5%] h-56 w-56 rounded-full bg-amber-300/20 blur-3xl" />
+            className="absolute bottom-[10%] right-[5%] h-40 w-40 sm:h-56 sm:w-56 lg:h-72 lg:w-72 rounded-full bg-amber-300/20 blur-3xl" />
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10 grid lg:grid-cols-2 gap-12 items-center">
@@ -133,6 +133,7 @@ export default function AboutClient() {
             <div className="mb-5">
               <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About Us" }]} />
             </div>
+            <div className="w-8 h-1 bg-amber-500 rounded-full mb-3 sm:hidden" />
             <motion.p initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.5 }}
               className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
               About Us
@@ -197,14 +198,15 @@ export default function AboutClient() {
       </section>
 
       {/* ══ COMPANY STORY ══ */}
-      <section className="py-24 px-4 bg-brand-section relative">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-brand-section relative">
         <div className="absolute inset-x-0 top-0 section-divider" />
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
 
           {/* Story text */}
           <motion.div initial={{ opacity:0, x:-40 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}>
+            <div className="w-8 h-1 bg-amber-500 rounded-full mb-3 sm:hidden" />
             <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">Our Story</p>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-ink mb-6 leading-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-brand-ink mb-6 leading-tight">
               From One Rooftop to an <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">Odisha-wide Network</span>
             </h2>
             <div className="space-y-4 text-brand-brown leading-relaxed">
@@ -252,28 +254,28 @@ export default function AboutClient() {
       </section>
 
       {/* ══ MISSION + VISION ══ */}
-      <section className="py-24 px-4 bg-brand-bg">
-        <div className="absolute inset-x-0 section-divider" />
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg relative">
+        <div className="absolute inset-x-0 top-0 section-divider" />
         <div className="max-w-5xl mx-auto">
           <SectionHeading badge="What We Stand For" words={["Mission", "&", "Vision"]} goldWords={["Mission"]} />
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <motion.div initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.6 }}
-              className="bg-white rounded-2xl border border-brand-border shadow-warm p-8 border-l-4 border-l-amber-500">
+              className="active:scale-[0.98] bg-white rounded-2xl border border-brand-border shadow-warm p-6 sm:p-8 border-l-4 border-l-amber-500">
               <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center mb-5">
                 <Target size={24} className="text-brand-gold" />
               </div>
-              <h3 className="text-xl font-bold font-display text-brand-ink mb-3">Our Mission</h3>
-              <p className="text-brand-brown leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold font-display text-brand-ink mb-3">Our Mission</h3>
+              <p className="text-sm sm:text-base text-brand-brown leading-relaxed">
                 To make clean energy accessible to every home and business in Odisha — through reliable solar installations, growing EV infrastructure, and best-in-class engineering support.
               </p>
             </motion.div>
             <motion.div initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.6, delay:0.1 }}
-              className="bg-white rounded-2xl border border-brand-border shadow-warm p-8 border-l-4 border-l-emerald-500">
+              className="active:scale-[0.98] bg-white rounded-2xl border border-brand-border shadow-warm p-6 sm:p-8 border-l-4 border-l-emerald-500">
               <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-5">
                 <Leaf size={24} className="text-brand-emerald" />
               </div>
-              <h3 className="text-xl font-bold font-display text-brand-ink mb-3">Our Vision</h3>
-              <p className="text-brand-brown leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold font-display text-brand-ink mb-3">Our Vision</h3>
+              <p className="text-sm sm:text-base text-brand-brown leading-relaxed">
                 A fully solar-powered Odisha with an EV network connecting every city and town — where clean energy is the default, not the exception.
               </p>
             </motion.div>
@@ -282,21 +284,21 @@ export default function AboutClient() {
       </section>
 
       {/* ══ CORE VALUES ══ */}
-      <section className="py-24 px-4 bg-brand-section">
-        <div className="absolute inset-x-0 section-divider" />
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-brand-section relative">
+        <div className="absolute inset-x-0 top-0 section-divider" />
         <div className="max-w-5xl mx-auto">
           <SectionHeading badge="Our Principles" words={["What", "Drives", "Us"]} goldWords={["Drives"]} />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {VALUES.map(({ icon: Icon, title, desc }, i) => (
               <motion.div key={title}
                 initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.5, delay:i*0.1 }}
                 whileHover={{ y:-6 }} transition_hover={{ type:"spring", stiffness:280, damping:18 }}
-                className="bg-white border border-brand-border rounded-2xl shadow-warm p-6 hover:border-amber-400 hover:shadow-card-hover transition-all duration-300">
+                className="active:scale-[0.98] bg-white border border-brand-border rounded-2xl shadow-warm p-4 sm:p-6 hover:border-amber-400 hover:shadow-card-hover transition-all duration-300">
                 <div className="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center mb-4">
                   <Icon size={22} className="text-brand-gold" />
                 </div>
-                <h3 className="font-bold font-display text-brand-ink mb-2">{title}</h3>
-                <p className="text-sm text-brand-brown leading-relaxed">{desc}</p>
+                <h3 className="text-lg sm:text-xl font-bold font-display text-brand-ink mb-2">{title}</h3>
+                <p className="text-xs sm:text-sm text-brand-brown leading-relaxed">{desc}</p>
               </motion.div>
             ))}
           </div>
@@ -304,23 +306,24 @@ export default function AboutClient() {
       </section>
 
       {/* ══ TEAM ══ */}
-      <section className="py-24 px-4 bg-brand-bg">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg">
         <div className="max-w-5xl mx-auto">
           <SectionHeading badge="The People Behind It" words={["Our", "Leadership"]} goldWords={["Leadership"]} />
           <p className="text-center text-brand-brown max-w-xl mx-auto -mt-6 mb-10 text-sm leading-relaxed">
             Our leadership team brings decades of combined experience in electrical engineering, renewable energy, and project management.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {TEAM.map(({ icon: Icon, title, bio, gradient }, i) => (
               <motion.div key={title}
                 initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.5, delay:i*0.1 }}
                 whileHover={{ y:-6 }}
-                className="bg-white border border-brand-border rounded-2xl shadow-warm p-6 text-center hover:border-amber-400 hover:shadow-card-hover transition-all duration-300">
-                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-white mx-auto mb-4 shadow-gold`}>
-                  <Icon size={26} />
+                className="active:scale-[0.98] bg-white border border-brand-border rounded-2xl shadow-warm p-4 sm:p-6 text-center hover:border-amber-400 hover:shadow-card-hover transition-all duration-300">
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-white mx-auto mb-4 shadow-gold`}>
+                  <Icon size={22} className="sm:hidden" />
+                  <Icon size={26} className="hidden sm:block" />
                 </div>
                 <h3 className="font-bold font-display text-brand-ink text-sm">{title}</h3>
-                <p className="text-brand-muted text-xs leading-relaxed mt-2">{bio}</p>
+                <p className="text-brand-muted text-xs leading-relaxed mt-2 line-clamp-3 sm:line-clamp-none">{bio}</p>
               </motion.div>
             ))}
           </div>
@@ -328,7 +331,7 @@ export default function AboutClient() {
       </section>
 
       {/* ══ TIMELINE ══ */}
-      <section className="py-24 px-4 bg-brand-section relative">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-brand-section relative">
         <div className="absolute inset-x-0 top-0 section-divider" />
         <div className="max-w-4xl mx-auto" ref={tlRef}>
           <SectionHeading badge="How We Got Here" words={["Our", "Journey"]} goldWords={["Journey"]} />
@@ -347,10 +350,10 @@ export default function AboutClient() {
             {MILESTONES.map((m, i) => (
               <motion.div key={m.year}
                 initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:i*0.1 }}
-                className="bg-white border border-brand-border rounded-2xl shadow-warm p-5 border-l-4 border-l-amber-500">
+                className="active:scale-[0.98] bg-white border border-brand-border rounded-2xl shadow-warm p-4 border-l-4 border-l-amber-500">
                 <span className="text-xs font-bold text-brand-gold tracking-widest uppercase">{m.year}</span>
-                <h4 className="font-bold font-display text-brand-ink mt-1 mb-1">{m.title}</h4>
-                <p className="text-sm text-brand-brown leading-relaxed">{m.desc}</p>
+                <h4 className="text-sm font-bold font-display text-brand-ink mt-1 mb-1">{m.title}</h4>
+                <p className="text-xs text-brand-brown leading-relaxed">{m.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -358,26 +361,26 @@ export default function AboutClient() {
       </section>
 
       {/* ══ FINAL CTA ══ */}
-      <section className="py-24 px-4 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background:"radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.1), transparent)" }} />
         <motion.div animate={{ scale:[1,1.3,1], opacity:[0.2,0.4,0.2] }} transition={{ duration:5, repeat:Infinity }}
-          className="absolute top-1/2 left-[10%] -translate-y-1/2 h-56 w-56 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+          className="absolute top-1/2 left-[10%] -translate-y-1/2 h-40 w-40 sm:h-56 sm:w-56 rounded-full bg-white/10 blur-3xl pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-200 mb-4">Let's Connect</p>
-          <h2 className="text-4xl sm:text-5xl font-bold font-display text-white leading-tight mb-5">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white leading-tight mb-5">
             Join Our Journey
           </h2>
-          <p className="text-amber-100 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-amber-100 mb-10 max-w-xl mx-auto leading-relaxed">
             Whether you're a customer, partner, or future team member — we'd love to hear from you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact"
-              className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-800 bg-white hover:bg-amber-50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:scale-105 transition-all duration-300">
+              className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-800 bg-white hover:bg-amber-50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:scale-105 transition-all duration-300">
               Get In Touch
             </Link>
             <Link href="/careers"
-              className="inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300">
+              className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300">
               View Open Roles
             </Link>
           </div>

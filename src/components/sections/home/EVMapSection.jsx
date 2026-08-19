@@ -35,17 +35,18 @@ export default function EVMapSection() {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="w-full py-24 bg-brand-section relative overflow-hidden">
+    <section className="w-full py-16 sm:py-20 lg:py-24 bg-brand-section relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 section-divider" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12" ref={ref}>
+        <div className="text-center mb-10 sm:mb-12" ref={ref}>
+          <div className="w-8 h-1 bg-amber-500 rounded-full mb-3 mx-auto sm:hidden" />
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
             EV Infrastructure
           </p>
           <motion.h2
-            className="text-4xl sm:text-5xl font-bold font-display text-brand-ink"
+            className="text-2xl sm:text-4xl lg:text-5xl font-bold font-display text-brand-ink"
             variants={VARIANTS.container}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -62,7 +63,7 @@ export default function EVMapSection() {
             variants={VARIANTS.para}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="mt-4 text-brand-brown max-w-xl mx-auto text-base"
+            className="mt-4 text-brand-brown max-w-xl mx-auto text-sm sm:text-base"
           >
             50+ charging stations and growing across Odisha. Find your nearest station.
           </motion.p>
@@ -112,11 +113,11 @@ export default function EVMapSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-10 text-center"
+          className="mt-10 flex justify-center px-4 sm:px-0"
         >
           <Link
             href="/solutions/ev-charging"
-            className="btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-[0_12px_40px_rgba(217,119,6,0.35)] hover:scale-105 transition-all duration-300"
+            className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-[0_12px_40px_rgba(217,119,6,0.35)] hover:scale-105 transition-all duration-300"
           >
             Explore EV Charging Solutions <ArrowRight size={15} />
           </Link>

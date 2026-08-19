@@ -168,13 +168,13 @@ export default function SolutionPageClient({ solution }) {
     <div className="bg-[#FFFBF0] text-[#1a1208] overflow-hidden">
 
       {/* ── HERO ───────────────────────────────────────────────── */}
-      <section className="min-h-screen bg-[#FFFBF0] relative overflow-hidden flex items-center pt-28 pb-16 px-4">
+      <section className="min-h-screen bg-[#FFFBF0] relative overflow-hidden flex items-center pt-28 sm:pt-32 lg:pt-36 pb-16 px-4">
         {/* Orbs */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.div animate={{ x: [0, 25, 0], y: [0, -18, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className={`absolute top-[8%] left-[4%] h-80 w-80 rounded-full ${a.orb} blur-3xl`} />
+            className={`absolute top-[8%] left-[4%] h-48 w-48 sm:h-64 sm:w-64 lg:h-80 lg:w-80 rounded-full ${a.orb} blur-3xl`} />
           <motion.div animate={{ x: [0, -20, 0], y: [0, 15, 0] }} transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-            className={`absolute top-[10%] right-[6%] h-64 w-64 rounded-full ${a.orb} blur-3xl opacity-70`} />
+            className={`absolute top-[10%] right-[6%] h-40 w-40 sm:h-52 sm:w-52 lg:h-64 lg:w-64 rounded-full ${a.orb} blur-3xl opacity-70`} />
         </div>
 
         <div ref={heroRef} className="max-w-7xl mx-auto w-full relative z-10 grid lg:grid-cols-[55%_45%] gap-12 items-center">
@@ -205,7 +205,7 @@ export default function SolutionPageClient({ solution }) {
             </motion.p>
 
             {/* Heading */}
-            <motion.h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-[#1a1208] leading-tight mb-6"
+            <motion.h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-display text-[#1a1208] leading-tight mb-6"
               variants={VARIANTS.container} initial="hidden" animate={heroInView ? "visible" : "hidden"}>
               {solution.heroHeading.split(" ").map((w, i) => (
                 <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
@@ -218,19 +218,19 @@ export default function SolutionPageClient({ solution }) {
 
             {/* Subtext */}
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.7 }}
-              className="text-[#78614a] text-lg leading-relaxed mb-8 max-w-lg">
+              className="text-[#78614a] text-sm sm:text-base lg:text-lg leading-relaxed mb-8 max-w-lg">
               {solution.heroSubtext}
             </motion.p>
 
             {/* CTAs */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.6 }}
-              className="flex flex-wrap gap-4">
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Link href={solution.heroCTAPrimary.href}
-                className={`btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r ${a.gradient} hover:scale-105 transition-all duration-300 shadow-lg`}>
+                className={`btn-shimmer inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r ${a.gradient} hover:scale-105 active:scale-[0.98] transition-all duration-300 shadow-lg w-full sm:w-auto`}>
                 {solution.heroCTAPrimary.label} <ArrowRight size={15} />
               </Link>
               <Link href={solution.heroCTASecondary.href}
-                className={`inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 ${a.border} ${a.icon} font-semibold text-sm hover:opacity-80 transition-all duration-300`}>
+                className={`inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border-2 ${a.border} ${a.icon} font-semibold text-sm hover:opacity-80 active:scale-[0.98] transition-all duration-300 w-full sm:w-auto`}>
                 {solution.heroCTASecondary.label}
               </Link>
             </motion.div>
@@ -264,18 +264,19 @@ export default function SolutionPageClient({ solution }) {
       </section>
 
       {/* ── BENEFITS ───────────────────────────────────────────── */}
-      <section className="bg-[#FFF8E7] py-24 px-4">
+      <section className="bg-[#FFF8E7] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <SectionHeading badge="Why Choose This Solution"
             words={["Why", "Choose", "This", "Solution"]} goldWords={["Why", "Choose"]} />
-          <motion.div className="grid sm:grid-cols-2 gap-6" variants={staggerGrid} initial="hidden" whileInView="visible" viewport={vp}>
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6" variants={staggerGrid} initial="hidden" whileInView="visible" viewport={vp}>
             {solution.benefits.map((b, i) => {
               const BIcon = ICON_MAP[b.icon];
               const num   = String(i + 1).padStart(2, "0");
               return (
                 <motion.div key={b.title} variants={VARIANTS.card}
                   whileHover={{ y: -8, borderColor: a.hoverBorder, boxShadow: a.hoverShadow, transition: { type: "spring", stiffness: 300, damping: 20 } }}
-                  className="group bg-white rounded-2xl border border-[#e8d5b0] p-8 cursor-default relative overflow-hidden"
+                  whileTap={{ scale: 0.98 }}
+                  className="group bg-white rounded-2xl border border-[#e8d5b0] p-5 sm:p-6 lg:p-8 cursor-default relative overflow-hidden"
                   style={{ borderTop: `3px solid ${a.hoverBorder}`, boxShadow: "0 4px 24px rgba(120,80,20,0.08)" }}>
                   {/* Decorative number badge */}
                   <span className="absolute top-5 right-6 text-3xl font-bold font-display leading-none select-none pointer-events-none"
@@ -283,12 +284,13 @@ export default function SolutionPageClient({ solution }) {
                     {num}
                   </span>
                   {BIcon && (
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300 ${a.iconBg}`}>
-                      <BIcon size={26} className={a.icon} />
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300 ${a.iconBg}`}>
+                      <BIcon size={22} className={`sm:hidden ${a.icon}`} />
+                      <BIcon size={26} className={`hidden sm:block ${a.icon}`} />
                     </div>
                   )}
-                  <h3 className="text-xl font-bold font-display text-[#1a1208] mb-2">{b.title}</h3>
-                  <p className="text-[#78614a] text-sm leading-relaxed">{b.description}</p>
+                  <h3 className="text-lg sm:text-xl font-bold font-display text-[#1a1208] mb-2">{b.title}</h3>
+                  <p className="text-[#78614a] text-xs sm:text-sm leading-relaxed">{b.description}</p>
                 </motion.div>
               );
             })}
@@ -298,17 +300,17 @@ export default function SolutionPageClient({ solution }) {
 
       {/* ── PRODUCT SHOWCASE ───────────────────────────────────── */}
       {solution.slug === 'solar-rooftop' ? (
-        <section className="bg-[#FFFBF0] py-24 px-4">
+        <section className="bg-[#FFFBF0] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <div>
                 <p className={`${a.icon} text-xs font-bold tracking-[0.2em] uppercase mb-3`}>
                   INTERACTIVE 3D EXPLORER
                 </p>
-                <h2 className="text-3xl sm:text-4xl font-display font-bold text-[#1a1208] mb-4">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-[#1a1208] mb-4">
                   See Your Solar Panel Up Close
                 </h2>
-                <p className="text-[#78614a] mb-6 leading-relaxed">
+                <p className="text-[#78614a] text-sm sm:text-base mb-6 leading-relaxed">
                   Every panel we install uses monocrystalline technology
                   for maximum efficiency. Drag to rotate, scroll to zoom —
                   explore the same technology powering homes across Odisha.
@@ -319,7 +321,7 @@ export default function SolutionPageClient({ solution }) {
                       <div className={`w-5 h-5 rounded-full bg-gradient-to-r ${a.gradient} flex items-center justify-center flex-shrink-0`}>
                         <Check className="w-3 h-3 text-white" />
                       </div>
-                      <span className="text-[#1a1208] text-sm">
+                      <span className="text-[#1a1208] text-xs sm:text-sm">
                         <strong>{spec.label}:</strong> {spec.value}
                       </span>
                     </li>
@@ -327,7 +329,7 @@ export default function SolutionPageClient({ solution }) {
                 </ul>
                 <Link
                   href="/contact"
-                  className={`inline-flex bg-gradient-to-r ${a.gradient} text-white font-semibold rounded-full px-8 py-3.5 hover:scale-105 transition-all shadow-lg`}
+                  className={`inline-flex items-center justify-center bg-gradient-to-r ${a.gradient} text-white font-semibold rounded-full px-8 py-3.5 hover:scale-105 active:scale-[0.98] transition-all shadow-lg w-full sm:w-auto`}
                 >
                   Get Solar Quote
                 </Link>
@@ -345,9 +347,9 @@ export default function SolutionPageClient({ solution }) {
           </div>
         </section>
       ) : solution.product ? (
-        <section className="bg-[#FFFBF0] py-24 px-4">
+        <section className="bg-[#FFFBF0] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -377,10 +379,10 @@ export default function SolutionPageClient({ solution }) {
                 <p className={`${a.icon} text-xs font-bold tracking-[0.2em] uppercase mb-3`}>
                   {solution.product.eyebrow}
                 </p>
-                <h2 className="text-3xl sm:text-4xl font-display font-bold text-[#1a1208] mb-4">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-[#1a1208] mb-4">
                   {solution.product.heading}
                 </h2>
-                <p className="text-[#78614a] mb-8 leading-relaxed">
+                <p className="text-[#78614a] text-sm sm:text-base mb-8 leading-relaxed">
                   {solution.product.description}
                 </p>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 mb-8">
@@ -391,16 +393,16 @@ export default function SolutionPageClient({ solution }) {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
-                      className={`${a.spec} border border-[#e8d5b0] rounded-xl p-2 sm:p-3 text-center`}
+                      className={`${a.spec} border border-[#e8d5b0] rounded-xl p-2.5 sm:p-3 text-center`}
                     >
-                      <p className="text-[#a8917a] text-[10px] sm:text-xs mb-1">{spec.label}</p>
+                      <p className="text-[#a8917a] text-[9px] sm:text-xs mb-1">{spec.label}</p>
                       <p className={`${a.icon} font-bold text-xs sm:text-sm`}>{spec.value}</p>
                     </motion.div>
                   ))}
                 </div>
                 <Link
                   href="/contact"
-                  className={`inline-flex bg-gradient-to-r ${a.gradient} text-white font-semibold rounded-full px-8 py-3.5 hover:scale-105 transition-all shadow-lg`}
+                  className={`inline-flex items-center justify-center bg-gradient-to-r ${a.gradient} text-white font-semibold rounded-full px-8 py-3.5 hover:scale-105 active:scale-[0.98] transition-all shadow-lg w-full sm:w-auto`}
                 >
                   Get Free Assessment
                 </Link>
@@ -412,7 +414,7 @@ export default function SolutionPageClient({ solution }) {
 
       {/* ── REQUIREMENTS ACCORDION ─────────────────────────────── */}
       {solution.requirements?.length > 0 && (
-        <section className="bg-[#FFF8E7] py-24 px-4">
+        <section className="bg-[#FFF8E7] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <SectionHeading badge="Before Installation"
               words={["Site", "Requirements", "&", "Checklist"]} goldWords={["Requirements"]}
@@ -427,25 +429,25 @@ export default function SolutionPageClient({ solution }) {
       )}
 
       {/* ── PROCESS ────────────────────────────────────────────── */}
-      <section className="bg-[#FFFBF0] py-24 px-4">
+      <section className="bg-[#FFFBF0] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <SectionHeading badge="How We Work" words={["Our", "Installation", "Process"]} goldWords={["Installation"]} />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 relative">
             {/* Connecting dashed line */}
             <div className="hidden lg:block absolute top-[3.5rem] left-[10%] right-[10%] h-px pointer-events-none"
               style={{ borderTop: `2px dashed ${a.lineColor}` }} />
             {solution.process.map((step, i) => (
               <motion.div key={step.step} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={vp} transition={{ duration: 0.55, delay: i * 0.12 }}
-                className="bg-white rounded-2xl border border-[#e8d5b0] p-6 relative"
+                className="bg-white rounded-2xl border border-[#e8d5b0] p-4 sm:p-6 relative"
                 style={{ borderLeft: `4px solid ${a.hoverBorder}`, boxShadow: "0 4px 24px rgba(120,80,20,0.08)" }}>
                 {/* Time badge */}
                 {solution.processTimings?.[i] && (
-                  <span className={`absolute top-4 right-4 text-[10px] font-bold tracking-wide ${a.pill} rounded-full px-2 py-0.5`}>
+                  <span className={`absolute top-4 right-4 text-[9px] font-bold tracking-wide ${a.pill} rounded-full px-2 py-0.5`}>
                     {solution.processTimings[i]}
                   </span>
                 )}
-                <p className={`font-display text-4xl font-bold leading-none mb-2 select-none bg-gradient-to-br ${a.gradient} bg-clip-text text-transparent`}>
+                <p className={`font-display text-3xl sm:text-4xl font-bold leading-none mb-2 select-none bg-gradient-to-br ${a.gradient} bg-clip-text text-transparent`}>
                   {step.step}
                 </p>
                 <h3 className="font-bold font-display text-[#1a1208] mb-2 text-sm">{step.title}</h3>
@@ -457,7 +459,7 @@ export default function SolutionPageClient({ solution }) {
       </section>
 
       {/* ── TESTIMONIALS ───────────────────────────────────────── */}
-      <section className="bg-[#FFF8E7] py-24 px-4">
+      <section className="bg-[#FFF8E7] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <SectionHeading badge="Customer Stories" words={["Trusted", "Across", "Odisha"]} goldWords={["Trusted"]} />
           {solution.testimonialsIntro && (
@@ -466,10 +468,10 @@ export default function SolutionPageClient({ solution }) {
               {solution.testimonialsIntro}
             </motion.p>
           )}
-          <motion.div className="grid md:grid-cols-3 gap-6" variants={staggerGrid} initial="hidden" whileInView="visible" viewport={vp}>
+          <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6" variants={staggerGrid} initial="hidden" whileInView="visible" viewport={vp}>
             {solution.testimonials.map((t) => (
               <motion.div key={t.name} variants={VARIANTS.fadeUp}
-                className="bg-white rounded-2xl border border-[#e8d5b0] p-7"
+                className="bg-white rounded-2xl border border-[#e8d5b0] p-5 sm:p-7"
                 style={{ boxShadow: "0 4px 24px rgba(120,80,20,0.08)" }}>
                 <div className="flex gap-0.5 mb-4">
                   {Array.from({ length: t.rating }).map((_, i) => (
@@ -495,33 +497,33 @@ export default function SolutionPageClient({ solution }) {
       </section>
 
       {/* ── FINAL CTA ──────────────────────────────────────────── */}
-      <section className={`py-24 px-4 bg-gradient-to-br ${a.gradient} relative overflow-hidden`}>
+      <section className={`py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br ${a.gradient} relative overflow-hidden`}>
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.08), transparent)" }} />
         <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.3, 0.15] }} transition={{ duration: 6, repeat: Infinity }}
-          className="absolute top-1/2 left-[6%] -translate-y-1/2 h-64 w-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+          className="absolute top-1/2 left-[6%] -translate-y-1/2 h-40 w-40 sm:h-56 sm:w-56 lg:h-64 lg:w-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
         <motion.div animate={{ scale: [1.3, 1, 1.3], opacity: [0.15, 0.3, 0.15] }} transition={{ duration: 7, repeat: Infinity, delay: 2 }}
-          className="absolute top-1/2 right-[6%] -translate-y-1/2 h-56 w-56 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+          className="absolute top-1/2 right-[6%] -translate-y-1/2 h-36 w-36 sm:h-48 sm:w-48 lg:h-56 lg:w-56 rounded-full bg-white/10 blur-3xl pointer-events-none" />
 
         <div className="max-w-3xl mx-auto text-center relative z-10">
-          <motion.h2 className="text-4xl sm:text-5xl font-bold font-display text-white leading-tight mb-5"
+          <motion.h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-white leading-tight mb-5"
             variants={VARIANTS.container} initial="hidden" whileInView="visible" viewport={vp}>
             {solution.ctaHeading.split(" ").map((w, i) => (
               <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">{w}</motion.span>
             ))}
           </motion.h2>
           <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ delay: 0.4 }}
-            className="text-white/80 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+            className="text-white/80 text-sm sm:text-base lg:text-lg mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed">
             {solution.ctaSubtext}
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ delay: 0.55 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center">
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link href={solution.ctaPrimary.href}
-              className={`btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base bg-white hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-lg ${a.ctaText}`}>
+              className={`btn-shimmer inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base bg-white hover:bg-white/90 hover:scale-105 active:scale-[0.98] transition-all duration-300 shadow-lg w-full sm:w-auto ${a.ctaText}`}>
               {solution.ctaPrimary.label}
             </Link>
             <a href={solution.ctaSecondary.href}
-              className="inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300">
+              className="inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full border-2 border-white/70 text-white font-semibold text-sm sm:text-base hover:bg-white/10 hover:border-white active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
               {solution.ctaSecondary.label}
             </a>
           </motion.div>

@@ -66,13 +66,13 @@ function MainStatCard({ Icon, value, label, i, isActive }) {
       initial={{ opacity: 0, y: 16 }}
       animate={isActive ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 1 + i * 0.1 }}
-      className="bg-white rounded-2xl p-3 sm:p-4 border border-[#e8d5b0] shadow-[0_4px_16px_rgba(120,80,20,0.06)] text-center hover:border-amber-300 transition-colors"
+      className="bg-white rounded-2xl p-2.5 sm:p-4 border border-[#e8d5b0] shadow-[0_4px_16px_rgba(120,80,20,0.06)] text-center hover:border-amber-300 transition-colors"
     >
       <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center mx-auto mb-2">
         <Icon className="w-4 h-4 text-amber-600" />
       </div>
       <p className="font-black text-xl sm:text-2xl text-[#1a1208]">{value}+</p>
-      <p className="text-[#a8917a] text-[10px] mt-0.5 whitespace-nowrap">{label}</p>
+      <p className="text-[#a8917a] text-[9px] sm:text-[10px] mt-0.5 whitespace-nowrap">{label}</p>
     </motion.div>
   );
 }
@@ -104,7 +104,7 @@ function SlideMain({ isActive }) {
 
       {/* Main content grid */}
       <div className="absolute inset-0 flex items-center">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-28 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 sm:pt-28 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* LEFT — content */}
           <div>
@@ -113,12 +113,12 @@ function SlideMain({ isActive }) {
               initial={{ opacity: 0, y: -10 }}
               animate={isActive ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0 }}
-              className="inline-flex items-center gap-2.5 bg-white border border-[#e8d5b0] rounded-full px-4 py-2 shadow-sm mb-4"
+              className="inline-flex items-center gap-2 sm:gap-2.5 bg-white border border-[#e8d5b0] rounded-full px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm mb-3 sm:mb-4"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
-              <span className="text-[#78614a] text-xs font-semibold">Odisha&apos;s Leading Energy Company</span>
+              <span className="text-[#78614a] text-[10px] sm:text-xs font-semibold">Odisha&apos;s Leading Energy Company</span>
               <span className="w-px h-3 bg-[#e8d5b0]" />
-              <span className="text-[#a8917a] text-xs">Est. Bhubaneswar</span>
+              <span className="text-[#a8917a] text-[10px] sm:text-xs">Est. Bhubaneswar</span>
             </motion.div>
 
             {/* 2. Main headline */}
@@ -151,12 +151,12 @@ function SlideMain({ isActive }) {
               initial={{ opacity: 0, y: 16 }}
               animate={isActive ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.75 }}
-              className="mt-4 flex flex-wrap gap-2"
+              className="mt-3 sm:mt-4 flex flex-wrap gap-2"
             >
               {FEATURE_PILLS.map(({ Icon, iconCls, label }) => (
                 <span
                   key={label}
-                  className="bg-white border border-[#e8d5b0] rounded-full px-3 py-1.5 flex items-center gap-1.5 text-xs text-[#78614a] font-medium shadow-sm"
+                  className="bg-white border border-[#e8d5b0] rounded-full px-2.5 py-1 sm:px-3 sm:py-1.5 flex items-center gap-1.5 text-[10px] sm:text-xs text-[#78614a] font-medium shadow-sm"
                 >
                   <Icon className={`w-3.5 h-3.5 ${iconCls}`} />
                   {label}
@@ -164,23 +164,28 @@ function SlideMain({ isActive }) {
               ))}
             </motion.div>
 
+            {/* Mobile-only trust line */}
+            <div className="lg:hidden mt-4 text-center">
+              <p className="text-[#78614a] text-xs">Trusted by 500+ customers across Odisha</p>
+            </div>
+
             {/* 5. CTA buttons */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={isActive ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.85 }}
-              className="mt-5 flex flex-col sm:flex-row gap-3"
+              className="mt-4 sm:mt-5 flex flex-col sm:flex-row gap-3"
             >
               <Link
                 href="/solutions"
-                className="btn-shimmer inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-full px-8 py-3.5 text-sm sm:text-base shadow-[0_8px_30px_rgba(217,119,6,0.35)] hover:shadow-[0_12px_40px_rgba(217,119,6,0.5)] hover:scale-105 transition-all duration-300"
+                className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-full px-8 py-3.5 text-sm sm:text-base shadow-[0_8px_30px_rgba(217,119,6,0.35)] hover:shadow-[0_12px_40px_rgba(217,119,6,0.5)] hover:scale-105 transition-all duration-300"
               >
                 Explore Our Solutions
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <a
                 href={CONTACT.phoneHref}
-                className="inline-flex items-center justify-center gap-2 border-2 border-[#e8d5b0] text-[#1a1208] font-semibold rounded-full px-8 py-3.5 text-sm sm:text-base hover:border-amber-400 hover:bg-amber-50 transition-all duration-300"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-[#e8d5b0] text-[#1a1208] font-semibold rounded-full px-8 py-3.5 text-sm sm:text-base hover:border-amber-400 hover:bg-amber-50 transition-all duration-300"
               >
                 <PhoneCall className="w-4 h-4 text-amber-600" />
                 Call Us Now
@@ -188,14 +193,14 @@ function SlideMain({ isActive }) {
             </motion.div>
 
             {/* 6. Stats row */}
-            <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
+            <div className="mt-4 sm:mt-5 grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
               {mainStats.map((s, i) => (
                 <MainStatCard key={s.label} {...s} i={i} isActive={isActive} />
               ))}
             </div>
 
             {/* Mobile-only: watch story */}
-            <div className="lg:hidden mt-4 text-center">
+            <div className="lg:hidden mt-3 sm:mt-4 text-center">
               <button
                 onClick={() => setShowMobileVideo((v) => !v)}
                 className="inline-flex items-center gap-1.5 text-amber-600 text-xs font-semibold"
@@ -319,7 +324,7 @@ function SlideEV({ isActive }) {
   return (
     <section className="relative w-full h-[90vh] min-h-[550px] overflow-hidden pt-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
-        <div className="relative order-2 lg:order-1 h-auto lg:h-full bg-[#0a0f1a] flex flex-col px-8 sm:px-12 pt-28 pb-16 lg:pt-20 lg:pb-20">
+        <div className="relative order-2 lg:order-1 h-auto lg:h-full bg-[#0a0f1a] flex flex-col px-5 sm:px-12 py-8 sm:py-10 lg:pt-20 lg:pb-20">
           <div className="flex-1 flex flex-col justify-center">
             <motion.span initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 }} className="inline-flex self-start items-center gap-2 bg-emerald-500/20 border border-emerald-500/40 rounded-full px-4 py-2 text-emerald-400 text-xs font-bold tracking-widest mb-5">
               ⚡ EV CHARGING NETWORK
@@ -340,7 +345,7 @@ function SlideEV({ isActive }) {
                 </motion.div>
               ))}
             </div>
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.85 }} className="flex flex-col gap-2 w-full sm:flex-row sm:flex-wrap sm:gap-4 sm:w-auto mt-10">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.85 }} className="flex flex-col gap-3 w-full sm:flex-row sm:flex-wrap sm:gap-4 sm:w-auto mt-8 sm:mt-10">
               <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-emerald-500 text-white hover:bg-emerald-400 hover:scale-105 transition-all duration-300 shadow-lg shadow-emerald-500/25 w-full text-center sm:w-auto">Find a Station</Link>
               <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/10 transition-all duration-300 w-full text-center sm:w-auto">Learn More</Link>
             </motion.div>
@@ -375,9 +380,9 @@ function SlideSolar({ isActive }) {
         initial={{ opacity: 0, x: 30 }}
         animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
         transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="absolute z-20 bottom-6 left-3 right-3 max-h-[50vh] overflow-y-auto lg:bottom-auto lg:left-auto lg:max-h-none lg:overflow-visible lg:right-12 lg:top-1/2 lg:-translate-y-1/2 lg:w-[320px]"
+        className="absolute z-20 bottom-16 left-3 right-3 max-h-[55vh] overflow-y-auto lg:bottom-auto lg:left-auto lg:max-h-none lg:overflow-visible lg:right-12 lg:top-1/2 lg:-translate-y-1/2 lg:w-[320px]"
       >
-        <div className="bg-white/95 backdrop-blur-2xl rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.2)] border border-white/80 p-6">
+        <div className="bg-white/95 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.2)] border border-white/80 p-4 sm:p-6">
 
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5 mb-3">
@@ -385,7 +390,7 @@ function SlideSolar({ isActive }) {
           </div>
 
           {/* Headline */}
-          <h2 className="font-display font-black text-[#1a1208] text-2xl leading-tight mb-0.5">
+          <h2 className="font-display font-black text-[#1a1208] text-xl sm:text-2xl leading-tight mb-0.5">
             {isActive && (
               <motion.span
                 initial={{ opacity: 0, x: 15 }}
@@ -397,7 +402,7 @@ function SlideSolar({ isActive }) {
               </motion.span>
             )}
           </h2>
-          <h2 className="font-display font-black text-amber-600 text-2xl leading-tight mb-3">
+          <h2 className="font-display font-black text-amber-600 text-xl sm:text-2xl leading-tight mb-3">
             {isActive && (
               <motion.span
                 initial={{ opacity: 0, x: 15 }}
@@ -419,7 +424,7 @@ function SlideSolar({ isActive }) {
           </p>
 
           {/* 3 check items — compact */}
-          <ul className="space-y-1.5 mb-5">
+          <ul className="space-y-1 mb-5">
             {[
               "Up to 22% Efficiency",
               "25-Year Performance Warranty",
@@ -440,8 +445,8 @@ function SlideSolar({ isActive }) {
             ))}
           </ul>
 
-          {/* CTAs — side by side, compact */}
-          <div className="flex gap-2">
+          {/* CTAs — stacked mobile, side by side desktop */}
+          <div className="flex flex-col sm:flex-row gap-2">
             <Link
               href="/solutions/solar-rooftop"
               className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full py-2.5 text-xs font-bold text-center hover:scale-105 transition shadow-md shadow-amber-500/20"
@@ -489,12 +494,12 @@ function SlideWind({ isActive }) {
         <p className="text-[#78614a] text-xs">Odisha Coast</p>
       </motion.div>
 
-      <motion.div initial={{ y: 40, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute bottom-0 left-0 right-0 z-20 bg-white/95 lg:bg-white/85 backdrop-blur-xl border-t border-white/60 px-6 pt-3 pb-10 sm:px-8 sm:py-8 lg:px-16 xl:px-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
+      <motion.div initial={{ y: 40, opacity: 0 }} animate={isActive ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="absolute bottom-0 left-0 right-0 z-20 bg-white/95 lg:bg-white/85 backdrop-blur-xl border-t border-white/60 px-4 pt-5 pb-14 sm:px-8 sm:py-8 lg:px-16 xl:px-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
         <div>
           <p className="text-sky-600 text-xs font-bold tracking-widest uppercase mb-2">💨 Wind Power</p>
           <HeadlineLines isActive={isActive} size="text-xl sm:text-2xl font-black" lines={[{ text: "Ride the Odisha Wind.", cls: "text-[#1a1208]", from: "left" }]} />
           <div className="lg:hidden mt-3">
-            <Link href="/solutions/wind-power" className="inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-bold text-white bg-sky-500 hover:bg-sky-400 transition w-full sm:w-auto">Explore Wind</Link>
+            <Link href="/solutions/wind-power" className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-bold text-white bg-sky-500 hover:bg-sky-400 transition w-full sm:w-auto">Explore Wind</Link>
           </div>
         </div>
         <div className="hidden lg:flex items-center gap-3">
@@ -526,11 +531,11 @@ function SlideIndustrial({ isActive }) {
   return (
     <section className="relative w-full h-[90vh] min-h-[550px] overflow-hidden pt-20">
       <div className="relative w-full h-full flex flex-col lg:grid lg:grid-cols-2">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }} className="relative flex-none h-[45vw] min-h-[180px] max-h-[220px] lg:h-full lg:max-h-none order-1 lg:order-none">
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={isActive ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }} className="relative flex-none h-48 sm:h-56 lg:h-full lg:max-h-none order-1 lg:order-none">
           <Image src="/soumyasi/industrial-power.png" alt="Industrial power infrastructure" fill sizes="(max-width: 1024px) 100vw, 50vw" loading="lazy" className="object-cover object-center" />
         </motion.div>
 
-        <div className="relative flex-1 bg-[#FFF8E7] overflow-y-auto order-2 lg:order-none px-6 py-5 lg:px-10 lg:py-0 lg:flex lg:flex-col lg:justify-center">
+        <div className="relative flex-1 bg-[#FFF8E7] overflow-y-auto order-2 lg:order-none px-5 py-6 lg:px-10 lg:py-0 lg:flex lg:flex-col lg:justify-center">
           <div className="hidden lg:block absolute -top-16 -right-16 h-64 w-64 rounded-full bg-orange-100 pointer-events-none" />
           <div className="hidden lg:block absolute -bottom-8 -left-8 h-48 w-48 rounded-full bg-amber-100 pointer-events-none" />
 
@@ -539,27 +544,27 @@ function SlideIndustrial({ isActive }) {
               <Factory className="h-3.5 w-3.5" /> INDUSTRIAL POWER
             </motion.span>
 
-            <HeadlineLines isActive={isActive} size="text-3xl sm:text-4xl lg:text-5xl font-black leading-none mt-4" lines={[
+            <HeadlineLines isActive={isActive} size="text-2xl sm:text-3xl lg:text-5xl font-black leading-none mt-4" lines={[
               { text: "Zero Downtime.", cls: "text-[#1a1208]" },
               { text: "Total Control.", cls: "text-orange-500" },
             ]} />
 
             <span className="block w-16 h-1.5 bg-orange-400 rounded-full my-6" />
 
-            <p className="text-[#78614a] text-base leading-relaxed max-w-xs">Complete electrical infrastructure for factories and commercial complexes. From substations to smart switchgear — zero downtime guaranteed.</p>
+            <p className="text-[#78614a] text-sm sm:text-base leading-relaxed max-w-xs">Complete electrical infrastructure for factories and commercial complexes. From substations to smart switchgear — zero downtime guaranteed.</p>
 
             <div className="grid grid-cols-2 gap-2 sm:gap-3 mt-8 max-w-sm">
               {INDUSTRIAL_SPECS.map((s, i) => (
-                <motion.div key={s.value} initial={{ opacity: 0, scale: 0.9 }} animate={isActive ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }} className="bg-white rounded-2xl p-3 sm:p-4 border border-[#e8d5b0]" style={{ boxShadow: "0 2px 8px rgba(120,80,20,0.06)" }}>
-                  <p className="text-orange-500 font-black text-lg sm:text-xl">{s.value}</p>
-                  <p className="text-[#78614a] text-xs font-medium">{s.label}</p>
+                <motion.div key={s.value} initial={{ opacity: 0, scale: 0.9 }} animate={isActive ? { opacity: 1, scale: 1 } : {}} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }} className="bg-white rounded-2xl p-2.5 sm:p-4 border border-[#e8d5b0]" style={{ boxShadow: "0 2px 8px rgba(120,80,20,0.06)" }}>
+                  <p className="text-orange-500 font-black text-base sm:text-lg">{s.value}</p>
+                  <p className="text-[#78614a] text-[10px] font-medium">{s.label}</p>
                 </motion.div>
               ))}
             </div>
 
             <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3 mt-8">
-              <Link href="/solutions/industrial-power" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/25 hover:scale-105 transition w-full text-center sm:w-auto">Industrial Solutions</Link>
-              <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium text-orange-600 border-2 border-orange-200 hover:bg-orange-50 transition w-full text-center sm:w-auto">Get Assessment</Link>
+              <Link href="/solutions/industrial-power" className="inline-flex items-center justify-center px-8 py-3 text-sm sm:text-base rounded-full font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/25 hover:scale-105 transition w-full text-center sm:w-auto">Industrial Solutions</Link>
+              <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3 text-sm sm:text-base rounded-full font-medium text-orange-600 border-2 border-orange-200 hover:bg-orange-50 transition w-full text-center sm:w-auto">Get Assessment</Link>
             </div>
           </div>
         </div>

@@ -14,12 +14,12 @@ export default function IndustriesClient() {
     <div className="bg-brand-bg text-brand-ink overflow-hidden">
 
       {/* ── HERO ── */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden bg-brand-bg">
+      <section className="relative pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 px-4 overflow-hidden bg-brand-bg">
         <div className="absolute inset-0 pointer-events-none">
           <motion.div animate={{ x:[0,30,0], y:[0,-20,0] }} transition={{ duration:10, repeat:Infinity, ease:"easeInOut" }}
-            className="absolute top-[10%] left-[5%] h-72 w-72 rounded-full bg-amber-400/25 blur-3xl" />
+            className="absolute top-[10%] left-[5%] h-48 w-48 sm:h-72 sm:w-72 rounded-full bg-amber-400/25 blur-3xl" />
           <motion.div animate={{ x:[0,-25,0], y:[0,20,0] }} transition={{ duration:12, repeat:Infinity, ease:"easeInOut", delay:3 }}
-            className="absolute bottom-[10%] right-[8%] h-56 w-56 rounded-full bg-amber-300/20 blur-3xl" />
+            className="absolute bottom-[10%] right-[8%] h-40 w-40 sm:h-56 sm:w-56 rounded-full bg-amber-300/20 blur-3xl" />
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10" ref={ref}>
@@ -52,7 +52,7 @@ export default function IndustriesClient() {
       </section>
 
       {/* ── GRID HEADING ── */}
-      <section className="pb-24 px-4 bg-brand-bg">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 bg-brand-bg">
         <div className="max-w-7xl mx-auto">
           <SectionHeading
             badge="Our Expertise"
@@ -61,7 +61,7 @@ export default function IndustriesClient() {
             subtitle="Soumyashi Power supports critical sectors with innovative electrical engineering solutions built for reliability."
           />
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
             {INDUSTRIES.map((item, index) => {
               const Icon = item.icon;
               return (
@@ -72,15 +72,16 @@ export default function IndustriesClient() {
                   transition={{ duration:0.5, delay:(index % 4) * 0.1 }}
                   viewport={{ once:true }}
                   whileHover={{ y:-6 }}
-                  className="group bg-white p-7 rounded-2xl border border-brand-border shadow-warm hover:border-amber-300 hover:shadow-card-hover transition-all duration-300 cursor-default"
+                  className="active:scale-[0.98] group bg-white p-4 sm:p-7 rounded-2xl border border-brand-border shadow-warm hover:border-amber-300 hover:shadow-card-hover transition-all duration-300 cursor-default"
                 >
-                  <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-amber-50 text-brand-gold mb-5 group-hover:bg-amber-100 group-hover:text-amber-700 transition-colors duration-300">
-                    <Icon size={26} />
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl bg-amber-50 text-brand-gold mb-3 sm:mb-5 group-hover:bg-amber-100 group-hover:text-amber-700 transition-colors duration-300">
+                    <Icon size={18} className="sm:hidden" />
+                    <Icon size={26} className="hidden sm:block" />
                   </div>
-                  <h3 className="text-base font-bold font-display text-brand-ink mb-2 leading-snug">
+                  <h3 className="text-xs sm:text-base font-bold font-display text-brand-ink mb-0 sm:mb-2 leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-brand-brown text-sm leading-relaxed">
+                  <p className="hidden sm:block text-brand-brown text-sm leading-relaxed">
                     {item.description}
                   </p>
                 </motion.div>
@@ -91,21 +92,21 @@ export default function IndustriesClient() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-20 px-4 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden text-center">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden text-center">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background:"radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.1), transparent)" }} />
         <div className="max-w-3xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}
-            className="text-3xl sm:text-4xl font-bold font-display text-white mb-4">
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-white mb-4">
             Partner With a Trusted Electrical Engineering Leader
           </motion.h2>
-          <p className="text-amber-100 max-w-xl mx-auto mb-8 leading-relaxed">
+          <p className="text-amber-100 text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed">
             From industrial plants to smart commercial spaces, we power industries with precision and reliability.
           </p>
           <motion.div whileHover={{ scale:1.05 }} whileTap={{ scale:0.97 }}>
             <Link href="/contact"
-              className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-800 bg-white hover:bg-amber-50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-300">
+              className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base text-amber-800 bg-white hover:bg-amber-50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-300">
               Discuss Your Project
             </Link>
           </motion.div>

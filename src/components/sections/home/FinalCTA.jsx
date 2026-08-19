@@ -10,7 +10,7 @@ export default function FinalCTA() {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="w-full py-28 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
+    <section className="w-full py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
       {/* Warm light overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -35,7 +35,7 @@ export default function FinalCTA() {
         </p>
 
         <motion.h2
-          className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-white leading-tight mb-6"
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-white leading-tight mb-6"
           variants={VARIANTS.container}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -53,7 +53,7 @@ export default function FinalCTA() {
           variants={VARIANTS.para}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="text-amber-100 text-lg mb-10 max-w-xl mx-auto leading-relaxed"
+          className="text-amber-100 text-sm sm:text-base mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed"
         >
           Get a free solar assessment or find your nearest EV charging station. Our experts are ready to help you make the switch.
         </motion.p>
@@ -66,13 +66,13 @@ export default function FinalCTA() {
         >
           <Link
             href="/contact"
-            className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-700 bg-white hover:bg-amber-50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:scale-105 transition-all duration-300"
+            className="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-700 bg-white hover:bg-amber-50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:scale-105 transition-all duration-300"
           >
             Get Free Assessment
           </Link>
           <Link
             href="/solutions/ev-charging"
-            className="inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300"
+            className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300"
           >
             Explore EV Network
           </Link>

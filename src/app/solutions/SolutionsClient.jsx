@@ -59,15 +59,15 @@ const vp = { once: true, margin: "-80px" };
 /* ═══════════════════════════════════════════════════ */
 function HeroSection() {
   return (
-    <section className="min-h-screen bg-[#FFFBF0] relative overflow-hidden flex items-center pt-28 pb-16 px-4">
+    <section className="min-h-screen bg-[#FFFBF0] relative overflow-hidden flex items-center pt-28 sm:pt-32 lg:pt-36 pb-16 px-4">
       {/* Orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div animate={{ x:[0,25,0], y:[0,-18,0] }} transition={{ duration:10, repeat:Infinity, ease:"easeInOut" }}
-          className="absolute top-[8%] left-[4%] h-80 w-80 rounded-full bg-amber-400/30 blur-3xl" />
+          className="absolute top-[8%] left-[4%] h-48 w-48 sm:h-64 sm:w-64 lg:h-80 lg:w-80 rounded-full bg-amber-400/30 blur-3xl" />
         <motion.div animate={{ x:[0,-20,0], y:[0,15,0] }} transition={{ duration:13, repeat:Infinity, ease:"easeInOut", delay:3 }}
-          className="absolute top-[10%] right-[6%] h-64 w-64 rounded-full bg-amber-300/25 blur-3xl" />
+          className="absolute top-[10%] right-[6%] h-40 w-40 sm:h-52 sm:w-52 lg:h-64 lg:w-64 rounded-full bg-amber-300/25 blur-3xl" />
         <motion.div animate={{ x:[0,15,0], y:[0,-12,0] }} transition={{ duration:11, repeat:Infinity, ease:"easeInOut", delay:6 }}
-          className="absolute bottom-[8%] left-[50%] h-56 w-56 rounded-full bg-amber-400/20 blur-3xl" />
+          className="absolute bottom-[8%] left-[50%] h-36 w-36 sm:h-44 sm:w-44 lg:h-56 lg:w-56 rounded-full bg-amber-400/20 blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10 grid lg:grid-cols-[55%_45%] gap-12 items-center">
@@ -79,7 +79,7 @@ function HeroSection() {
           </motion.p>
 
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-brand-ink leading-tight mb-6"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-display text-brand-ink leading-tight mb-6"
             variants={VARIANTS.container} initial="hidden" animate="visible"
           >
             {["Everything", "You", "Need", "to", "Power", "Your", "World"].map((w, i) => (
@@ -92,27 +92,27 @@ function HeroSection() {
           </motion.h1>
 
           <motion.p initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.55, duration:0.7 }}
-            className="text-brand-brown text-lg leading-relaxed mb-8 max-w-lg">
+            className="text-brand-brown text-sm sm:text-lg leading-relaxed mb-8 max-w-lg">
             From rooftop solar panels to city-wide EV charging networks — we design, install, and maintain complete energy infrastructure across Odisha.
           </motion.p>
 
           <motion.div initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.7, duration:0.6 }}
-            className="flex flex-wrap gap-4 mb-8">
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
             <Link href="/contact"
-              className="btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-[0_12px_40px_rgba(217,119,6,0.35)] hover:scale-105 transition-all duration-300">
+              className="btn-shimmer inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-[0_12px_40px_rgba(217,119,6,0.35)] hover:scale-105 active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
               Get Free Assessment <ArrowRight size={15} />
             </Link>
             <Link href="/projects"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-amber-400 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition-all duration-300">
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border-2 border-amber-400 text-amber-700 font-semibold text-sm hover:bg-amber-50 active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
               View Our Projects
             </Link>
           </motion.div>
 
           <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.85, duration:0.6 }}
-            className="flex flex-wrap gap-3">
+            className="flex flex-wrap gap-2 sm:gap-3">
             {[["🌞","Solar"],["⚡","EV Charging"],["🏭","Industrial"]].map(([emoji, label]) => (
               <span key={label}
-                className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-sm px-4 py-1.5 font-medium">
+                className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 font-medium">
                 {emoji} {label}
               </span>
             ))}
@@ -144,7 +144,7 @@ function HeroSection() {
 /* ═══════════════════════════════════════════════════ */
 function SolutionsGridSection() {
   return (
-    <section className="bg-[#FFF8E7] py-24 px-4">
+    <section className="bg-[#FFF8E7] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <SectionHeading
           badge="What We Offer"
@@ -154,7 +154,7 @@ function SolutionsGridSection() {
         />
 
         <motion.div
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           variants={VARIANTS.cardGrid}
           initial="hidden"
           whileInView="visible"
@@ -166,17 +166,19 @@ function SolutionsGridSection() {
               <motion.div key={item.slug}
                 variants={VARIANTS.card}
                 whileHover={{ y:-10, borderColor:"#fcd34d", boxShadow:"0 16px 50px rgba(217,119,6,0.18)" }}
+                whileTap={{ scale: 0.98 }}
                 transition={{ type:"spring", stiffness:300, damping:20 }}
-                className="group bg-white rounded-2xl border border-[#e8d5b0] p-8 cursor-default"
+                className="group bg-white rounded-2xl border border-[#e8d5b0] p-5 sm:p-6 lg:p-8 cursor-default"
                 style={{ boxShadow:"0 4px 24px rgba(120,80,20,0.08)" }}
               >
-                <div className="w-[60px] h-[60px] rounded-xl bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center transition-colors duration-300">
-                  {Icon && <Icon size={28} className="text-brand-gold" />}
+                <div className="w-12 h-12 sm:w-[60px] sm:h-[60px] rounded-xl bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center transition-colors duration-300">
+                  {Icon && <Icon size={24} className="text-brand-gold sm:hidden" />}
+                  {Icon && <Icon size={28} className="text-brand-gold hidden sm:block" />}
                 </div>
-                <h3 className="text-xl font-bold font-display text-[#1a1208] mt-5 mb-2">{item.shortTitle}</h3>
-                <p className="text-[#78614a] text-sm leading-relaxed mt-2">{item.tagline}</p>
+                <h3 className="text-lg sm:text-xl font-bold font-display text-[#1a1208] mt-5 mb-2">{item.shortTitle}</h3>
+                <p className="text-[#78614a] text-xs sm:text-sm leading-relaxed mt-2">{item.tagline}</p>
                 <Link href={`/solutions/${item.slug}`}
-                  className="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700 font-medium text-sm mt-5 transition-colors">
+                  className="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700 font-medium text-xs sm:text-sm mt-5 transition-colors">
                   Learn More →
                 </Link>
               </motion.div>
@@ -193,21 +195,21 @@ function SolutionsGridSection() {
 /* ═══════════════════════════════════════════════════ */
 function SolarViewerSection() {
   return (
-    <section className="bg-[#FFFBF0] py-24 px-4">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+    <section className="bg-[#FFFBF0] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
         {/* Left */}
         <motion.div initial="hidden" whileInView="visible" viewport={vp} variants={VARIANTS.slideLeft}>
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-5">
             INTERACTIVE 3D EXPLORER
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-ink leading-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-brand-ink leading-tight mb-4">
             See Your Solar Panel{" "}
             <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">
               Up Close
             </span>
           </h2>
-          <p className="text-brand-brown leading-relaxed mb-7">
+          <p className="text-brand-brown text-sm sm:text-base leading-relaxed mb-7">
             Every panel we install uses monocrystalline technology for maximum efficiency. Drag to rotate, scroll to zoom — explore the same technology powering homes across Odisha.
           </p>
 
@@ -220,7 +222,7 @@ function SolarViewerSection() {
           >
             {SOLAR_SPECS.map((spec) => (
               <motion.li key={spec} variants={VARIANTS.fadeUp}
-                className="flex items-center gap-3 text-sm text-brand-ink">
+                className="flex items-center gap-3 text-xs sm:text-sm text-brand-ink">
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
                   <CheckCircle size={11} className="text-white" strokeWidth={2.5} />
                 </span>
@@ -230,7 +232,7 @@ function SolarViewerSection() {
           </motion.ul>
 
           <Link href="/contact"
-            className="btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:scale-105 transition-all duration-300">
+            className="btn-shimmer inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:scale-105 active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
             Get Solar Quote <ArrowRight size={15} />
           </Link>
         </motion.div>
@@ -255,14 +257,14 @@ function SolarViewerSection() {
 /* ═══════════════════════════════════════════════════ */
 function EVChargerSection() {
   return (
-    <section className="bg-[#FFF8E7] py-24 px-4">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+    <section className="bg-[#FFF8E7] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
-        {/* Left — image */}
+        {/* Left — image (below text on mobile) */}
         <motion.div
           initial="hidden" whileInView="visible" viewport={vp} variants={VARIANTS.slideLeft}
           {...FLOAT}
-          className="rounded-3xl overflow-hidden border border-amber-200/60 shadow-[0_30px_80px_rgba(217,119,6,0.18)]"
+          className="order-2 lg:order-1 rounded-3xl overflow-hidden border border-amber-200/60 shadow-[0_30px_80px_rgba(217,119,6,0.18)]"
         >
           <Image
             src="/soumyasi/ev-charger-ultra60.png"
@@ -273,15 +275,15 @@ function EVChargerSection() {
           />
         </motion.div>
 
-        {/* Right */}
-        <motion.div initial="hidden" whileInView="visible" viewport={vp} variants={VARIANTS.slideRight}>
+        {/* Right — text (above image on mobile) */}
+        <motion.div initial="hidden" whileInView="visible" viewport={vp} variants={VARIANTS.slideRight} className="order-1 lg:order-2">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">
             ULTRA 60 THUNDER CHARGE
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-ink leading-tight mb-5">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-brand-ink leading-tight mb-5">
             60kW DC Fast Charger
           </h2>
-          <p className="text-brand-brown leading-relaxed mb-8">
+          <p className="text-brand-brown text-sm sm:text-base leading-relaxed mb-8">
             Our flagship charging unit delivers 60kW of DC fast charging power — enough to charge most EVs in under 30 minutes. Built for Indian road conditions, weather-sealed, and RFID-enabled for smart access management.
           </p>
 
@@ -312,7 +314,7 @@ function EVChargerSection() {
           </div>
 
           <Link href="/solutions/ev-charging"
-            className="btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:scale-105 transition-all duration-300">
+            className="btn-shimmer inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:scale-105 active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
             Learn More <ArrowRight size={15} />
           </Link>
         </motion.div>
@@ -326,7 +328,7 @@ function EVChargerSection() {
 /* ═══════════════════════════════════════════════════ */
 function ProcessSection() {
   return (
-    <section className="bg-[#FFFBF0] py-24 px-4">
+    <section className="bg-[#FFFBF0] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <SectionHeading
           badge="How We Work"
@@ -335,27 +337,28 @@ function ProcessSection() {
           subtitle="From first call to final installation — engineered for your peace of mind."
         />
 
-        <div className="grid md:grid-cols-4 gap-5 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 relative">
           {/* Dashed connector */}
-          <div className="hidden md:block absolute top-[3.25rem] left-[12.5%] right-[12.5%] h-px border-t-2 border-dashed border-amber-200 pointer-events-none" />
+          <div className="hidden lg:block absolute top-[3.25rem] left-[12.5%] right-[12.5%] h-px border-t-2 border-dashed border-amber-200 pointer-events-none" />
 
           {STEPS.map((step, i) => {
             const Icon = step.icon;
             return (
               <motion.div key={step.num}
                 initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }} viewport={vp}
+                whileTap={{ scale: 0.98 }}
                 transition={{ duration:0.55, delay:i * 0.15 }}
-                className="bg-white rounded-2xl border border-[#e8d5b0] p-8 hover:border-amber-300 hover:shadow-card-hover transition-all duration-300 relative"
+                className="bg-white rounded-2xl border border-[#e8d5b0] p-5 sm:p-6 lg:p-8 hover:border-amber-300 hover:shadow-card-hover transition-all duration-300 relative"
                 style={{ boxShadow:"0 4px 24px rgba(120,80,20,0.08)" }}
               >
-                <p className="font-display text-4xl sm:text-5xl font-bold text-amber-200 leading-none mb-2 select-none">
+                <p className="font-display text-3xl sm:text-4xl font-bold text-amber-200 leading-none mb-2 select-none">
                   {step.num}
                 </p>
                 <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mb-4">
                   <Icon size={20} className="text-brand-gold" />
                 </div>
-                <h3 className="font-bold font-display text-brand-ink mb-2">{step.title}</h3>
-                <p className="text-[#78614a] text-sm leading-relaxed">{step.desc}</p>
+                <h3 className="font-bold font-display text-sm sm:text-base text-brand-ink mb-2">{step.title}</h3>
+                <p className="text-[#78614a] text-xs sm:text-sm leading-relaxed">{step.desc}</p>
               </motion.div>
             );
           })}
@@ -370,7 +373,7 @@ function ProcessSection() {
 /* ═══════════════════════════════════════════════════ */
 function TestimonialsSection() {
   return (
-    <section className="bg-[#FFF8E7] py-16 px-4">
+    <section className="bg-[#FFF8E7] py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <SectionHeading
           badge="Customer Stories"
@@ -379,7 +382,7 @@ function TestimonialsSection() {
         />
 
         <motion.div
-          className="grid md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           variants={VARIANTS.cardGrid}
           initial="hidden"
           whileInView="visible"
@@ -387,7 +390,7 @@ function TestimonialsSection() {
         >
           {TESTIMONIALS.map((t) => (
             <motion.div key={t.name} variants={VARIANTS.fadeUp}
-              className="bg-white rounded-2xl border border-[#e8d5b0] p-7"
+              className="bg-white rounded-2xl border border-[#e8d5b0] p-5 sm:p-6 lg:p-7"
               style={{ boxShadow:"0 4px 24px rgba(120,80,20,0.08)" }}>
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: t.rating }).map((_, i) => (
@@ -420,18 +423,18 @@ function TestimonialsSection() {
 /* ═══════════════════════════════════════════════════ */
 function CTASection() {
   return (
-    <section className="py-24 px-4 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none"
         style={{ background:"radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.08), transparent)" }} />
       <motion.div animate={{ scale:[1,1.3,1], opacity:[0.15,0.3,0.15] }} transition={{ duration:6, repeat:Infinity }}
-        className="absolute top-1/2 left-[6%] -translate-y-1/2 h-64 w-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        className="absolute top-1/2 left-[6%] -translate-y-1/2 h-40 w-40 sm:h-56 sm:w-56 lg:h-64 lg:w-64 rounded-full bg-white/10 blur-3xl pointer-events-none" />
       <motion.div animate={{ scale:[1.3,1,1.3], opacity:[0.15,0.3,0.15] }} transition={{ duration:7, repeat:Infinity, delay:2 }}
-        className="absolute top-1/2 right-[6%] -translate-y-1/2 h-56 w-56 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        className="absolute top-1/2 right-[6%] -translate-y-1/2 h-36 w-36 sm:h-48 sm:w-48 lg:h-56 lg:w-56 rounded-full bg-white/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-3xl mx-auto text-center relative z-10">
         <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-200 mb-4">Start Today</p>
         <motion.h2
-          className="text-4xl sm:text-5xl font-bold font-display text-white leading-tight mb-5"
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-white leading-tight mb-5"
           variants={VARIANTS.container} initial="hidden" whileInView="visible" viewport={vp}
         >
           {["Ready", "to", "Make", "the", "Switch?"].map((w, i) => (
@@ -439,17 +442,17 @@ function CTASection() {
           ))}
         </motion.h2>
         <motion.p initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={vp} transition={{ delay:0.4 }}
-          className="text-amber-100 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+          className="text-amber-100 text-sm sm:text-base lg:text-lg mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed">
           Get a free site assessment — no obligation, no pressure. Our team will design the perfect energy solution for your needs.
         </motion.p>
         <motion.div initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={vp} transition={{ delay:0.55 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center">
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Link href="/contact"
-            className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-700 bg-white hover:bg-amber-50 hover:shadow-xl hover:scale-105 transition-all duration-300">
+            className="btn-shimmer inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base text-amber-700 bg-white hover:bg-amber-50 hover:shadow-xl hover:scale-105 active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
             Book Free Assessment
           </Link>
           <a href={CONTACT.phoneHref}
-            className="inline-flex items-center justify-center px-10 py-4 rounded-full border-2 border-white/70 text-white font-semibold text-base hover:bg-white/10 hover:border-white transition-all duration-300">
+            className="inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full border-2 border-white/70 text-white font-semibold text-sm sm:text-base hover:bg-white/10 hover:border-white active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
             Call Us Now
           </a>
         </motion.div>

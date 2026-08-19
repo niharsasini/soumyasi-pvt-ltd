@@ -17,7 +17,7 @@ export default function SectionHeading({ badge, words = [], goldWords = [], subt
         </p>
       )}
       <motion.h2
-        className="text-4xl sm:text-5xl font-bold font-display text-brand-ink leading-tight"
+        className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-brand-ink leading-tight"
         variants={VARIANTS.container}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
@@ -35,7 +35,7 @@ export default function SectionHeading({ badge, words = [], goldWords = [], subt
           variants={VARIANTS.para}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className={`mt-4 text-brand-brown max-w-xl text-base leading-relaxed ${center ? "mx-auto" : ""}`}
+          className={`mt-4 text-brand-brown max-w-xl text-sm sm:text-base leading-relaxed ${center ? "mx-auto" : ""}`}
         >
           {subtitle}
         </motion.p>
