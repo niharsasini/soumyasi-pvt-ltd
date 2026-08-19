@@ -10,7 +10,7 @@ export default function FinalCTA() {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="w-full py-28 bg-gradient-to-br from-amber-600 to-amber-800 relative overflow-hidden">
+    <section className="w-full py-28 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
       {/* Warm light overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -66,7 +66,7 @@ export default function FinalCTA() {
         >
           <Link
             href="/contact"
-            className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-800 bg-white hover:bg-amber-50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:scale-105 transition-all duration-300"
+            className="btn-shimmer inline-flex items-center justify-center px-10 py-4 rounded-full font-bold text-base text-amber-700 bg-white hover:bg-amber-50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:scale-105 transition-all duration-300"
           >
             Get Free Assessment
           </Link>

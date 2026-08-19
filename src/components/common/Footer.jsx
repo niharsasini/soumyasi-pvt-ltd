@@ -86,7 +86,7 @@ function Newsletter() {
           onChange={(e) => { setEmail(e.target.value); setStatus("idle"); setErrMsg(""); }}
           placeholder="Your email"
           aria-label="Email for newsletter"
-          className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-white/8 border border-white/10 focus:outline-none focus:border-amber-500/60 text-sm text-[#faf8f5] placeholder-[#c4b8a8]/50 transition-colors"
+          className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-white/8 border border-white/10 focus:outline-none focus:border-amber-500/60 text-sm text-[#FFFBF0] placeholder-[#a8917a]/50 transition-colors"
         />
         <button
           type="submit"
@@ -96,7 +96,7 @@ function Newsletter() {
           {status === "loading" ? <Loader2 size={12} className="animate-spin" /> : "Join"}
         </button>
       </div>
-      <p aria-live="polite" aria-atomic="true" className="text-red-400 text-xs mt-1.5">
+      <p aria-live="polite" aria-atomic="true" className="text-red-300 text-xs mt-1.5">
         {status === "error" && errMsg ? errMsg : ""}
       </p>
     </form>
@@ -105,7 +105,7 @@ function Newsletter() {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1a1208] text-[#c4b8a8] relative overflow-hidden">
+    <footer className="bg-[#1a1208] text-[#a8917a] relative overflow-hidden">
       {/* Gold gradient divider at top */}
       <div
         className="absolute inset-x-0 top-0 h-[2px]"
@@ -117,10 +117,10 @@ export default function Footer() {
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
           <div>
             <p className="text-xs font-bold tracking-[0.3em] uppercase text-amber-500 mb-1">Start Today</p>
-            <h3 className="text-xl sm:text-2xl font-bold font-display text-[#faf8f5]">
+            <h3 className="text-xl sm:text-2xl font-bold font-display text-[#FFFBF0]">
               Ready to Power Up?
             </h3>
-            <p className="text-sm text-[#c4b8a8] mt-1 max-w-xs">
+            <p className="text-sm text-[#a8917a] mt-1 max-w-xs">
               Solar installations, EV charging stations, and industrial power — get a free assessment today.
             </p>
           </div>
@@ -139,8 +139,8 @@ export default function Footer() {
 
           {/* Company info */}
           <div className="space-y-5">
-            <h2 className="text-base font-bold font-display text-[#faf8f5]">{BRAND.name}</h2>
-            <p className="text-sm text-[#c4b8a8] leading-relaxed">{BRAND.description}</p>
+            <h2 className="text-base font-bold font-display text-[#FFFBF0]">{BRAND.name}</h2>
+            <p className="text-sm text-[#a8917a] leading-relaxed">{BRAND.description}</p>
             <div className="flex gap-3">
               {[
                 { href: SOCIAL.facebook, Icon: SocialIcons.Facebook, label: "Facebook" },
@@ -163,7 +163,7 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h3 className="text-[#faf8f5] font-semibold mb-5 text-sm uppercase tracking-wider">
+            <h3 className="text-[#FFFBF0] font-semibold mb-5 text-sm uppercase tracking-wider">
               Quick Links
             </h3>
             <ul className="space-y-3 text-sm">
@@ -179,7 +179,7 @@ export default function Footer() {
 
           {/* Services — now with real links */}
           <div>
-            <h3 className="text-[#faf8f5] font-semibold mb-5 text-sm uppercase tracking-wider">
+            <h3 className="text-[#FFFBF0] font-semibold mb-5 text-sm uppercase tracking-wider">
               Our Services
             </h3>
             <ul className="space-y-3 text-sm">
@@ -196,13 +196,13 @@ export default function Footer() {
           {/* Contact + Newsletter */}
           <div className="space-y-6">
             <div>
-              <h3 className="text-[#faf8f5] font-semibold mb-5 text-sm uppercase tracking-wider">
+              <h3 className="text-[#FFFBF0] font-semibold mb-5 text-sm uppercase tracking-wider">
                 Contact Us
               </h3>
               <div className="space-y-4 text-sm">
                 <div className="flex items-start gap-3">
                   <MapPin size={15} className="text-amber-500 mt-0.5 shrink-0" />
-                  <p className="text-[#c4b8a8]">
+                  <p className="text-[#a8917a]">
                     {CONTACT.address}
                   </p>
                 </div>
@@ -222,7 +222,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4 className="text-[#faf8f5] font-semibold text-sm mb-3">Newsletter</h4>
+              <h4 className="text-[#FFFBF0] font-semibold text-sm mb-3">Newsletter</h4>
               <Newsletter />
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative z-10 border-t border-white/5 text-center py-5 text-xs text-[#c4b8a8]/60 px-4">
+      <div className="relative z-10 border-t border-white/5 text-center py-5 text-xs text-[#a8917a]/60 px-4">
         © {new Date().getFullYear()} {BRAND.name}. All Rights Reserved.
         &nbsp;·&nbsp; Made with ☀️ in Odisha
         &nbsp;·&nbsp; <Link href="/privacy-policy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link>

@@ -341,7 +341,7 @@ function SlideEV({ isActive }) {
               ))}
             </div>
             <motion.div initial={{ opacity: 0, y: 16 }} animate={isActive ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.85 }} className="flex flex-col gap-2 w-full sm:flex-row sm:flex-wrap sm:gap-4 sm:w-auto mt-10">
-              <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-emerald-500 text-black hover:bg-emerald-400 hover:scale-105 transition-all duration-300 shadow-lg shadow-emerald-500/25 w-full text-center sm:w-auto">Find a Station</Link>
+              <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm bg-emerald-500 text-white hover:bg-emerald-400 hover:scale-105 transition-all duration-300 shadow-lg shadow-emerald-500/25 w-full text-center sm:w-auto">Find a Station</Link>
               <Link href="/solutions/ev-charging" className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/10 transition-all duration-300 w-full text-center sm:w-auto">Learn More</Link>
             </motion.div>
           </div>

@@ -81,7 +81,7 @@ function TimelineItem({ year, title, desc, side, active, delay }) {
 const TEAM = [
   { icon: Award,    title: "Founder & Managing Director", bio: "Sets the company's direction and leads its growth across Odisha's solar, EV, and industrial power markets.", gradient: "from-amber-400 to-amber-600" },
   { icon: Settings, title: "Chief Technical Officer",      bio: "Oversees engineering standards across every solar, EV, and industrial installation we deliver.", gradient: "from-emerald-400 to-emerald-600" },
-  { icon: Zap,       title: "Head of EV Operations",        bio: "Runs the EV charging network end-to-end — site surveys, installation, and station uptime.", gradient: "from-indigo-400 to-indigo-600" },
+  { icon: Zap,       title: "Head of EV Operations",        bio: "Runs the EV charging network end-to-end — site surveys, installation, and station uptime.", gradient: "from-emerald-400 to-emerald-600" },
   { icon: Users,     title: "Head of Projects",              bio: "Coordinates project delivery so every installation lands on schedule and on budget.", gradient: "from-amber-500 to-orange-500" },
 ];
 
@@ -143,7 +143,7 @@ export default function AboutClient() {
             >
               {["Powering", "Odisha", "Since", "Day", "One"].map((w, i) => (
                 <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
-                  {w === "Odisha" ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span> : w}
+                  {w === "Odisha" ? <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">{w}</span> : w}
                 </motion.span>
               ))}
             </motion.h1>
@@ -205,7 +205,7 @@ export default function AboutClient() {
           <motion.div initial={{ opacity:0, x:-40 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ duration:0.7 }}>
             <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-4">Our Story</p>
             <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-ink mb-6 leading-tight">
-              From One Rooftop to an <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">Odisha-wide Network</span>
+              From One Rooftop to an <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">Odisha-wide Network</span>
             </h2>
             <div className="space-y-4 text-brand-brown leading-relaxed">
               <p>Soumyashi Power began with a single rooftop solar installation in Bhubaneswar — powering a local factory and proving that clean energy could mean real, measurable savings from day one.</p>
@@ -358,7 +358,7 @@ export default function AboutClient() {
       </section>
 
       {/* ══ FINAL CTA ══ */}
-      <section className="py-24 px-4 bg-gradient-to-br from-amber-600 to-amber-800 relative overflow-hidden">
+      <section className="py-24 px-4 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background:"radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.1), transparent)" }} />
         <motion.div animate={{ scale:[1,1.3,1], opacity:[0.2,0.4,0.2] }} transition={{ duration:5, repeat:Infinity }}

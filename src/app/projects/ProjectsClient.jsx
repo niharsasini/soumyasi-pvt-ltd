@@ -47,7 +47,7 @@ export default function ProjectsClient() {
             {["Our", "Work", "Across", "Odisha"].map((w, i) => (
               <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
                 {w === "Odisha"
-                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">{w}</span>
                   : w}
               </motion.span>
             ))}
@@ -123,7 +123,7 @@ export default function ProjectsClient() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-4 bg-gradient-to-br from-amber-600 to-amber-800 relative overflow-hidden">
+      <section className="py-24 px-4 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.08), transparent)" }} />
         <motion.div animate={{ scale:[1,1.3,1], opacity:[0.15,0.3,0.15] }} transition={{ duration:6, repeat:Infinity }}

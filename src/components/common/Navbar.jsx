@@ -14,28 +14,40 @@ const MEGA_COLS = [
     title: "Solar Solutions",
     desc: "Rooftop & ground-mount solar for homes, businesses and industries.",
     href: "/solutions/solar-rooftop",
-    color: "text-brand-gold bg-amber-50",
+    iconBg: "bg-amber-50",
+    iconColor: "text-amber-600",
+    titleHover: "group-hover:text-amber-600",
+    linkColor: "text-amber-600",
   },
   {
     icon: Zap,
     title: "EV Charging",
     desc: "Install a 60kW DC fast charging station at your location — site assessment, installation, and support.",
     href: "/solutions/ev-charging",
-    color: "text-brand-indigo bg-indigo-50",
+    iconBg: "bg-emerald-50",
+    iconColor: "text-emerald-600",
+    titleHover: "group-hover:text-emerald-600",
+    linkColor: "text-emerald-600",
   },
   {
     icon: Wind,
     title: "Wind Power",
     desc: "Coastal and inland wind energy for commercial and industrial use.",
     href: "/solutions/wind-power",
-    color: "text-blue-600 bg-blue-50",
+    iconBg: "bg-sky-50",
+    iconColor: "text-sky-600",
+    titleHover: "group-hover:text-sky-600",
+    linkColor: "text-sky-600",
   },
   {
     icon: Factory,
     title: "Industrial Power",
     desc: "Switchgear, substations and transformers for Odisha's industries.",
     href: "/solutions/industrial-power",
-    color: "text-brand-emerald bg-emerald-50",
+    iconBg: "bg-orange-50",
+    iconColor: "text-orange-600",
+    titleHover: "group-hover:text-orange-600",
+    linkColor: "text-orange-600",
   },
 ];
 
@@ -108,7 +120,7 @@ export default function Navbar() {
         {/* Reading progress bar */}
         <div className="absolute inset-x-0 top-0 h-[2px] overflow-hidden">
           <div
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-500 to-amber-700 transition-[width] duration-100"
+            className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-500 to-amber-600 transition-[width] duration-100"
             style={{ width: `${progress}%` }}
           />
           {progress === 0 && (
@@ -178,21 +190,21 @@ export default function Navbar() {
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[min(700px,95vw)] overflow-hidden bg-[#FFFBF0] border border-[#e8d5b0] rounded-2xl shadow-[0_20px_60px_rgba(120,80,20,0.15)]"
                       >
                         <div className="p-5 grid grid-cols-2 lg:grid-cols-4 gap-3">
-                          {MEGA_COLS.map(({ icon: Icon, title, desc, href, color }) => (
+                          {MEGA_COLS.map(({ icon: Icon, title, desc, href, iconBg, iconColor, titleHover, linkColor }) => (
                             <Link
                               key={title}
                               href={href}
                               onClick={() => setMegaOpen(false)}
                               className="group flex flex-col gap-3 p-4 rounded-xl hover:bg-white hover:shadow-[0_4px_20px_rgba(120,80,20,0.08)] transition-all duration-200"
                             >
-                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
-                                <Icon size={20} />
+                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${iconBg}`}>
+                                <Icon size={20} className={iconColor} />
                               </div>
                               <div>
-                                <p className="text-sm font-bold text-[#1a1208] group-hover:text-[#d97706] transition-colors">{title}</p>
+                                <p className={`text-sm font-bold text-[#1a1208] ${titleHover} transition-colors`}>{title}</p>
                                 <p className="text-xs text-[#a8917a] mt-1 leading-relaxed">{desc}</p>
                               </div>
-                              <span className="text-xs font-semibold text-[#d97706] flex items-center gap-1">
+                              <span className={`text-xs font-semibold ${linkColor} flex items-center gap-1`}>
                                 Explore →
                               </span>
                             </Link>

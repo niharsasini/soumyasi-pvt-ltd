@@ -38,7 +38,7 @@ export default function IndustriesClient() {
             {["Powering", "Every", "Sector"].map((w, i) => (
               <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
                 {w === "Every"
-                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">{w}</span>
                   : w}
               </motion.span>
             ))}
@@ -91,7 +91,7 @@ export default function IndustriesClient() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-20 px-4 bg-gradient-to-br from-amber-600 to-amber-800 relative overflow-hidden text-center">
+      <section className="py-20 px-4 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden text-center">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background:"radial-gradient(ellipse 70% 80% at 50% 30%, rgba(255,255,255,0.1), transparent)" }} />
         <div className="max-w-3xl mx-auto relative z-10">

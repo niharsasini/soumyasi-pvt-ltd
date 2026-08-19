@@ -37,7 +37,7 @@ export default function GlobalError({ error, reset }) {
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           className="mb-6 flex justify-center"
         >
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-gold-lg">
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-gold-lg">
             <AlertTriangle size={36} className="text-white" />
           </div>
         </motion.div>

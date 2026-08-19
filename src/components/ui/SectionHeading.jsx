@@ -25,7 +25,7 @@ export default function SectionHeading({ badge, words = [], goldWords = [], subt
         {words.map((w, i) => (
           <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
             {goldWords.includes(w)
-              ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+              ? <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">{w}</span>
               : w}
           </motion.span>
         ))}

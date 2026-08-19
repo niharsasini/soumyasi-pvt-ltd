@@ -42,7 +42,7 @@ const ACCENT = {
   amber: {
     pill:        "bg-amber-100 text-amber-700",
     border:      "border-amber-400",
-    gradient:    "from-amber-600 to-amber-800",
+    gradient:    "from-amber-500 to-amber-600",
     icon:        "text-amber-600",
     iconBg:      "bg-amber-50 group-hover:bg-amber-100",
     orb:         "bg-amber-400/25",
@@ -56,7 +56,7 @@ const ACCENT = {
   emerald: {
     pill:        "bg-emerald-100 text-emerald-700",
     border:      "border-emerald-400",
-    gradient:    "from-emerald-600 to-emerald-800",
+    gradient:    "from-emerald-500 to-emerald-600",
     icon:        "text-emerald-600",
     iconBg:      "bg-emerald-50 group-hover:bg-emerald-100",
     orb:         "bg-emerald-400/25",
@@ -68,23 +68,23 @@ const ACCENT = {
     lineColor:   "#a7f3d0",
   },
   blue: {
-    pill:        "bg-blue-100 text-blue-700",
-    border:      "border-blue-400",
-    gradient:    "from-blue-600 to-blue-800",
-    icon:        "text-blue-600",
-    iconBg:      "bg-blue-50 group-hover:bg-blue-100",
-    orb:         "bg-blue-400/25",
-    spec:        "bg-blue-50",
-    ctaText:     "text-blue-700",
-    hoverBorder: "#60a5fa",
-    hoverShadow: "0 12px 40px rgba(59,130,246,0.18)",
-    glowOrb:     "rgba(96,165,250,0.15)",
-    lineColor:   "#bfdbfe",
+    pill:        "bg-sky-100 text-sky-700",
+    border:      "border-sky-400",
+    gradient:    "from-sky-500 to-sky-600",
+    icon:        "text-sky-600",
+    iconBg:      "bg-sky-50 group-hover:bg-sky-100",
+    orb:         "bg-sky-400/25",
+    spec:        "bg-sky-50",
+    ctaText:     "text-sky-700",
+    hoverBorder: "#38bdf8",
+    hoverShadow: "0 12px 40px rgba(2,132,199,0.18)",
+    glowOrb:     "rgba(56,189,248,0.15)",
+    lineColor:   "#bae6fd",
   },
   orange: {
     pill:        "bg-orange-100 text-orange-700",
     border:      "border-orange-400",
-    gradient:    "from-orange-600 to-orange-800",
+    gradient:    "from-orange-500 to-orange-600",
     icon:        "text-orange-600",
     iconBg:      "bg-orange-50 group-hover:bg-orange-100",
     orb:         "bg-orange-400/25",
@@ -210,7 +210,7 @@ export default function SolutionPageClient({ solution }) {
               {solution.heroHeading.split(" ").map((w, i) => (
                 <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
                   {solution.heroGoldWords?.includes(w)
-                    ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+                    ? <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">{w}</span>
                     : w}
                 </motion.span>
               ))}

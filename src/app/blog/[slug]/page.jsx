@@ -98,7 +98,7 @@ export default function BlogArticlePage({ params }) {
       </div>
 
       {/* CTA */}
-      <section className="py-20 px-4 bg-gradient-to-br from-amber-600 to-amber-800 mt-6">
+      <section className="py-20 px-4 bg-gradient-to-br from-amber-500 to-amber-600 mt-6">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl font-bold font-display text-white leading-tight mb-4">
             Ready to go solar or add an EV charger?

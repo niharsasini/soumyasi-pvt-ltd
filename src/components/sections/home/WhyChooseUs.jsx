@@ -173,7 +173,7 @@ export default function WhyChooseUs() {
         >
           <Link
             href="/projects"
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border-2 border-amber-400 text-amber-700 font-semibold text-sm hover:bg-amber-50 transition-all duration-300"
+            className="btn-shimmer inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-full px-8 py-3.5 text-sm hover:scale-105 transition shadow-lg shadow-amber-500/20"
           >
             See Our Projects <ArrowRight size={15} />
           </Link>

@@ -43,7 +43,7 @@ export default function StatsStrip() {
   }, []);
 
   return (
-    <section ref={ref} className="w-full py-16 bg-gradient-to-r from-amber-600 to-amber-700 relative overflow-hidden">
+    <section ref={ref} className="w-full py-16 bg-gradient-to-r from-amber-500 to-amber-600 relative overflow-hidden">
       {/* Subtle texture overlay */}
       <div
         className="absolute inset-0 pointer-events-none opacity-10"

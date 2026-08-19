@@ -32,8 +32,8 @@ export const BLOG_POSTS = [
     date: "April 2025",
     readTime: "3 min",
     author: "Soumyashi Power Team",
-    catColor: "bg-indigo-100 text-indigo-700",
-    gradient: "from-indigo-400 to-blue-500",
+    catColor: "bg-emerald-100 text-emerald-700",
+    gradient: "from-emerald-400 to-emerald-600",
     content: [
       "India's EV market has moved past the early-adopter phase. Two- and three-wheeler EVs now account for a meaningful share of new registrations nationally, and four-wheeler EV sales have grown several times over in the last three years. Odisha has followed the national curve closely, with EV registrations concentrated in Bhubaneswar, Cuttack, and Rourkela but spreading fast along NH-16 and other highway corridors.",
       "The state's EV policy offers registration fee waivers and purchase incentives that materially lower the cost of ownership, and combined with central FAME II subsidies on qualifying vehicles, the total cost of an EV in Odisha is closer to a comparable petrol vehicle than most buyers expect. That's pulling more first-time buyers toward electric, not just early adopters.",
@@ -70,8 +70,8 @@ export const BLOG_POSTS = [
     date: "May 2025",
     readTime: "4 min",
     author: "Soumyashi Power Team",
-    catColor: "bg-indigo-100 text-indigo-700",
-    gradient: "from-violet-400 to-indigo-500",
+    catColor: "bg-emerald-100 text-emerald-700",
+    gradient: "from-emerald-500 to-teal-600",
     content: [
       "For a hotel, mall, office park, or petrol pump, an EV charger isn't just a utility — it's a footfall driver. Guests actively choose accommodation with charging on-site, and shoppers stay measurably longer in a mall when their car is charging in the parking lot. Multiple location partners report the charger itself becomes a reason customers pick them over a competitor down the road.",
       "The revenue math is direct: a single 60kW DC fast charger running a modest 10–15 sessions a day at a 30-minute average session generates a steady secondary income stream on top of whatever benefit the added footfall brings to the core business. For most partner locations, this lands in the ₹8,000–₹15,000 monthly range with no ongoing effort from the site owner.",

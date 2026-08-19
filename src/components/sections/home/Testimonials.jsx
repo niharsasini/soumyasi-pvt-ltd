@@ -105,7 +105,7 @@ export default function Testimonials() {
                   </p>
 
                   <div className="flex items-center gap-3 pt-4 border-t border-brand-border">
-                    <div className="h-9 w-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                    <div className="h-9 w-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
                       {t.name.charAt(0)}
                     </div>
                     <div>

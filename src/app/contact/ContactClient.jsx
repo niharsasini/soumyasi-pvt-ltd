@@ -76,7 +76,7 @@ export default function ContactClient() {
             {["Let’s", "Talk", "Energy"].map((w, i) => (
               <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
                 {w === "Energy"
-                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">{w}</span>
+                  ? <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">{w}</span>
                   : w}
               </motion.span>
             ))}
@@ -136,7 +136,7 @@ export default function ContactClient() {
             <div>
               <p className="text-xs font-bold tracking-[0.3em] uppercase text-brand-gold mb-3">Why Choose Us</p>
               <h2 className="text-3xl sm:text-4xl font-bold font-display text-brand-ink leading-tight">
-                We’re here to power <span className="bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">your future</span>
+                We’re here to power <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">your future</span>
               </h2>
               <p className="mt-4 text-brand-brown leading-relaxed">
                 Odisha’s most trusted solar, EV, and industrial power company. Over 500 installations, 50+ EV stations, and a team that answers every call.

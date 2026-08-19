@@ -33,7 +33,7 @@ export default function BackToTop() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Back to top"
           style={{ bottom: cookieAccepted ? "1.5rem" : "5rem" }}
-          className="fixed right-4 sm:right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center shadow-gold hover:shadow-gold-lg hover:scale-110 transition-all duration-300"
+          className="fixed right-4 sm:right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-gold hover:shadow-gold-lg hover:scale-110 transition-all duration-300"
         >
           <ChevronUp size={20} />
         </motion.button>
