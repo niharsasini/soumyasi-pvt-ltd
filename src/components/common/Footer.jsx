@@ -206,11 +206,16 @@ export default function Footer() {
                     {CONTACT.address}
                   </p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Phone size={15} className="text-amber-500 shrink-0" />
-                  <a href={CONTACT.phoneHref} className="hover:text-amber-400 transition-colors">
-                    {CONTACT.phone}
-                  </a>
+                <div className="flex items-start gap-3">
+                  <Phone size={15} className="text-amber-500 shrink-0 mt-0.5" />
+                  <div className="flex flex-col">
+                    <a href={CONTACT.phoneHref} className="hover:text-amber-400 transition-colors">
+                      {CONTACT.phone}
+                    </a>
+                    <a href={CONTACT.phone2Href} className="hover:text-amber-400 transition-colors">
+                      {CONTACT.phone2Display}
+                    </a>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail size={15} className="text-amber-500 shrink-0" />

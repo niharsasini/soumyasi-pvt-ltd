@@ -486,7 +486,10 @@ function HowItWorksSection() {
               </Link>
               <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm">
                 <a href={CONTACT.phoneHref} className="inline-flex items-center gap-1.5 text-white/80 hover:text-white transition-colors">
-                  <PhoneCall size={14} /> Call Us
+                  <PhoneCall size={14} /> {CONTACT.phone}
+                </a>
+                <a href={CONTACT.phone2Href} className="inline-flex items-center gap-1.5 text-white/80 hover:text-white transition-colors">
+                  <PhoneCall size={14} /> {CONTACT.phone2Display}
                 </a>
                 <a href={waHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-white/80 hover:text-white transition-colors">
                   <MessageCircle size={14} /> WhatsApp

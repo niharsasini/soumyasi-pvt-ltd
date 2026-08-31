@@ -11,6 +11,9 @@ export default function FormFallback({ className = "" }) {
       <a href={CONTACT.phoneHref} className="inline-flex items-center gap-1 text-brand-gold hover:text-amber-700 font-semibold transition-colors">
         <Phone size={12} /> {CONTACT.phone}
       </a>
+      <a href={CONTACT.phone2Href} className="inline-flex items-center gap-1 text-brand-gold hover:text-amber-700 font-semibold transition-colors">
+        <Phone size={12} /> {CONTACT.phone2Display}
+      </a>
       <a
         href={waHref}
         target="_blank"

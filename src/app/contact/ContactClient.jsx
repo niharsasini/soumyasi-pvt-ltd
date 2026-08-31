@@ -13,6 +13,8 @@ const INFO_CARDS = [
     title: "Call Us",
     info: CONTACT.phone,
     href: CONTACT.phoneHref,
+    info2: CONTACT.phone2Display,
+    href2: CONTACT.phone2Href,
     color: "text-brand-gold bg-amber-50",
   },
   {
@@ -94,7 +96,7 @@ export default function ContactClient() {
       {/* ── INFO CARDS ── */}
       <section className="py-10 sm:py-12 lg:py-16 px-4">
         <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5">
-          {INFO_CARDS.map(({ icon: Icon, title, info, href, color }, i) => (
+          {INFO_CARDS.map(({ icon: Icon, title, info, href, info2, href2, color }, i) => (
             <motion.div
               key={title}
               initial={{ opacity: 0, x: -30 }}
@@ -116,6 +118,12 @@ export default function ContactClient() {
                   </a>
                 ) : (
                   <p className="text-brand-brown text-sm">{info}</p>
+                )}
+                {href2 && (
+                  <a href={href2}
+                    className="block mt-0.5 text-brand-brown text-sm hover:text-brand-gold transition-colors break-all">
+                    {info2}
+                  </a>
                 )}
               </div>
             </motion.div>
@@ -148,11 +156,11 @@ export default function ContactClient() {
 
             <div className="space-y-4">
               {[
-                { icon: Phone, label: "24/7 Support Line", val: CONTACT.phone, href: CONTACT.phoneHref },
+                { icon: Phone, label: "24/7 Support Line", val: CONTACT.phone, href: CONTACT.phoneHref, val2: CONTACT.phone2Display, href2: CONTACT.phone2Href },
                 { icon: Mail,  label: "Email Response < 2h", val: CONTACT.email, href: CONTACT.emailHref },
                 { icon: MapPin, label: "Visit Our Office", val: CONTACT.address, href: CONTACT.mapLink },
                 { icon: Clock, label: "Business Hours", val: CONTACT.hours, href: null },
-              ].map(({ icon: Icon, label, val, href }) => (
+              ].map(({ icon: Icon, label, val, href, val2, href2 }) => (
                 <div key={label} className="flex gap-4 items-start">
                   <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
                     <Icon size={18} className="text-brand-gold" />
@@ -165,6 +173,10 @@ export default function ContactClient() {
                         className="text-sm text-brand-ink hover:text-brand-gold transition-colors">{val}</a>
                     ) : (
                       <p className="text-sm text-brand-ink">{val}</p>
+                    )}
+                    {href2 && (
+                      <a href={href2}
+                        className="block text-sm text-brand-ink hover:text-brand-gold transition-colors">{val2}</a>
                     )}
                   </div>
                 </div>

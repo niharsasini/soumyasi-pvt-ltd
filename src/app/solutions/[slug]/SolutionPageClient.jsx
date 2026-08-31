@@ -14,6 +14,7 @@ import {
 import SectionHeading from "@/components/ui/SectionHeading";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { VARIANTS } from "@/lib/animations/variants";
+import { CONTACT } from "@/lib/config/site.config";
 import dynamic from 'next/dynamic'
 
 const SolarPanelViewer = dynamic(
@@ -526,6 +527,12 @@ export default function SolutionPageClient({ solution }) {
               className="inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full border-2 border-white/70 text-white font-semibold text-sm sm:text-base hover:bg-white/10 hover:border-white active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
               {solution.ctaSecondary.label}
             </a>
+            {solution.ctaSecondary.href?.startsWith("tel:") && (
+              <a href={CONTACT.phone2Href}
+                className="inline-flex items-center justify-center px-10 py-3.5 sm:py-4 rounded-full border-2 border-white/70 text-white font-semibold text-sm sm:text-base hover:bg-white/10 hover:border-white active:scale-[0.98] transition-all duration-300 w-full sm:w-auto">
+                Call {CONTACT.phone2Display}
+              </a>
+            )}
           </motion.div>
         </div>
       </section>
