@@ -1,24 +1,35 @@
-# Powring Electrical — Next.js + Tailwind Scaffold
+# Soumyashi Power — Full Stack Website
 
-This workspace contains a minimal Next.js (App Router) starter configured for Tailwind CSS for a powering electrical company website.
+## Project Structure
 
-Quick start
+```
+soumayashree/
+├── frontend/          # Next.js website (soumyashipower.in)
+├── backend/           # FastAPI Python API
+└── README.md
+```
 
-```powershell
-cd "c:/Users/nihar/OneDrive/Desktop/soumayashree"
+## Frontend (Next.js)
+
+```bash
+cd frontend
 npm install
 npm run dev
 ```
 
-Project layout
+→ http://localhost:3000
 
-- `app/` — App Router pages and `globals.css`
-- `components/` — `Header.js`, `Hero.js`, `Footer.js`
-- `tailwind.config.js`, `postcss.config.js` — Tailwind setup
-- `package.json` — scripts and deps
+## Backend (FastAPI + Python)
 
-Next steps
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
 
-- Run `npm install` to install dependencies.
-- Optionally convert to TypeScript with `touch tsconfig.json` and update files.
-- Add real assets under `public/` and expand components.
+→ http://localhost:8000/api/docs
+
+## Deployment
+
+- Frontend: Vercel (auto-deploys from main branch)
+- Backend: Railway/Render (coming soon)
