@@ -74,7 +74,7 @@ export default function Industries() {
                 <p className="mt-1.5 text-[11px] text-brand-muted leading-relaxed hidden sm:block">
                   {ind.description.split(".")[0]}.
                 </p>
-                <span className="mt-1.5 sm:mt-2 text-[9px] sm:text-[11px] font-semibold text-amber-600 opacity-60 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
+                <span className="mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] font-semibold text-amber-600 opacity-60 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
                   Learn More →
                 </span>
               </motion.div>

@@ -396,7 +396,7 @@ export default function SolutionPageClient({ solution }) {
                       transition={{ delay: i * 0.05 }}
                       className={`${a.spec} border border-[#e8d5b0] rounded-xl p-2.5 sm:p-3 text-center`}
                     >
-                      <p className="text-[#a8917a] text-[9px] sm:text-xs mb-1">{spec.label}</p>
+                      <p className="text-[#a8917a] text-[10px] sm:text-xs mb-1">{spec.label}</p>
                       <p className={`${a.icon} font-bold text-xs sm:text-sm`}>{spec.value}</p>
                     </motion.div>
                   ))}
@@ -444,7 +444,7 @@ export default function SolutionPageClient({ solution }) {
                 style={{ borderLeft: `4px solid ${a.hoverBorder}`, boxShadow: "0 4px 24px rgba(120,80,20,0.08)" }}>
                 {/* Time badge */}
                 {solution.processTimings?.[i] && (
-                  <span className={`absolute top-4 right-4 text-[9px] font-bold tracking-wide ${a.pill} rounded-full px-2 py-0.5`}>
+                  <span className={`absolute top-4 right-4 text-[10px] font-bold tracking-wide ${a.pill} rounded-full px-2 py-0.5`}>
                     {solution.processTimings[i]}
                   </span>
                 )}

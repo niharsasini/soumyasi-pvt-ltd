@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Zap, Check, Phone, PhoneCall, MapPin, FileText, Wrench, MessageCircle,
-  CheckCircle, Loader2,
+  CheckCircle, Loader2, User, Mail, Building2, Map, Building, Maximize2,
+  MessageSquare, Shield, ChevronDown, X, File as FileIcon, AlertCircle, ArrowRight,
 } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 import { CONTACT } from "@/lib/config/site.config";
@@ -37,11 +38,6 @@ const STATS = [
   { value: "60kW", label: "Charger Output" },
   { value: `${SITE_STATS.evStations}+`, label: "Active Stations", countTo: SITE_STATS.evStations, suffix: "+" },
   { value: "6 Weeks", label: "Survey to Live" },
-];
-
-const LOCATION_TYPES = [
-  "Hotel/Resort", "Petrol Pump", "Shopping Mall", "Highway Stop",
-  "Office Complex", "Industrial Park", "Other",
 ];
 
 const STEPS = [
@@ -102,43 +98,318 @@ function StepCard({ step }) {
 
 /* ── Partner Enquiry Form (center column) ───────────────── */
 
+const LOCATION_TYPE_OPTIONS = [
+  { value: "hotel_resort", label: "Hotel / Resort", icon: "🏨" },
+  { value: "petrol_pump", label: "Petrol Pump / CNG Station", icon: "⛽" },
+  { value: "shopping_mall", label: "Shopping Mall / Complex", icon: "🏬" },
+  { value: "highway_dhaba", label: "Highway Dhaba / Rest Stop", icon: "🛣️" },
+  { value: "office_complex", label: "Office Complex / IT Park", icon: "🏢" },
+  { value: "industrial", label: "Industrial / Factory", icon: "🏭" },
+  { value: "parking_lot", label: "Parking Lot / Basement", icon: "🅿️" },
+  { value: "residential", label: "Residential Complex", icon: "🏠" },
+  { value: "hospital", label: "Hospital / Healthcare", icon: "🏥" },
+  { value: "educational", label: "Educational Institution", icon: "🎓" },
+  { value: "warehouse", label: "Warehouse / Logistics Hub", icon: "📦" },
+  { value: "other", label: "Other", icon: "🔧" },
+];
+
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.4, delay: i * 0.1 } }),
+};
+
+function SectionHeadingLabel({ children }) {
+  return <h4 className="text-xs font-bold text-[#a8917a] tracking-widest uppercase mb-4">{children}</h4>;
+}
+
+/* Generic labeled input/textarea with icon, validity + error states */
+function FormField({
+  as = "input", icon: Icon, label, required, name, value, onChange, onBlur,
+  placeholder, error, valid, shake, helper, rows, ...rest
+}) {
+  const Tag = as === "textarea" ? motion.textarea : motion.input;
+  return (
+    <div className="relative flex flex-col gap-1">
+      <label htmlFor={name} className="text-[#1a1208] text-xs font-semibold mb-1">
+        {label} {required && <span className="text-red-400">*</span>}
+      </label>
+      <div className="relative group">
+        <Icon
+          className={`w-4 h-4 text-[#a8917a] group-focus-within:text-emerald-500 transition absolute left-3 pointer-events-none ${
+            as === "textarea" ? "top-3.5" : "top-1/2 -translate-y-1/2"
+          }`}
+        />
+        <Tag
+          whileFocus={{ scale: 1.01 }}
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          rows={as === "textarea" ? rows : undefined}
+          {...rest}
+          className={`w-full rounded-xl border bg-white pl-10 ${valid && !error ? "pr-10" : "pr-4"} py-3 text-sm text-[#1a1208] placeholder:text-[#a8917a] focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-200 min-h-[48px] ${
+            as === "textarea" ? "resize-none" : ""
+          } ${error ? "border-red-300 bg-red-50" : valid ? "border-emerald-300" : "border-[#e8d5b0]"} ${
+            shake ? "animate-shake" : ""
+          }`}
+        />
+        {valid && !error && (
+          <CheckCircle
+            className={`w-4 h-4 text-emerald-500 absolute right-3 pointer-events-none ${
+              as === "textarea" ? "top-3.5" : "top-1/2 -translate-y-1/2"
+            }`}
+          />
+        )}
+      </div>
+      {error && <p className="text-red-500 text-[10px] mt-1">{error}</p>}
+      {helper && !error && <p className="text-[#a8917a] text-[10px] mt-1">{helper}</p>}
+    </div>
+  );
+}
+
+/* Custom select dropdown for Location Type */
+function LocationTypeSelect({ value, onChange, onBlur, error, valid, shake }) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    function handleClick(e) {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) {
+        setOpen((wasOpen) => {
+          if (wasOpen) onBlur();
+          return false;
+        });
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [onBlur]);
+
+  const selected = LOCATION_TYPE_OPTIONS.find((o) => o.value === value);
+
+  return (
+    <div className="relative flex flex-col gap-1" ref={wrapRef}>
+      <label className="text-[#1a1208] text-xs font-semibold mb-1">
+        Location Type <span className="text-red-400">*</span>
+      </label>
+      <div className="relative group">
+        <Building2
+          className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none transition ${
+            open ? "text-emerald-500" : "text-[#a8917a]"
+          }`}
+        />
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className={`w-full rounded-xl border bg-white pl-10 pr-9 py-3 min-h-[48px] text-sm text-left transition-all duration-200 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 ${
+            error ? "border-red-300 bg-red-50" : valid ? "border-emerald-300" : "border-[#e8d5b0]"
+          } ${selected ? "text-[#1a1208]" : "text-[#a8917a]"} ${shake ? "animate-shake" : ""}`}
+        >
+          {selected ? `${selected.icon}  ${selected.label}` : "Select your location type"}
+        </button>
+        <ChevronDown
+          className={`w-4 h-4 text-[#a8917a] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+        {valid && !error && !open && (
+          <CheckCircle className="w-4 h-4 text-emerald-500 absolute right-9 top-1/2 -translate-y-1/2 pointer-events-none" />
+        )}
+        <AnimatePresence>
+          {open && (
+            <motion.ul
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.15 }}
+              className="absolute z-20 mt-1 w-full max-h-64 overflow-y-auto rounded-xl border border-[#e8d5b0] bg-white shadow-lg py-1"
+            >
+              {LOCATION_TYPE_OPTIONS.map((opt) => (
+                <li key={opt.value}>
+                  <button
+                    type="button"
+                    onClick={() => { onChange(opt.value); onBlur(); setOpen(false); }}
+                    className={`w-full text-left px-4 py-2.5 min-h-[44px] text-sm flex items-center gap-2 hover:bg-emerald-50 transition ${
+                      opt.value === value ? "bg-emerald-50 text-emerald-700 font-semibold" : "text-[#1a1208]"
+                    }`}
+                  >
+                    <span>{opt.icon}</span> {opt.label}
+                  </button>
+                </li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
+      </div>
+      {error && <p className="text-red-500 text-[10px] mt-1">{error}</p>}
+    </div>
+  );
+}
+
+/* Custom file upload field */
+function FileUploadField({ label, description, file, error, onChange, onRemove }) {
+  const inputId = `file-${label.replace(/\s+/g, "-").toLowerCase()}`;
+  return (
+    <div className="flex flex-col gap-1">
+      <label className="text-[#1a1208] text-xs font-semibold mb-1">{label}</label>
+      {!file ? (
+        <label
+          htmlFor={inputId}
+          className="border-2 border-dashed border-[#e8d5b0] rounded-xl p-4 hover:border-amber-400 transition cursor-pointer flex flex-col items-center justify-center text-center gap-1 min-h-[110px]"
+        >
+          <FileText className="w-8 h-8 text-[#a8917a]" />
+          <span className="text-[#78614a] text-sm">{description}</span>
+          <span className="text-[#a8917a] text-xs">PDF, JPG, PNG up to 5MB</span>
+          <input
+            id={inputId}
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            className="hidden"
+            onChange={(e) => onChange(e.target.files?.[0] || null)}
+          />
+        </label>
+      ) : (
+        <div className="relative bg-amber-50 border-2 border-amber-300 rounded-xl p-4 flex items-center gap-3 min-h-[110px]">
+          <FileIcon className="w-6 h-6 text-amber-600 flex-shrink-0" />
+          <div className="min-w-0 flex-1">
+            <p className="text-[#1a1208] text-sm font-medium truncate">{file.name}</p>
+            <p className="text-[#a8917a] text-xs">{(file.size / 1024).toFixed(0)} KB</p>
+          </div>
+          <button
+            type="button"
+            onClick={onRemove}
+            aria-label={`Remove ${label}`}
+            className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-white border border-[#e8d5b0] flex items-center justify-center text-[#78614a] hover:text-red-500 hover:border-red-300 transition shadow"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+      {error && <p className="text-red-500 text-[10px] mt-1">{error}</p>}
+    </div>
+  );
+}
+
+const EMPTY_FIELDS = {
+  name: "", phone: "", email: "", locationType: "", address: "",
+  googleMapsLink: "", city: "", availableSpace: "", electricalConnection: "", message: "",
+};
+
+function validatePartnerForm(f) {
+  const e = {};
+  if (!f.name.trim() || f.name.trim().length < 2) e.name = "Enter your full name (min 2 characters)";
+  if (f.phone.replace(/\D/g, "").length !== 10) e.phone = "Enter a valid 10-digit phone number";
+  if (!f.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = "Enter a valid email address";
+  if (!f.locationType) e.locationType = "Please select a location type";
+  if (!f.address.trim()) e.address = "Property address is required";
+  if (!f.city.trim()) e.city = "City / district is required";
+  if (f.googleMapsLink.trim() && !/^https?:\/\//i.test(f.googleMapsLink.trim())) {
+    e.googleMapsLink = "Enter a valid link (starting with http:// or https://)";
+  }
+  return e;
+}
+
 function PartnerEnquiryForm() {
-  const [form, setForm] = useState({ name: "", phone: "", locationType: "", city: "", message: "" });
+  const [fields, setFields] = useState(EMPTY_FIELDS);
+  const [files, setFiles] = useState({ revenuePatta: null, revenueMap: null, landPapers: null });
+  const [fileErrors, setFileErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [shakeFields, setShakeFields] = useState([]);
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [refNumber, setRefNumber] = useState(null);
+
+  const errors = validatePartnerForm(fields);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
+    setFields((f) => ({ ...f, [name]: value }));
+  };
+  const handleBlur = (name) => setTouched((t) => ({ ...t, [name]: true }));
+
+  const handleFileChange = (key, label, file) => {
+    if (file && file.size > MAX_FILE_BYTES) {
+      setFileErrors((e) => ({ ...e, [key]: `${label} is too large — max 5MB` }));
+      return;
+    }
+    setFileErrors((e) => ({ ...e, [key]: undefined }));
+    setFiles((f) => ({ ...f, [key]: file }));
+  };
+
+  const validateForm = () => {
+    const errs = validatePartnerForm(fields);
+    if (Object.keys(errs).length > 0) {
+      setTouched((t) => ({ ...t, ...Object.fromEntries(Object.keys(errs).map((k) => [k, true])) }));
+      setShakeFields(Object.keys(errs));
+      setTimeout(() => setShakeFields([]), 600);
+      return false;
+    }
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setStatus("loading");
+
+    // TODO: When backend is ready, replace Formspree with:
+    // POST /api/v1/ev-partner (multipart/form-data with files)
     try {
+      const textData = {
+        name: fields.name,
+        phone: fields.phone,
+        email: fields.email,
+        location_type: fields.locationType,
+        address: fields.address,
+        google_maps: fields.googleMapsLink,
+        city: fields.city,
+        space_sqft: fields.availableSpace,
+        electrical: fields.electricalConnection,
+        message: fields.message,
+        files_note: `Files attached: ${[
+          files.revenuePatta ? "Revenue Patta" : "",
+          files.revenueMap ? "Revenue Map" : "",
+          files.landPapers ? "Land Papers" : "",
+        ].filter(Boolean).join(", ") || "None"}`,
+      };
+
       // TODO: replace xpwzgkqr with your real Formspree EV-partner form ID
-      const res = await fetch("https://formspree.io/f/xpwzgkqr", {
+      const response = await fetch("https://formspree.io/f/xpwzgkqr", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(textData),
       });
-      if (!res.ok) throw new Error("formspree error");
-      setStatus("success");
+
+      if (response.ok) {
+        setStatus("success");
+        setRefNumber(Math.floor(100000 + Math.random() * 900000));
+      } else {
+        throw new Error("formspree error");
+      }
     } catch {
       setStatus("error");
     }
   };
 
+  const fieldState = (name) => ({
+    error: touched[name] ? errors[name] : undefined,
+    valid: touched[name] && !errors[name] && String(fields[name]).trim() !== "",
+    shake: shakeFields.includes(name),
+  });
+
   if (status === "success") {
     return (
       <div
         id="partner-enquiry-form"
-        className="order-1 lg:order-2 bg-white rounded-3xl p-5 sm:p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)] flex flex-col items-center justify-center text-center min-h-[420px]"
+        className="order-1 lg:order-2 bg-emerald-50 rounded-2xl p-8 border-2 border-emerald-300 shadow-[0_20px_60px_rgba(16,185,129,0.12)] flex flex-col items-center justify-center text-center min-h-[420px] scroll-mt-28"
       >
-        <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
-          <CheckCircle size={30} className="text-emerald-600" />
-        </div>
-        <h3 className="text-lg font-bold text-[#1a1208] mb-2">Request Received!</h3>
-        <p className="text-[#78614a] text-sm">We&apos;ll contact you within 48 hours!</p>
+        <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
+        <h3 className="font-black text-xl text-emerald-700">Application Received!</h3>
+        <p className="text-emerald-600 text-sm mt-2">We&apos;ll call you within 48 hours for a free site assessment.</p>
+        <p className="text-[#a8917a] text-xs mt-3">Reference: SP-{refNumber}</p>
       </div>
     );
   }
@@ -156,60 +427,137 @@ function PartnerEnquiryForm() {
       <p className="text-[#78614a] text-sm mb-6">Get a free site assessment within 48 hours</p>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <input
-          type="text"
-          name="name"
-          required
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Your name"
-          aria-label="Full Name"
-          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all"
-        />
-        <input
-          type="tel"
-          name="phone"
-          required
-          value={form.phone}
-          onChange={handleChange}
-          placeholder="+91 XXXXX XXXXX"
-          aria-label="Phone Number"
-          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all"
-        />
-        <select
-          name="locationType"
-          required
-          value={form.locationType}
-          onChange={handleChange}
-          aria-label="Location Type"
-          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all bg-white appearance-none cursor-pointer"
-        >
-          <option value="">Location type...</option>
-          {LOCATION_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-        </select>
-        <input
-          type="text"
-          name="city"
-          required
-          value={form.city}
-          onChange={handleChange}
-          placeholder="City or area name"
-          aria-label="City or Area"
-          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all"
-        />
-        <textarea
-          name="message"
-          rows={3}
-          value={form.message}
-          onChange={handleChange}
-          placeholder="Tell us about your location and available space"
-          aria-label="Message"
-          className="rounded-xl border border-[#e8d5b0] px-4 py-3 w-full text-sm text-[#1a1208] outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all resize-none"
-        />
+        {/* Section A — Personal Details */}
+        <motion.div custom={0} variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-4">
+          <SectionHeadingLabel>Personal Information</SectionHeadingLabel>
+          <FormField
+            icon={User} label="Full Name" required name="name" value={fields.name}
+            onChange={handleChange} onBlur={() => handleBlur("name")} placeholder="Your full name"
+            {...fieldState("name")}
+          />
+          <FormField
+            icon={Phone} label="Phone Number" required name="phone" type="tel" value={fields.phone}
+            onChange={handleChange} onBlur={() => handleBlur("phone")} placeholder="+91 XXXXX XXXXX"
+            {...fieldState("phone")}
+          />
+          <FormField
+            icon={Mail} label="Email Address" required name="email" type="email" value={fields.email}
+            onChange={handleChange} onBlur={() => handleBlur("email")} placeholder="your@email.com"
+            {...fieldState("email")}
+          />
+        </motion.div>
+
+        {/* Section B — Location Details */}
+        <motion.div custom={1} variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-4 mt-6">
+          <SectionHeadingLabel>Location Information</SectionHeadingLabel>
+          <LocationTypeSelect
+            value={fields.locationType}
+            onChange={(v) => setFields((f) => ({ ...f, locationType: v }))}
+            onBlur={() => handleBlur("locationType")}
+            {...fieldState("locationType")}
+          />
+          <FormField
+            icon={MapPin} label="Property Address" required name="address" value={fields.address}
+            onChange={handleChange} onBlur={() => handleBlur("address")} placeholder="Street, Area, City"
+            {...fieldState("address")}
+          />
+          <FormField
+            icon={Map} label="Google Maps Link" name="googleMapsLink" type="url" value={fields.googleMapsLink}
+            onChange={handleChange} onBlur={() => handleBlur("googleMapsLink")}
+            placeholder="Paste your Google Maps location link"
+            helper="Share your location → Open Google Maps → Long press your location → Share → Copy link"
+            {...fieldState("googleMapsLink")}
+          />
+          <FormField
+            icon={Building} label="City / District" required name="city" value={fields.city}
+            onChange={handleChange} onBlur={() => handleBlur("city")} placeholder="Bhubaneswar, Cuttack, Puri..."
+            {...fieldState("city")}
+          />
+        </motion.div>
+
+        {/* Section C — Land Documents */}
+        <motion.div custom={2} variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-4 mt-6">
+          <div>
+            <SectionHeadingLabel>Land Documents</SectionHeadingLabel>
+            <p className="text-[#78614a] text-xs mb-4">
+              Upload relevant documents to speed up your application process. All files are secure and confidential.
+            </p>
+          </div>
+          <FileUploadField
+            label="Revenue Patta" description="Upload Revenue Patta"
+            file={files.revenuePatta} error={fileErrors.revenuePatta}
+            onChange={(file) => handleFileChange("revenuePatta", "Revenue Patta", file)}
+            onRemove={() => setFiles((f) => ({ ...f, revenuePatta: null }))}
+          />
+          <FileUploadField
+            label="Revenue Map" description="Upload Revenue Map / Survey Map"
+            file={files.revenueMap} error={fileErrors.revenueMap}
+            onChange={(file) => handleFileChange("revenueMap", "Revenue Map", file)}
+            onRemove={() => setFiles((f) => ({ ...f, revenueMap: null }))}
+          />
+          <FileUploadField
+            label="Land Papers" description="Upload Land Title / Registry Papers"
+            file={files.landPapers} error={fileErrors.landPapers}
+            onChange={(file) => handleFileChange("landPapers", "Land Papers", file)}
+            onRemove={() => setFiles((f) => ({ ...f, landPapers: null }))}
+          />
+          <div className="bg-amber-50 rounded-xl p-3 flex items-start gap-2">
+            <Shield className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+            <p className="text-[#78614a] text-xs">
+              Your documents are encrypted and stored securely. We will never share them with third parties.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Section D — Additional Info */}
+        <motion.div custom={3} variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-4 mt-6">
+          <SectionHeadingLabel>Additional Information</SectionHeadingLabel>
+          <FormField
+            icon={Maximize2} label="Available Space (sq ft)" name="availableSpace" type="number"
+            value={fields.availableSpace} onChange={handleChange} onBlur={() => handleBlur("availableSpace")}
+            placeholder="e.g. 500" helper="Minimum 100 sq ft required for installation"
+            {...fieldState("availableSpace")}
+          />
+          <div className="flex flex-col gap-1">
+            <label className="text-[#1a1208] text-xs font-semibold mb-1">Electrical Connection Available?</label>
+            <div className="flex gap-2 flex-wrap">
+              {[
+                { value: "yes", label: "Yes, 3-Phase Available" },
+                { value: "no", label: "No / Not Sure" },
+              ].map((opt) => {
+                const selected = fields.electricalConnection === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setFields((f) => ({ ...f, electricalConnection: opt.value }))}
+                    className={`rounded-full px-4 py-2 min-h-[44px] text-sm font-medium border cursor-pointer transition ${
+                      selected
+                        ? opt.value === "yes"
+                          ? "bg-emerald-500 text-white border-emerald-500"
+                          : "bg-amber-500 text-white border-amber-500"
+                        : "bg-white text-[#78614a] border-[#e8d5b0]"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <FormField
+            as="textarea" icon={MessageSquare} label="Message / Additional Notes" name="message" rows={3}
+            value={fields.message} onChange={handleChange} onBlur={() => handleBlur("message")}
+            placeholder="Tell us anything else about your location, current power setup, or questions"
+            {...fieldState("message")}
+          />
+        </motion.div>
 
         {status === "error" && (
           <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
-            <p className="text-red-600 text-xs font-medium mb-2">{FORM_ERROR_MESSAGE}</p>
+            <p className="text-red-600 text-xs font-medium mb-2 flex items-center gap-1.5">
+              <AlertCircle size={14} className="flex-shrink-0" /> {FORM_ERROR_MESSAGE}
+            </p>
             <FormFallback />
           </div>
         )}
@@ -217,11 +565,15 @@ function PartnerEnquiryForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="btn-shimmer bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full px-8 py-3.5 w-full font-bold hover:scale-105 transition shadow-lg shadow-emerald-500/25 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+          className="btn-shimmer bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full py-4 w-full font-bold text-sm mt-6 hover:scale-105 transition-all duration-300 shadow-lg shadow-emerald-500/25 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
         >
-          {status === "loading"
-            ? <><Loader2 size={16} className="animate-spin" /> Sending...</>
-            : "Get Free Assessment →"}
+          {status === "loading" ? (
+            <><Loader2 size={16} className="animate-spin" /> Submitting...</>
+          ) : status === "error" ? (
+            <><AlertCircle size={16} /> Failed — Call Us Instead</>
+          ) : (
+            <>Submit Partnership Application <ArrowRight size={16} /></>
+          )}
         </button>
       </form>
 

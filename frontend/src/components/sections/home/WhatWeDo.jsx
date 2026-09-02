@@ -162,7 +162,7 @@ function ServiceCard({ card, index, isInView }) {
             {card.stats.map((s) => (
               <div key={s.label} className="bg-[#FFFBF0] rounded-xl px-2 py-2 flex-1 text-center">
                 <p className={`font-black text-xs ${card.accentTextClass}`}>{s.value}</p>
-                <p className="text-[#a8917a] text-[9px] mt-0.5">{s.label}</p>
+                <p className="text-[#a8917a] text-[10px] mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>

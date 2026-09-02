@@ -60,14 +60,14 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="bg-[#FFFBF0] min-h-screen">
       {/* Hero */}
-      <section className="pt-32 pb-16 px-4 text-center relative overflow-hidden">
+      <section className="pt-28 sm:pt-32 pb-16 px-4 text-center relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(217,119,6,0.06), transparent)" }} />
         <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#d97706] mb-4">Legal</p>
-        <h1 className="text-4xl sm:text-5xl font-bold font-display text-[#1a1208] leading-tight mb-4">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold font-display text-[#1a1208] leading-tight mb-4">
           Privacy Policy
         </h1>
-        <p className="text-[#78614a] text-lg max-w-xl mx-auto">
+        <p className="text-[#78614a] text-sm sm:text-lg max-w-xl mx-auto leading-relaxed">
           Last updated: June 2026
         </p>
       </section>
@@ -75,12 +75,12 @@ export default function PrivacyPolicyPage() {
       {/* Content */}
       <section className="pb-24 px-4">
         <div className="max-w-3xl mx-auto space-y-8">
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-sm text-[#78614a] leading-relaxed">
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-6 text-sm text-[#78614a] leading-relaxed">
             Soumyashi Power Limited (&quot;Soumyashi Power&quot;, &quot;we&quot;, &quot;our&quot;) is committed to protecting your personal data and respecting your privacy. This policy explains how we collect, use, and protect information when you interact with our website or services.
           </div>
 
           {SECTIONS.map(({ title, content }) => (
-            <div key={title} className="bg-white rounded-2xl border border-[#e8d5b0] p-7"
+            <div key={title} className="bg-white rounded-2xl border border-[#e8d5b0] p-4 sm:p-7"
               style={{ boxShadow: "0 4px 24px rgba(120,80,20,0.08)" }}>
               <h2 className="text-lg font-bold font-display text-[#1a1208] mb-3">{title}</h2>
               <p className="text-[#78614a] text-sm leading-relaxed whitespace-pre-line">{content}</p>

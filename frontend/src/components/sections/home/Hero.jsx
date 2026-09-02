@@ -72,7 +72,7 @@ function MainStatCard({ Icon, value, label, i, isActive }) {
         <Icon className="w-4 h-4 text-amber-600" />
       </div>
       <p className="font-black text-xl sm:text-2xl text-[#1a1208]">{value}+</p>
-      <p className="text-[#a8917a] text-[9px] sm:text-[10px] mt-0.5 whitespace-nowrap">{label}</p>
+      <p className="text-[#a8917a] text-[10px] mt-0.5 whitespace-nowrap">{label}</p>
     </motion.div>
   );
 }

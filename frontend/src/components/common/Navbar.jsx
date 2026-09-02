@@ -52,23 +52,23 @@ const MEGA_COLS = [
 ];
 
 const HamburgerIcon = ({ open }) => (
-  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <motion.line
-      x1="2" y1="6" x2="20" y2="6"
-      animate={open ? { x1: 3, y1: 3, x2: 19, y2: 19 } : { x1: 2, y1: 6, x2: 20, y2: 6 }}
+  <div className="relative w-[22px] h-[22px] flex items-center justify-center">
+    <motion.span
+      className="absolute h-0.5 w-[18px] rounded-full bg-current"
+      animate={open ? { rotate: 45, y: 0 } : { rotate: 0, y: -6 }}
       transition={{ duration: 0.25 }}
     />
-    <motion.line
-      x1="2" y1="11" x2="20" y2="11"
+    <motion.span
+      className="absolute h-0.5 w-[18px] rounded-full bg-current"
       animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
       transition={{ duration: 0.2 }}
     />
-    <motion.line
-      x1="2" y1="16" x2="20" y2="16"
-      animate={open ? { x1: 3, y1: 19, x2: 19, y2: 3 } : { x1: 2, y1: 16, x2: 20, y2: 16 }}
+    <motion.span
+      className="absolute h-0.5 w-[18px] rounded-full bg-current"
+      animate={open ? { rotate: -45, y: 0 } : { rotate: 0, y: 6 }}
       transition={{ duration: 0.25 }}
     />
-  </svg>
+  </div>
 );
 
 export default function Navbar() {
