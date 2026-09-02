@@ -259,7 +259,7 @@ function FileUploadField({ label, description, file, error, onChange, onRemove }
       {!file ? (
         <label
           htmlFor={inputId}
-          className="border-2 border-dashed border-[#e8d5b0] rounded-xl p-4 hover:border-amber-400 transition cursor-pointer flex flex-col items-center justify-center text-center gap-1 min-h-[110px]"
+          className="border-2 border-dashed border-[#e8d5b0] rounded-xl p-3 sm:p-4 hover:border-amber-400 transition cursor-pointer flex flex-col items-center justify-center text-center gap-1 min-h-[110px]"
         >
           <FileText className="w-8 h-8 text-[#a8917a]" />
           <span className="text-[#78614a] text-sm">{description}</span>
@@ -273,7 +273,7 @@ function FileUploadField({ label, description, file, error, onChange, onRemove }
           />
         </label>
       ) : (
-        <div className="relative bg-amber-50 border-2 border-amber-300 rounded-xl p-4 flex items-center gap-3 min-h-[110px]">
+        <div className="relative bg-amber-50 border-2 border-amber-300 rounded-xl p-3 sm:p-4 flex items-center gap-3 min-h-[110px]">
           <FileIcon className="w-6 h-6 text-amber-600 flex-shrink-0" />
           <div className="min-w-0 flex-1">
             <p className="text-[#1a1208] text-sm font-medium truncate">{file.name}</p>
@@ -321,6 +321,7 @@ function PartnerEnquiryForm() {
   const [shakeFields, setShakeFields] = useState([]);
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [refNumber, setRefNumber] = useState(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const errors = validatePartnerForm(fields);
 
@@ -352,6 +353,7 @@ function PartnerEnquiryForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setHasSubmitted(true);
     if (!validateForm()) return;
     setStatus("loading");
 
@@ -403,8 +405,7 @@ function PartnerEnquiryForm() {
   if (status === "success") {
     return (
       <div
-        id="partner-enquiry-form"
-        className="order-1 lg:order-2 bg-emerald-50 rounded-2xl p-8 border-2 border-emerald-300 shadow-[0_20px_60px_rgba(16,185,129,0.12)] flex flex-col items-center justify-center text-center min-h-[420px] scroll-mt-28"
+        className="bg-emerald-50 rounded-2xl p-8 border-2 border-emerald-300 shadow-[0_20px_60px_rgba(16,185,129,0.12)] flex flex-col items-center justify-center text-center min-h-[420px]"
       >
         <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
         <h3 className="font-black text-xl text-emerald-700">Application Received!</h3>
@@ -416,12 +417,11 @@ function PartnerEnquiryForm() {
 
   return (
     <motion.div
-      id="partner-enquiry-form"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: 0.15 }}
-      className="order-1 lg:order-2 bg-white rounded-3xl p-5 sm:p-8 border-2 border-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.12)] scroll-mt-28"
+      className="bg-white rounded-3xl p-6 sm:p-10 border border-[#e8d5b0] shadow-[0_8px_40px_rgba(120,80,20,0.10)]"
     >
       <h3 className="text-xl font-bold text-[#1a1208] mb-2">Apply as EV Partner</h3>
       <p className="text-[#78614a] text-sm mb-6">Get a free site assessment within 48 hours</p>
@@ -553,7 +553,7 @@ function PartnerEnquiryForm() {
           />
         </motion.div>
 
-        {status === "error" && (
+        {hasSubmitted && status === "error" && (
           <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
             <p className="text-red-600 text-xs font-medium mb-2 flex items-center gap-1.5">
               <AlertCircle size={14} className="flex-shrink-0" /> {FORM_ERROR_MESSAGE}
@@ -650,7 +650,7 @@ function RevenueCalculator() {
           at ₹12/kWh · Based on {sessions} sessions/day
         </p>
         <a
-          href="#partner-enquiry-form"
+          href="#partner-application"
           className="btn-shimmer mt-6 inline-flex items-center justify-center bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full px-8 py-3 font-bold hover:scale-105 transition-transform duration-300"
         >
           Apply Now
@@ -658,6 +658,137 @@ function RevenueCalculator() {
       </div>
     </motion.div>
   );
+}
+
+/* ── Revenue Potential Card (center column) ─────────────── */
+
+function RevenuePotentialCard() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.2 }}
+      className="bg-white rounded-3xl p-6 sm:p-8
+        border-2 border-emerald-200
+        shadow-[0_20px_60px_rgba(16,185,129,0.12)]"
+    >
+      {/* Heading */}
+      <h3 className="text-xl font-bold text-[#1a1208] mb-1">
+        Your Revenue Potential
+      </h3>
+      <p className="text-[#78614a] text-sm mb-6">
+        Estimated monthly earnings by location type
+      </p>
+
+      {/* Revenue Tiers */}
+      <div className="space-y-3 mb-6">
+        {[
+          {
+            label: 'High Traffic',
+            sublabel: 'Malls, Highways, Tourist Spots',
+            range: '₹12,000 – ₹18,000',
+            color: 'emerald',
+            bg: 'bg-emerald-50',
+            border: 'border-emerald-200',
+            text: 'text-emerald-600',
+          },
+          {
+            label: 'Medium Traffic',
+            sublabel: 'Hotels, Office Complexes',
+            range: '₹8,000 – ₹12,000',
+            color: 'amber',
+            bg: 'bg-amber-50',
+            border: 'border-amber-200',
+            text: 'text-amber-600',
+          },
+          {
+            label: 'Standard',
+            sublabel: 'Petrol Pumps, Residential',
+            range: '₹4,000 – ₹8,000',
+            color: 'gray',
+            bg: 'bg-[#FFFBF0]',
+            border: 'border-[#e8d5b0]',
+            text: 'text-[#78614a]',
+          },
+        ].map((tier, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 + i * 0.1 }}
+            className={`${tier.bg} ${tier.border}
+              border rounded-2xl p-4`}
+          >
+            <div className="flex items-center
+              justify-between">
+              <div>
+                <p className="font-bold text-[#1a1208]
+                  text-sm">{tier.label}</p>
+                <p className="text-[#a8917a] text-[10px]
+                  mt-0.5">{tier.sublabel}</p>
+              </div>
+              <div className="text-right">
+                <p className={`font-black text-lg
+                  ${tier.text}`}>{tier.range}</p>
+                <p className="text-[#a8917a]
+                  text-[10px]">/month</p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Divider */}
+      <div className="h-px bg-[#e8d5b0] mb-5" />
+
+      {/* 4 Stats */}
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        {[
+          { value: '60kW', label: 'Charger Output' },
+          { value: '30min', label: 'Avg Charge Time' },
+          { value: '50+', label: 'Active Stations' },
+          { value: '6wks', label: 'Survey to Live' },
+        ].map((stat, i) => (
+          <div key={i} className="text-center bg-[#FFFBF0]
+            rounded-xl p-3 border border-[#e8d5b0]">
+            <p className="font-black text-xl
+              text-emerald-600">{stat.value}</p>
+            <p className="text-[#a8917a] text-[10px]
+              mt-0.5">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA — scrolls to form */}
+      <button
+        onClick={() => document.getElementById(
+          'partner-application'
+        )?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        })}
+        className="w-full bg-gradient-to-r
+          from-emerald-500 to-emerald-600
+          text-white rounded-full py-3.5
+          font-bold text-sm
+          hover:scale-105 transition-all
+          shadow-lg shadow-emerald-500/20
+          flex items-center justify-center gap-2"
+      >
+        Apply as Partner
+        <ChevronDown className="w-4 h-4" />
+      </button>
+
+      {/* Trust note */}
+      <p className="text-center text-[#a8917a]
+        text-[10px] mt-3">
+        No upfront cost · Free site assessment ·
+        48hr response
+      </p>
+    </motion.div>
+  )
 }
 
 /* ── Section 1: Become an EV Partner ────────────────────── */
@@ -710,8 +841,10 @@ function BecomePartnerSection() {
             ))}
           </motion.div>
 
-          {/* Partner Enquiry Form */}
-          <PartnerEnquiryForm />
+          {/* Revenue Potential */}
+          <div className="order-1 lg:order-2">
+            <RevenuePotentialCard />
+          </div>
 
           {/* What We Provide */}
           <motion.div
@@ -817,6 +950,40 @@ function HowItWorksSection() {
             ))}
           </motion.div>
         </div>
+        {/* Partner Application Form */}
+        <div
+          id="partner-application"
+          className="mt-16 scroll-mt-24"
+        >
+          {/* Section intro */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2
+              bg-emerald-100 border border-emerald-200
+              rounded-full px-4 py-2 mb-4">
+              <Zap className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="text-emerald-700 text-xs
+                font-bold tracking-widest">
+                PARTNERSHIP APPLICATION
+              </span>
+            </div>
+            <h2 className="font-display font-black
+              text-[#1a1208] text-2xl sm:text-3xl lg:text-4xl">
+              Apply as an EV Charging Partner
+            </h2>
+            <p className="text-[#78614a] text-sm sm:text-base
+              mt-3 max-w-xl mx-auto">
+              Fill in your details and we&apos;ll contact you
+              within 48 hours with a free site assessment.
+              No commitment required.
+            </p>
+          </div>
+
+          {/* The existing form component */}
+          <div className="max-w-3xl mx-auto">
+            <PartnerEnquiryForm />
+          </div>
+        </div>
+
         {/* CTA banner */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
