@@ -1,12 +1,14 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
-from sqlalchemy.sql import func
-from app.database import Base
+from beanie import Document
+from pydantic import EmailStr, Field
+from typing import Optional
+from datetime import datetime
 
-class NewsletterSubscriber(Base):
-    __tablename__ = "newsletter_subscribers"
+class NewsletterSubscriber(Document):
+    email: EmailStr
+    is_active: bool = True
+    subscribed_at: datetime = Field(default_factory=datetime.utcnow)
+    unsubscribed_at: Optional[datetime] = None
 
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String(255), unique=True, nullable=False, index=True)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime(timezone=True),
-                        server_default=func.now())
+    class Settings:
+        name = "newsletter_subscribers"
+        indexes = ["email"]

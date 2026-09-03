@@ -1,16 +1,27 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
-from sqlalchemy.sql import func
-from app.database import Base
+from beanie import Document
+from pydantic import EmailStr, Field
+from typing import Optional
+from datetime import datetime
+from enum import Enum
 
-class Application(Base):
-    __tablename__ = "applications"
+class ApplicationStatus(str, Enum):
+    NEW = "new"
+    REVIEWED = "reviewed"
+    SHORTLISTED = "shortlisted"
+    REJECTED = "rejected"
+    HIRED = "hired"
 
-    id = Column(Integer, primary_key=True, index=True)
-    job_id = Column(Integer, ForeignKey("jobs.id"), nullable=False)
-    name = Column(String(100), nullable=False)
-    email = Column(String(255), nullable=False)
-    phone = Column(String(20), nullable=True)
-    resume_url = Column(String(500), nullable=True)
-    status = Column(String(20), default="new")
-    created_at = Column(DateTime(timezone=True),
-                        server_default=func.now())
+class JobApplication(Document):
+    job_id: str
+    job_title: str
+    name: str
+    email: EmailStr
+    phone: str
+    resume_url: Optional[str] = None
+    cover_letter: Optional[str] = None
+    status: ApplicationStatus = ApplicationStatus.NEW
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+    class Settings:
+        name = "job_applications"
+        indexes = ["job_id", "status"]

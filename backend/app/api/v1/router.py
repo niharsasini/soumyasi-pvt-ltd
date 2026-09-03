@@ -4,7 +4,6 @@ from app.api.v1.endpoints import (
     newsletter,
     ev_partner,
     ev_stations,
-    solutions,
     projects,
     blog,
     careers,
@@ -32,11 +31,6 @@ api_router.include_router(
     ev_stations.router,
     prefix="/ev-stations",
     tags=["EV Stations"]
-)
-api_router.include_router(
-    solutions.router,
-    prefix="/solutions",
-    tags=["Solutions"]
 )
 api_router.include_router(
     projects.router,

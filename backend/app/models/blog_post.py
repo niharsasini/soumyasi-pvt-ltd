@@ -1,17 +1,22 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime
-from sqlalchemy.sql import func
-from app.database import Base
+from beanie import Document
+from pydantic import Field
+from typing import Optional, List
+from datetime import datetime
 
-class BlogPost(Base):
-    __tablename__ = "blog_posts"
+class BlogPost(Document):
+    title: str
+    slug: str
+    excerpt: str
+    content: str
+    category: str
+    author: str = "Soumyashi Power Team"
+    image_url: Optional[str] = None
+    tags: List[str] = []
+    is_published: bool = True
+    published_at: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: Optional[datetime] = None
 
-    id = Column(Integer, primary_key=True, index=True)
-    slug = Column(String(150), unique=True, nullable=False, index=True)
-    title = Column(String(200), nullable=False)
-    excerpt = Column(Text, nullable=True)
-    content = Column(Text, nullable=True)
-    cover_image = Column(String(500), nullable=True)
-    author = Column(String(100), nullable=True)
-    published = Column(String(20), default="draft")
-    created_at = Column(DateTime(timezone=True),
-                        server_default=func.now())
+    class Settings:
+        name = "blog_posts"
+        indexes = ["slug", "category", "is_published"]

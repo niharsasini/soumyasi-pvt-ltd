@@ -7,4 +7,4 @@ class NewsletterCreate(BaseModel):
 class NewsletterResponse(BaseModel):
     success: bool
     message: str
-    id: Optional[int] = None
+    id: Optional[str] = None

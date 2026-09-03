@@ -6,30 +6,20 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/soumyashi_power
-      - REDIS_URL=redis://redis:6379
+      - MONGODB_URL=mongodb://mongo:27017
+      - MONGODB_DB_NAME=soumyashi_power
     depends_on:
-      - db
-      - redis
+      - mongo
     volumes:
       - .:/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: soumyashi_power
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+  mongo:
+    image: mongo:7
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mongo_data:/data/db
     ports:
-      - "5432:5432"
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
+      - "27017:27017"
 
 volumes:
-  postgres_data:
+  mongo_data:

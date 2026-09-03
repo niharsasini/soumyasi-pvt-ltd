@@ -1,17 +1,19 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from typing import Optional
 
-class UserBase(BaseModel):
-    email: EmailStr
-    full_name: Optional[str] = None
-
-class UserCreate(UserBase):
+class LoginRequest(BaseModel):
+    username: str
     password: str
 
-class UserOut(UserBase):
-    id: int
-    is_active: bool = True
-    is_admin: bool = False
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    username: str
+    is_superadmin: bool
 
-    class Config:
-        from_attributes = True
+class AdminCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+    full_name: str
+    is_superadmin: bool = False

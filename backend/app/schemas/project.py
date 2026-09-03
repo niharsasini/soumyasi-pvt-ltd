@@ -1,19 +1,23 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 class ProjectBase(BaseModel):
     slug: str
     title: str
-    location: Optional[str] = None
-    category: Optional[str] = None
-    description: Optional[str] = None
+    category: str
+    location: str
+    city: str
+    capacity: Optional[str] = None
+    description: str
+    highlights: List[str] = []
     image_url: Optional[str] = None
 
 class ProjectCreate(ProjectBase):
     pass
 
 class ProjectOut(ProjectBase):
-    id: int
+    id: str
+    is_published: bool = True
 
     class Config:
         from_attributes = True

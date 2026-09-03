@@ -1,16 +1,31 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime
-from sqlalchemy.sql import func
-from app.database import Base
+from beanie import Document
+from pydantic import Field
+from typing import Optional, List
+from datetime import datetime
+from enum import Enum
 
-class Project(Base):
-    __tablename__ = "projects"
+class ProjectCategory(str, Enum):
+    SOLAR = "Solar"
+    EV = "EV"
+    WIND = "Wind"
+    INDUSTRIAL = "Industrial"
 
-    id = Column(Integer, primary_key=True, index=True)
-    slug = Column(String(150), unique=True, nullable=False, index=True)
-    title = Column(String(200), nullable=False)
-    location = Column(String(150), nullable=True)
-    category = Column(String(100), nullable=True)
-    description = Column(Text, nullable=True)
-    image_url = Column(String(500), nullable=True)
-    created_at = Column(DateTime(timezone=True),
-                        server_default=func.now())
+class Project(Document):
+    title: str
+    slug: str
+    category: ProjectCategory
+    location: str
+    city: str
+    capacity: Optional[str] = None
+    description: str
+    highlights: List[str] = []
+    image_url: Optional[str] = None
+    images: List[str] = []
+    completed_date: Optional[str] = None
+    status: str = "Completed"
+    is_published: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+    class Settings:
+        name = "projects"
+        indexes = ["slug", "category", "is_published"]

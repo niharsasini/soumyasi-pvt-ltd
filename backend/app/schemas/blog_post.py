@@ -1,20 +1,22 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 class BlogPostBase(BaseModel):
     slug: str
     title: str
-    excerpt: Optional[str] = None
-    content: Optional[str] = None
-    cover_image: Optional[str] = None
-    author: Optional[str] = None
+    excerpt: str
+    content: str
+    category: str
+    author: str = "Soumyashi Power Team"
+    image_url: Optional[str] = None
+    tags: List[str] = []
 
 class BlogPostCreate(BlogPostBase):
     pass
 
 class BlogPostOut(BlogPostBase):
-    id: int
-    published: str = "draft"
+    id: str
+    is_published: bool = True
 
     class Config:
         from_attributes = True

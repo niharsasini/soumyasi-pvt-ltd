@@ -3,16 +3,19 @@ from typing import Optional
 
 class JobBase(BaseModel):
     title: str
-    department: Optional[str] = None
-    location: Optional[str] = None
-    employment_type: Optional[str] = None
-    description: Optional[str] = None
+    department: str
+    location: str
+    job_type: str = "Full Time"
+    description: str
+    requirements: str
+    salary_range: Optional[str] = None
 
 class JobCreate(JobBase):
-    pass
+    slug: str
 
 class JobOut(JobBase):
-    id: int
+    id: str
+    slug: str
     is_active: bool = True
 
     class Config:

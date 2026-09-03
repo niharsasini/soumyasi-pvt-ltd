@@ -12,4 +12,7 @@ class ContactCreate(BaseModel):
 class ContactResponse(BaseModel):
     success: bool
     message: str
-    id: Optional[int] = None
+    id: Optional[str] = None
+
+class ContactUpdate(BaseModel):
+    status: Optional[str] = None

@@ -2,15 +2,13 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 
 class ApplicationCreate(BaseModel):
-    job_id: int
     name: str
     email: EmailStr
-    phone: Optional[str] = None
+    phone: str
     resume_url: Optional[str] = None
+    cover_letter: Optional[str] = None
 
-class ApplicationOut(ApplicationCreate):
-    id: int
-    status: str = "new"
-
-    class Config:
-        from_attributes = True
+class ApplicationResponse(BaseModel):
+    success: bool
+    message: str
+    id: Optional[str] = None

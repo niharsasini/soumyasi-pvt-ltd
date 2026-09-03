@@ -1,42 +1,39 @@
 """
-Create an admin user in the database.
+Create first admin user.
 Run: python scripts/create_admin.py
 """
+import asyncio
 import sys
-sys.path.append(".")
+sys.path.insert(0, '.')
 
-import getpass
+async def create_admin():
+    from app.database import connect_db
+    from app.models.user import AdminUser
+    from app.services.auth_service import hash_password
 
-from app.database import SessionLocal
-from app.models.user import User
-from app.services.auth_service import hash_password
+    await connect_db()
 
-
-def create_admin():
+    username = input("Admin username: ").strip()
+    password = input("Admin password: ").strip()
     email = input("Admin email: ").strip()
-    password = getpass.getpass("Admin password: ")
     full_name = input("Full name: ").strip()
 
-    db = SessionLocal()
-    try:
-        existing = db.query(User).filter(User.email == email).first()
-        if existing:
-            print(f"User with email {email} already exists.")
-            return
+    existing = await AdminUser.find_one(
+        AdminUser.username == username
+    )
+    if existing:
+        print(f"❌ Username '{username}' already exists")
+        return
 
-        admin = User(
-            email=email,
-            hashed_password=hash_password(password),
-            full_name=full_name,
-            is_active=True,
-            is_admin=True,
-        )
-        db.add(admin)
-        db.commit()
-        print(f"Admin user created: {email}")
-    finally:
-        db.close()
-
+    user = AdminUser(
+        username=username,
+        email=email,
+        hashed_password=hash_password(password),
+        full_name=full_name,
+        is_superadmin=True,
+    )
+    await user.insert()
+    print(f"✅ Admin '{username}' created successfully!")
 
 if __name__ == "__main__":
-    create_admin()
+    asyncio.run(create_admin())

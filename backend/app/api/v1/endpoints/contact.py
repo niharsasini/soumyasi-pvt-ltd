@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Depends, BackgroundTasks
-from sqlalchemy.orm import Session
-from app.database import get_db
-from app.schemas.contact import ContactCreate, ContactResponse
+from fastapi import APIRouter, Request, BackgroundTasks
 from app.models.contact import ContactSubmission
+from app.schemas.contact import ContactCreate, ContactResponse
+from app.services.email_service import notify_contact
 
 router = APIRouter()
 
@@ -10,25 +9,21 @@ router = APIRouter()
 async def submit_contact(
     data: ContactCreate,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
+    request: Request
 ):
-    """Submit contact form enquiry"""
-    # Save to database
-    submission = ContactSubmission(**data.model_dump())
-    db.add(submission)
-    db.commit()
-    db.refresh(submission)
-
-    # Send email notification in background
-    # background_tasks.add_task(send_contact_email, submission)
-
+    submission = ContactSubmission(
+        **data.model_dump(),
+        ip_address=request.client.host if request.client else None,
+    )
+    await submission.insert()
+    background_tasks.add_task(notify_contact, submission)
     return ContactResponse(
         success=True,
         message="Thank you! We will contact you within 24 hours.",
-        id=submission.id
+        id=str(submission.id)
     )
 
 @router.get("/")
-async def get_submissions(db: Session = Depends(get_db)):
-    """Get all contact submissions (admin only)"""
-    return db.query(ContactSubmission).all()
+async def get_contacts(skip: int = 0, limit: int = 50):
+    contacts = await ContactSubmission.find_all().skip(skip).limit(limit).to_list()
+    return contacts

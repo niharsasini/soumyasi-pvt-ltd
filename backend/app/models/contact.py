@@ -1,18 +1,26 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text
-from sqlalchemy.sql import func
-from app.database import Base
+from beanie import Document
+from pydantic import EmailStr, Field
+from typing import Optional
+from datetime import datetime
+from enum import Enum
 
-class ContactSubmission(Base):
-    __tablename__ = "contact_submissions"
+class ContactStatus(str, Enum):
+    NEW = "new"
+    READ = "read"
+    RESPONDED = "responded"
+    CLOSED = "closed"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(100), nullable=False)
-    email = Column(String(255), nullable=False)
-    phone = Column(String(20), nullable=True)
-    service = Column(String(100), nullable=True)
-    message = Column(Text, nullable=False)
-    status = Column(String(20), default="new")
-    created_at = Column(DateTime(timezone=True),
-                        server_default=func.now())
-    updated_at = Column(DateTime(timezone=True),
-                        onupdate=func.now())
+class ContactSubmission(Document):
+    name: str
+    email: EmailStr
+    phone: Optional[str] = None
+    service: Optional[str] = None
+    message: str
+    status: ContactStatus = ContactStatus.NEW
+    ip_address: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: Optional[datetime] = None
+
+    class Settings:
+        name = "contact_submissions"
+        indexes = ["email", "status", "created_at"]
