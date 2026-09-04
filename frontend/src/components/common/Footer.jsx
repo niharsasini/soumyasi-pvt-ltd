@@ -54,13 +54,12 @@ function Newsletter() {
     setStatus("loading");
     setErrMsg("");
     try {
-      // TODO: replace xpwzgkqr with your real Formspree newsletter form ID
-      const res = await fetch("https://formspree.io/f/xpwzgkqr", {
+      const res = await fetch("/api/newsletter", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      if (!res.ok) throw new Error("formspree error");
+      if (!res.ok) throw new Error("newsletter api error");
       setStatus("success");
     } catch {
       setErrMsg(`Couldn't subscribe. Reach us directly at ${CONTACT.phone} instead.`);

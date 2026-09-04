@@ -58,13 +58,18 @@ export default function ContactForm() {
     }
     setStatus("loading");
     try {
-      // TODO: replace xpwzgkqr with your real Formspree form ID
-      const res = await fetch("https://formspree.io/f/xpwzgkqr", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          service: form.service,
+          message: form.message,
+        }),
       });
-      if (!res.ok) throw new Error("formspree error");
+      if (!res.ok) throw new Error("contact api error");
       if (typeof window !== "undefined") {
         const confetti = (await import("canvas-confetti")).default;
         confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ["#d97706", "#f59e0b", "#fbbf24", "#059669"] });

@@ -57,20 +57,19 @@ function ApplyModal({ role, onClose }) {
     setSubmitError("");
     const data = new FormData(e.target);
     const payload = {
-      role: role.title,
-      name:  data.get("name"),
+      name: data.get("name"),
       email: data.get("email"),
       phone: data.get("phone"),
-      cover: data.get("cover"),
+      position: role.title,
+      coverLetter: data.get("cover"),
     };
     try {
-      // TODO: replace xpwzgkqr with your real Formspree careers form ID
-      const res = await fetch("https://formspree.io/f/xpwzgkqr", {
+      const res = await fetch("/api/careers", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("formspree error");
+      if (!res.ok) throw new Error("careers api error");
       setSubmitted(true);
     } catch {
       setSubmitError(FORM_ERROR_MESSAGE);

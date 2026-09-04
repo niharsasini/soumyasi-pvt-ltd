@@ -357,39 +357,38 @@ function PartnerEnquiryForm() {
     if (!validateForm()) return;
     setStatus("loading");
 
-    // TODO: When backend is ready, replace Formspree with:
-    // POST /api/v1/ev-partner (multipart/form-data with files)
     try {
-      const textData = {
+      const filesUploaded = [
+        files.revenuePatta ? "Revenue Patta" : "",
+        files.revenueMap ? "Revenue Map" : "",
+        files.landPapers ? "Land Papers" : "",
+      ].filter(Boolean).join(", ") || "None";
+
+      const payload = {
         name: fields.name,
         phone: fields.phone,
         email: fields.email,
-        location_type: fields.locationType,
+        locationType: fields.locationType,
         address: fields.address,
-        google_maps: fields.googleMapsLink,
+        googleMapsLink: fields.googleMapsLink,
         city: fields.city,
-        space_sqft: fields.availableSpace,
+        space: fields.availableSpace,
         electrical: fields.electricalConnection,
         message: fields.message,
-        files_note: `Files attached: ${[
-          files.revenuePatta ? "Revenue Patta" : "",
-          files.revenueMap ? "Revenue Map" : "",
-          files.landPapers ? "Land Papers" : "",
-        ].filter(Boolean).join(", ") || "None"}`,
+        files_uploaded: filesUploaded,
       };
 
-      // TODO: replace xpwzgkqr with your real Formspree EV-partner form ID
-      const response = await fetch("https://formspree.io/f/xpwzgkqr", {
+      const response = await fetch("/api/ev-partner", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(textData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
         setStatus("success");
         setRefNumber(Math.floor(100000 + Math.random() * 900000));
       } else {
-        throw new Error("formspree error");
+        throw new Error("ev-partner api error");
       }
     } catch {
       setStatus("error");
