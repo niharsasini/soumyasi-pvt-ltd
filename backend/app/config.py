@@ -13,7 +13,9 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: List[str] = [
         "https://www.soumyashipower.in",
         "https://soumyashipower.in",
-        "http://localhost:3000"
+        "https://admin.soumyashipower.in",
+        "http://localhost:3000",
+        "http://localhost:3001",
     ]
 
     # MongoDB

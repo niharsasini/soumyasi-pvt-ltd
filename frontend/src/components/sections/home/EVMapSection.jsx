@@ -1,11 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Zap, MapPin, Clock, ArrowRight } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
-import { EV_STATIONS } from "@/lib/data/ev-stations";
 
 const EVStationMap = dynamic(() => import("@/components/map/EVStationMap"), {
   ssr: false,
@@ -21,18 +21,28 @@ const EVStationMap = dynamic(() => import("@/components/map/EVStationMap"), {
 
 const HEADING = ["Our", "EV", "Charging", "Network"];
 
-const activeCount    = EV_STATIONS.filter((s) => s.status === "Active").length;
-const comingSoonCount = EV_STATIONS.filter((s) => s.status === "Coming Soon").length;
-const citiesCount    = [...new Set(EV_STATIONS.map((s) => s.city))].length;
-
-const STATS = [
-  { icon: Zap,    value: activeCount,     label: "Active Stations" },
-  { icon: MapPin, value: citiesCount,     label: "Cities Covered"  },
-  { icon: Clock,  value: comingSoonCount, label: "Coming Soon"     },
-];
-
 export default function EVMapSection() {
   const { ref, isInView } = useScrollReveal();
+  const [stations, setStations] = useState([]);
+
+  useEffect(() => {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.soumyashipower.in";
+
+    fetch(`${API_URL}/api/v1/ev-stations/`)
+      .then((r) => r.json())
+      .then((data) => setStations(Array.isArray(data) ? data : []))
+      .catch(() => setStations([]));
+  }, []);
+
+  const activeCount = stations.filter((s) => s.status === "Active").length;
+  const comingSoonCount = stations.filter((s) => s.status === "Coming Soon").length;
+  const citiesCount = [...new Set(stations.map((s) => s.city))].length;
+
+  const STATS = [
+    { icon: Zap, value: activeCount, label: "Active Stations" },
+    { icon: MapPin, value: citiesCount, label: "Cities Covered" },
+    { icon: Clock, value: comingSoonCount, label: "Coming Soon" },
+  ];
 
   return (
     <section className="w-full py-16 sm:py-20 lg:py-24 bg-brand-section relative overflow-hidden">

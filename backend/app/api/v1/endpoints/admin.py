@@ -5,6 +5,10 @@ from app.models.contact import ContactSubmission, ContactStatus
 from app.models.ev_partner import EVPartnerApplication, EVPartnerStatus
 from app.models.newsletter import NewsletterSubscriber
 from app.models.ev_station import EVStation
+from app.models.project import Project
+from app.models.blog_post import BlogPost
+from app.models.job import Job
+from app.models.application import JobApplication
 from app.schemas.user import LoginRequest, TokenResponse, AdminCreate
 from app.schemas.contact import ContactUpdate
 from app.schemas.ev_partner import EVPartnerUpdate
@@ -46,6 +50,24 @@ async def get_me(current_user: AdminUser = Depends(get_current_admin)):
         "is_superadmin": current_user.is_superadmin,
         "last_login": current_user.last_login
     }
+
+@router.post("/change-password")
+async def change_password(
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    current_password = data.get("current_password", "")
+    new_password = data.get("new_password", "")
+    if not verify_password(current_password, current_user.hashed_password):
+        raise HTTPException(status_code=401, detail="Current password is incorrect")
+    if len(new_password) < 8:
+        raise HTTPException(
+            status_code=400,
+            detail="New password must be at least 8 characters"
+        )
+    current_user.hashed_password = hash_password(new_password)
+    await current_user.save()
+    return {"success": True}
 
 # ── DASHBOARD STATS ───────────────────────────────
 @router.get("/dashboard")
@@ -190,6 +212,182 @@ async def delete_station(
     if station:
         station.is_active = False
         await station.save()
+    return {"success": True}
+
+# ── PROJECTS ──────────────────────────────────────
+@router.get("/projects")
+async def get_all_projects(
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    return await Project.find_all().sort(-Project.created_at).to_list()
+
+@router.post("/projects")
+async def create_project(
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    project = Project(**data)
+    await project.insert()
+    return {"success": True, "id": str(project.id)}
+
+@router.patch("/projects/{project_id}")
+async def update_project(
+    project_id: str,
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    project = await Project.get(PydanticObjectId(project_id))
+    if not project:
+        raise HTTPException(status_code=404, detail="Not found")
+    for k, v in data.items():
+        setattr(project, k, v)
+    await project.save()
+    return {"success": True}
+
+@router.delete("/projects/{project_id}")
+async def delete_project(
+    project_id: str,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    project = await Project.get(PydanticObjectId(project_id))
+    if project:
+        await project.delete()
+    return {"success": True}
+
+# ── BLOG ──────────────────────────────────────────
+@router.get("/blog")
+async def get_all_posts(
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    return await BlogPost.find_all().sort(-BlogPost.created_at).to_list()
+
+@router.post("/blog")
+async def create_post(
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    post = BlogPost(**data)
+    await post.insert()
+    return {"success": True, "id": str(post.id)}
+
+@router.patch("/blog/{post_id}")
+async def update_post(
+    post_id: str,
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    post = await BlogPost.get(PydanticObjectId(post_id))
+    if not post:
+        raise HTTPException(status_code=404, detail="Not found")
+    for k, v in data.items():
+        setattr(post, k, v)
+    post.updated_at = datetime.utcnow()
+    await post.save()
+    return {"success": True}
+
+@router.delete("/blog/{post_id}")
+async def delete_post(
+    post_id: str,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    post = await BlogPost.get(PydanticObjectId(post_id))
+    if post:
+        await post.delete()
+    return {"success": True}
+
+# ── CAREERS: JOBS ─────────────────────────────────
+@router.get("/jobs")
+async def get_all_jobs(
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    return await Job.find_all().sort(-Job.created_at).to_list()
+
+@router.post("/jobs")
+async def create_job(
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    job = Job(**data)
+    await job.insert()
+    return {"success": True, "id": str(job.id)}
+
+@router.patch("/jobs/{job_id}")
+async def update_job(
+    job_id: str,
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    job = await Job.get(PydanticObjectId(job_id))
+    if not job:
+        raise HTTPException(status_code=404, detail="Not found")
+    for k, v in data.items():
+        setattr(job, k, v)
+    await job.save()
+    return {"success": True}
+
+@router.delete("/jobs/{job_id}")
+async def delete_job(
+    job_id: str,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    job = await Job.get(PydanticObjectId(job_id))
+    if job:
+        await job.delete()
+    return {"success": True}
+
+# ── CAREERS: APPLICATIONS ─────────────────────────
+@router.get("/job-applications")
+async def get_job_applications(
+    job_id: str = None,
+    status: str = None,
+    skip: int = 0,
+    limit: int = 50,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    query = {}
+    if job_id:
+        query["job_id"] = job_id
+    if status:
+        query["status"] = status
+    return await JobApplication.find(query).sort(
+        -JobApplication.created_at
+    ).skip(skip).limit(limit).to_list()
+
+@router.patch("/job-applications/{application_id}")
+async def update_job_application(
+    application_id: str,
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    application = await JobApplication.get(
+        PydanticObjectId(application_id)
+    )
+    if not application:
+        raise HTTPException(status_code=404, detail="Not found")
+    for k, v in data.items():
+        setattr(application, k, v)
+    await application.save()
+    return {"success": True}
+
+# ── NEWSLETTER ────────────────────────────────────
+@router.get("/newsletter")
+async def get_subscribers(
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    return await NewsletterSubscriber.find_all().sort(
+        -NewsletterSubscriber.subscribed_at
+    ).to_list()
+
+@router.delete("/newsletter/{subscriber_id}")
+async def delete_subscriber(
+    subscriber_id: str,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    subscriber = await NewsletterSubscriber.get(
+        PydanticObjectId(subscriber_id)
+    )
+    if subscriber:
+        await subscriber.delete()
     return {"success": True}
 
 # ── CREATE ADMIN ──────────────────────────────────
