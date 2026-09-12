@@ -7,18 +7,36 @@ import FinalCTA    from "@/components/sections/home/FinalCTA";
 
 const Industries      = dynamic(() => import("@/components/sections/home/Industries"),      { ssr: false });
 const Testimonials    = dynamic(() => import("@/components/sections/home/Testimonials"),    { ssr: false });
+const Gallery         = dynamic(() => import("@/components/sections/home/Gallery"),         { ssr: false });
 const EVMapSection    = dynamic(() => import("@/components/sections/home/EVMapSection"),    { ssr: false });
 const EVPartnerSection = dynamic(() => import("@/components/sections/home/EVPartnerSection"), { ssr: false });
 
 export const metadata = {
-  title: "Soumyashi Power | Solar Panels & EV Charging Odisha",
+  title: "Soumyashi Power | Solar Panels, EV Charging & Industrial Power — Odisha",
   description:
-    "Odisha's leading energy company. Solar rooftop installations, 60kW EV fast charging network, and industrial power solutions across 15+ cities.",
+    "Odisha's leading energy company. 500+ solar installations, 50+ EV charging stations, wind power and industrial electrical infrastructure across 15+ cities. Based in Bhubaneswar.",
+  keywords: [
+    "solar panels Odisha",
+    "solar installation Bhubaneswar",
+    "EV charging station Odisha",
+    "EV charging Bhubaneswar",
+    "wind power Odisha",
+    "industrial power supply Odisha",
+    "solar company Bhubaneswar",
+    "Soumyashi Power",
+    "rooftop solar Odisha",
+    "fast charging station Odisha",
+  ],
   openGraph: {
-    title: "Soumyashi Power | Solar Panels & EV Charging Odisha",
+    title: "Soumyashi Power | Solar & EV Charging — Odisha",
     description:
-      "Solar installations, EV charging network, and industrial power across Odisha.",
+      "Leading energy company in Odisha. Solar installations, EV charging network, wind power and industrial infrastructure.",
     images: ["/soumyasi/solar-field-odisha.png"],
+    locale: "en_IN",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://www.soumyashipower.in",
   },
 };
 
@@ -44,6 +62,8 @@ export default function Page() {
       <WhyChooseUs />
       <Divider />
       <Testimonials />
+      <Divider />
+      <Gallery />
       <Divider />
       <FinalCTA />
     </div>

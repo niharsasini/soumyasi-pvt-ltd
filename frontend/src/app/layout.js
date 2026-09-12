@@ -79,9 +79,55 @@ export const metadata = {
   },
 };
 
+const LOCAL_BUSINESS_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Soumyashi Power Limited",
+  description:
+    "Solar panel installation, EV charging stations, wind power and industrial electrical infrastructure in Odisha, India.",
+  url: "https://www.soumyashipower.in",
+  telephone: ["+919437611129", "+917381076808"],
+  email: "soumyashipower@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "MIG-126, Bhimatangi Housing Colony",
+    addressLocality: "Bhubaneswar",
+    addressRegion: "Odisha",
+    postalCode: "751002",
+    addressCountry: "IN",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: "20.2961",
+    longitude: "85.8245",
+  },
+  openingHours: "Mo-Sa 09:00-18:00",
+  priceRange: "₹₹",
+  areaServed: {
+    "@type": "State",
+    name: "Odisha",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Energy Solutions",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Solar Panel Installation" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "EV Charging Station" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Wind Power Plant" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Industrial Power Supply" } },
+    ],
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-brand-bg text-brand-ink antialiased">
         <a
           href="#main-content"
