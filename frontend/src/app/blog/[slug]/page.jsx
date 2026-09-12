@@ -8,8 +8,37 @@ export async function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
 }
 
+async function fetchRealPost(slug) {
+  const API = process.env.NEXT_PUBLIC_API_URL || "https://api.soumyashipower.in";
+  try {
+    const res = await fetch(`${API}/api/v1/blog/${slug}`, { cache: "no-store" });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+// Real posts (added via the admin panel after this file was built) use plain
+// fields — no gradient/catColor/content-array like the illustrative demo
+// data — so they're normalized to the same shape the page renders below.
+function normalizeRealPost(post) {
+  return {
+    slug: post.slug,
+    title: post.title,
+    excerpt: post.excerpt,
+    category: post.category,
+    catColor: "bg-amber-100 text-amber-700",
+    gradient: "from-amber-400 to-amber-600",
+    author: post.author,
+    date: new Date(post.published_at || post.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+    readTime: Math.max(1, Math.round(post.content.split(/\s+/).length / 200)),
+    content: post.content.split("\n\n").filter(Boolean),
+  };
+}
+
 export async function generateMetadata({ params }) {
-  const post = getPostBySlug(params.slug);
+  const post = getPostBySlug(params.slug) || await fetchRealPost(params.slug);
   if (!post) return { title: "Article Not Found | Soumyashi Power" };
   return {
     title: post.title,
@@ -18,11 +47,12 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function BlogArticlePage({ params }) {
-  const post = getPostBySlug(params.slug);
+export default async function BlogArticlePage({ params }) {
+  const staticPost = getPostBySlug(params.slug);
+  const post = staticPost || (await fetchRealPost(params.slug).then((p) => p && normalizeRealPost(p)));
   if (!post) notFound();
 
-  const related = getRelatedPosts(post.slug, 3);
+  const related = staticPost ? getRelatedPosts(post.slug, 3) : [];
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-ink">

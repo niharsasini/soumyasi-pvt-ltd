@@ -9,8 +9,37 @@ export async function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
 }
 
+async function fetchRealProject(slug) {
+  const API = process.env.NEXT_PUBLIC_API_URL || "https://api.soumyashipower.in";
+  try {
+    const res = await fetch(`${API}/api/v1/projects/${slug}`, { cache: "no-store" });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+// Real projects (added via the admin panel) use plain backend fields —
+// normalized here to the shape this page already renders below.
+function normalizeRealProject(p) {
+  return {
+    slug: p.slug,
+    title: p.title,
+    category: p.category,
+    location: p.location,
+    client: null,
+    capacity: p.capacity,
+    completedDate: p.completed_date,
+    status: p.status,
+    description: p.description,
+    highlights: p.highlights || [],
+    image: p.image_url || (p.images && p.images[0]) || "/soumyasi/solar-field-odisha.png",
+  };
+}
+
 export async function generateMetadata({ params }) {
-  const project = getProjectBySlug(params.slug);
+  const project = getProjectBySlug(params.slug) || await fetchRealProject(params.slug);
   if (!project) return { title: "Project Not Found | Soumyashi Power" };
   return {
     title: project.title,
@@ -24,11 +53,14 @@ const STATUS_COLOR = {
   "Coming Soon": "bg-amber-100 text-amber-700",
 };
 
-export default function ProjectDetailPage({ params }) {
-  const project = getProjectBySlug(params.slug);
+export default async function ProjectDetailPage({ params }) {
+  const staticProject = getProjectBySlug(params.slug);
+  const project = staticProject || (await fetchRealProject(params.slug).then((p) => p && normalizeRealProject(p)));
   if (!project) notFound();
 
-  const related = PROJECTS.filter((p) => p.category === project.category && p.slug !== project.slug).slice(0, 3);
+  const related = staticProject
+    ? PROJECTS.filter((p) => p.category === project.category && p.slug !== project.slug).slice(0, 3)
+    : [];
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-ink">
@@ -87,10 +119,12 @@ export default function ProjectDetailPage({ params }) {
                 </div>
                 <p className="font-semibold text-brand-ink text-sm">{project.completedDate}</p>
               </div>
-              <div className="pt-4 border-t border-brand-border">
-                <p className="text-brand-muted text-xs mb-1">Client Type</p>
-                <p className="font-semibold text-brand-ink text-sm">{project.client}</p>
-              </div>
+              {project.client && (
+                <div className="pt-4 border-t border-brand-border">
+                  <p className="text-brand-muted text-xs mb-1">Client Type</p>
+                  <p className="font-semibold text-brand-ink text-sm">{project.client}</p>
+                </div>
+              )}
               <Link
                 href="/contact"
                 className="btn-shimmer mt-2 w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-gold hover:shadow-gold-lg hover:scale-[1.02] transition-all duration-300"

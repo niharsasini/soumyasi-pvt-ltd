@@ -1,15 +1,28 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, Tag } from "lucide-react";
 import { VARIANTS } from "@/lib/animations/variants";
 
 // NOTE: lib/data/blog-posts.js is placeholder content from the initial site
-// build, not real published articles. Showing a "coming soon" state here
-// instead of presenting invented posts as real content.
-
+// build, not real published articles, so it's not used here. This page
+// fetches real posts from the backend and shows an honest empty state
+// until real articles are published via the admin panel.
 export default function BlogClient() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const API = process.env.NEXT_PUBLIC_API_URL || "https://api.soumyashipower.in";
+    fetch(`${API}/api/v1/blog/`)
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data) => setPosts(Array.isArray(data) ? data : []))
+      .catch(() => setPosts([]))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div className="bg-brand-bg text-brand-ink min-h-screen">
       {/* Hero */}
@@ -46,26 +59,68 @@ export default function BlogClient() {
         </div>
       </section>
 
-      {/* Empty state — no published articles yet */}
-      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto text-center bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6">
-          <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
-            <BookOpen className="w-6 h-6 text-amber-500" />
-          </div>
-          <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
-            Our blog is coming soon.
-          </p>
-          <p className="text-brand-brown text-sm sm:text-base mt-2 max-w-md mx-auto">
-            We're preparing guides on solar savings, EV infrastructure, and clean energy in Odisha. Check back soon.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full px-8 py-3.5 font-bold mt-6 hover:scale-105 transition shadow-lg shadow-amber-500/20"
-          >
-            Talk to Our Experts <ArrowRight className="w-4 h-4" />
-          </Link>
+      {loading ? (
+        <div className="flex items-center justify-center py-24">
+          <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
         </div>
-      </section>
+      ) : posts.length === 0 ? (
+        /* Empty state — no published articles yet */
+        <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6">
+            <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
+              <BookOpen className="w-6 h-6 text-amber-500" />
+            </div>
+            <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
+              No articles yet. Check back soon.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full px-8 py-3.5 font-bold mt-6 hover:scale-105 transition shadow-lg shadow-amber-500/20"
+            >
+              Talk to Our Experts <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
+      ) : (
+        <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="section-divider mb-10 sm:mb-14" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+              {posts.map((post, i) => (
+                <Link key={post._id || post.slug} href={`/blog/${post.slug}`}>
+                  <motion.article
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+                    whileHover={{ y: -6 }}
+                    className="bg-white border border-brand-border rounded-2xl shadow-warm overflow-hidden hover:border-amber-400 hover:shadow-card-hover transition-all duration-300 flex flex-col h-full"
+                  >
+                    <div className="h-32 sm:h-36 bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+                      <Tag size={28} className="text-white/70" />
+                    </div>
+                    <div className="p-4 sm:p-5 flex flex-col flex-1">
+                      <span className="inline-flex self-start text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 bg-amber-100 text-amber-700">
+                        {post.category}
+                      </span>
+                      <h2 className="font-bold font-display text-brand-ink text-base sm:text-lg leading-snug mb-3 flex-1 line-clamp-2">
+                        {post.title}
+                      </h2>
+                      <p className="text-brand-brown text-xs sm:text-sm leading-relaxed mb-5 line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex items-center gap-1.5 pt-4 border-t border-brand-border text-brand-muted text-xs">
+                        <Calendar size={12} />
+                        <span>{new Date(post.published_at || post.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</span>
+                      </div>
+                    </div>
+                  </motion.article>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-500 to-amber-600 relative overflow-hidden">

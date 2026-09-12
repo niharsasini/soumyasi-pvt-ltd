@@ -62,7 +62,7 @@ export default function Industries() {
                 whileHover={{ y: -6, scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 280, damping: 18 }}
-                className="group flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl bg-white border border-brand-border shadow-warm hover:border-amber-400 hover:shadow-card-hover transition-all duration-300 cursor-default"
+                className="group flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl bg-white border border-brand-border shadow-warm hover:border-amber-400 hover:shadow-card-hover transition-all duration-300 cursor-default h-full"
               >
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center mb-3 sm:mb-4 transition-colors duration-300">
                   <Icon size={18} className="text-brand-muted group-hover:text-brand-gold transition-colors duration-300 sm:hidden" />

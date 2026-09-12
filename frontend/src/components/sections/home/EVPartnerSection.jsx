@@ -745,7 +745,7 @@ function RevenuePotentialCard() {
       <div className="grid grid-cols-2 gap-3 mb-6">
         {[
           { value: '60kW', label: 'Charger Output' },
-          { value: '30min', label: 'Avg Charge Time' },
+          { value: 'Dual', label: 'CCS2 + CHAdeMO' },
           { value: 'Odisha', label: 'Coverage Area' },
           { value: '6wks', label: 'Survey to Live' },
         ].map((stat, i) => (
@@ -819,7 +819,7 @@ function BecomePartnerSection() {
           </motion.p>
         </div>
         {/* 3-column grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {/* Who Can Partner */}
           <motion.div
             variants={VARIANTS.slideRight}

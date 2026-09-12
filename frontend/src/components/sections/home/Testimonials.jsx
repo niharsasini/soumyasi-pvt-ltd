@@ -1,38 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-import { Star } from "lucide-react";
-import "swiper/css";
-import "swiper/css/pagination";
+import Link from "next/link";
+import { MessageSquareHeart, ArrowRight } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 
-const HEADING = ["Trusted", "Across", "Odisha"];
-
-const TESTIMONIALS = [
-  {
-    name:    "Rajesh Mohanty",
-    role:    "Business Owner, Bhubaneswar",
-    detail:  "50kW system · Installed Oct 2023",
-    message: "Soumyashi installed solar panels for our factory. Electricity bills dropped 70% in the first month. Outstanding quality and professionalism.",
-    stars:   5,
-  },
-  {
-    name:    "Priya Nanda",
-    role:    "IT Park Manager, Cuttack",
-    detail:  "2 × 60kW chargers · Installed Jan 2024",
-    message: "They set up our EV charging stations flawlessly. The team was efficient and the after-sales support has been excellent.",
-    stars:   5,
-  },
-  {
-    name:    "Debashis Rath",
-    role:    "Factory Director, Sambalpur",
-    detail:  "2MW substation · 18 months live",
-    message: "Industrial power solutions from Soumyashi have been top-notch. They understood our requirements and delivered beyond expectations.",
-    stars:   5,
-  },
-];
+const HEADING = ["What", "Our", "Clients", "Say"];
 
 export default function Testimonials() {
   const { ref, isInView } = useScrollReveal();
@@ -60,65 +33,36 @@ export default function Testimonials() {
           >
             {HEADING.map((w, i) => (
               <motion.span key={i} variants={VARIANTS.word} className="inline-block mr-[0.25em]">
-                {w === "Odisha"
+                {w === "Clients"
                   ? <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">{w}</span>
                   : w}
               </motion.span>
             ))}
           </motion.h2>
-          <motion.p
-            variants={VARIANTS.para}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="mt-4 text-brand-brown max-w-xl mx-auto text-sm sm:text-base"
-          >
-            Real results from real clients — from Bhubaneswar to Sambalpur.
-          </motion.p>
         </div>
 
-        {/* Carousel */}
+        {/* Empty state */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="max-w-2xl mx-auto text-center bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6"
         >
-          <Swiper
-            modules={[Autoplay, Pagination]}
-            spaceBetween={24}
-            slidesPerView={1}
-            autoplay={{ delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true }}
-            pagination={{ clickable: true }}
-            breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
-            className="pb-12"
+          <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
+            <MessageSquareHeart className="w-6 h-6 text-amber-500" />
+          </div>
+          <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
+            Be the first to share your experience.
+          </p>
+          <p className="text-brand-brown text-sm sm:text-base mt-2 max-w-md mx-auto">
+            Contact us to share your feedback — we'd love to feature real stories from our customers here.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full px-8 py-3.5 font-bold mt-6 hover:scale-105 transition shadow-lg shadow-amber-500/20"
           >
-            {TESTIMONIALS.map((t, i) => (
-              <SwiperSlide key={i} className="h-auto">
-                <div className="flex flex-col h-full p-5 sm:p-6 rounded-2xl bg-white border border-brand-border shadow-warm hover:border-amber-400 hover:shadow-card-hover active:scale-[0.98] transition-all duration-300">
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-4">
-                    {Array(t.stars).fill(0).map((_, j) => (
-                      <Star key={j} size={13} className="text-amber-500 fill-amber-500" />
-                    ))}
-                  </div>
-
-                  <p className="text-brand-brown text-sm leading-relaxed flex-1 mb-6">
-                    &ldquo;{t.message}&rdquo;
-                  </p>
-
-                  <div className="flex items-center gap-3 pt-4 border-t border-brand-border">
-                    <div className="h-9 w-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
-                      {t.name.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="text-brand-ink font-semibold text-sm">{t.name}</div>
-                      <div className="text-brand-gold text-xs mt-0.5">{t.role}</div>
-                      {t.detail && <div className="text-brand-muted text-[11px] mt-0.5">{t.detail}</div>}
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+            Share Your Feedback <ArrowRight className="w-4 h-4" />
+          </Link>
         </motion.div>
       </div>
     </section>

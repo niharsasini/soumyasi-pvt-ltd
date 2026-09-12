@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 const EMPTY_STATS = {
   activeEvStations: 0,
+  totalEvStations: 0,
   citiesCovered: 0,
   completedProjects: 0,
   partnerEnquiries: 0,
@@ -25,12 +26,13 @@ export function useSiteStats() {
       return;
     }
 
-    fetch(`${API}/api/v1/stats/public`)
+    fetch(`${API}/api/v1/stats/`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data) {
           setStats({
             activeEvStations: data.active_ev_stations ?? 0,
+            totalEvStations: data.total_ev_stations ?? 0,
             citiesCovered: data.cities_covered ?? 0,
             completedProjects: data.completed_projects ?? 0,
             partnerEnquiries: data.partner_enquiries ?? 0,

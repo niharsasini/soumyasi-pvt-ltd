@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Camera, MapPin, ArrowRight, X, ImageOff } from "lucide-react";
+import { Camera, MapPin, ArrowRight, X } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 
 const HEADING_LINE_1 = ["Our", "Projects"];
@@ -119,13 +119,13 @@ export default function Gallery() {
         ) : galleryItems.length === 0 ? (
           <div className="mt-10 bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6 text-center">
             <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
-              <ImageOff className="w-6 h-6 text-amber-500" />
+              <Camera className="w-6 h-6 text-amber-500" />
             </div>
             <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
-              Our project gallery is coming soon.
+              Our Gallery is Coming Soon
             </p>
             <p className="text-brand-brown text-sm sm:text-base mt-2 max-w-md mx-auto">
-              Check back to see our installations across Odisha.
+              We're documenting our installations across Odisha. Check back soon to see our work.
             </p>
             <Link
               href="/projects"

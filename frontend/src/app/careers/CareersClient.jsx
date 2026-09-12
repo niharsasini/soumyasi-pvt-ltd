@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lightbulb, Leaf, TrendingUp, Briefcase, ArrowRight, X } from "lucide-react";
+import { Lightbulb, Leaf, TrendingUp, Briefcase, ArrowRight, X, MapPin, Clock } from "lucide-react";
 import SectionHeading from '@/components/ui/SectionHeading';
 import { VARIANTS } from "@/lib/animations/variants";
 import FormFallback, { FORM_ERROR_MESSAGE } from "@/components/forms/FormFallback";
@@ -13,37 +13,6 @@ const CULTURE = [
   { icon: Lightbulb, title: "Innovation", desc: "We build with the latest technology — from smart solar systems to IoT-enabled EV infrastructure. Push boundaries every day." },
   { icon: Leaf,      title: "Impact",      desc: "Your work directly reduces carbon emissions and powers communities across Odisha. Every installation counts." },
   { icon: TrendingUp, title: "Growth",     desc: "Fast-growing company with clear career paths, mentorship, and regular skill development programs." },
-];
-
-const ROLES = [
-  {
-    title: "Solar Design Engineer",
-    type: "Full-time",
-    location: "Bhubaneswar",
-    dept: "Engineering",
-    desc: "Design residential and commercial solar systems. Proficiency in AutoCAD and PVSyst required. 2+ years experience.",
-  },
-  {
-    title: "EV Infrastructure Technician",
-    type: "Full-time",
-    location: "Cuttack / Bhubaneswar",
-    dept: "Operations",
-    desc: "Install, commission, and maintain EV charging stations. Electrical ITI/diploma required. Travel within Odisha.",
-  },
-  {
-    title: "Business Development Executive",
-    type: "Full-time",
-    location: "Bhubaneswar",
-    dept: "Sales",
-    desc: "Drive B2B solar and EV sales across industries. 3+ years in energy/infra sales preferred. Fluent Odia + English.",
-  },
-  {
-    title: "Project Manager — Power Infrastructure",
-    type: "Full-time",
-    location: "Bhubaneswar",
-    dept: "Projects",
-    desc: "Manage end-to-end delivery of industrial electrification projects. PMP certification a plus. 5+ years experience.",
-  },
 ];
 
 function ApplyModal({ role, onClose }) {
@@ -145,6 +114,17 @@ function ApplyModal({ role, onClose }) {
 
 export default function CareersClient() {
   const [applyRole, setApplyRole] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const API = process.env.NEXT_PUBLIC_API_URL || "https://api.soumyashipower.in";
+    fetch(`${API}/api/v1/careers/`)
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data) => setJobs(Array.isArray(data) ? data : []))
+      .catch(() => setJobs([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="bg-brand-bg text-brand-ink min-h-screen">
@@ -205,23 +185,56 @@ export default function CareersClient() {
         <div className="section-divider mb-10 sm:mb-14" />
         <div className="max-w-4xl mx-auto">
           <SectionHeading badge="Join the Team" words={["Open", "Positions"]} goldWords={["Open"]} />
-          <div className="text-center bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6">
-            <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
-              <Briefcase className="w-6 h-6 text-amber-500" />
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
             </div>
-            <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
-              No open positions currently.
-            </p>
-            <p className="text-brand-brown text-sm sm:text-base mt-2 max-w-md mx-auto">
-              We're not actively hiring right now, but we're always glad to hear from good people. Send us your CV for when the right role opens up.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full px-8 py-3.5 font-bold mt-6 hover:scale-105 transition shadow-lg shadow-amber-500/20"
-            >
-              Send Your CV <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          ) : jobs.length === 0 ? (
+            <div className="text-center bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6">
+              <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
+                <Briefcase className="w-6 h-6 text-amber-500" />
+              </div>
+              <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
+                No open positions currently.
+              </p>
+              <p className="text-brand-brown text-sm sm:text-base mt-2 max-w-md mx-auto">
+                Send us your CV — we're always looking for talent.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full px-8 py-3.5 font-bold mt-6 hover:scale-105 transition shadow-lg shadow-amber-500/20"
+              >
+                Send Your CV <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {jobs.map((job) => (
+                <motion.div key={job._id || job.slug}
+                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="bg-white border border-brand-border rounded-2xl shadow-warm p-5 sm:p-6 hover:border-amber-400 hover:shadow-card-hover transition-all duration-300">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700">{job.department}</span>
+                      </div>
+                      <h3 className="font-bold font-display text-brand-ink text-base">{job.title}</h3>
+                      <div className="flex flex-wrap gap-4 mt-2 text-xs text-brand-muted">
+                        <span className="flex items-center gap-1"><MapPin size={11} /> {job.location}</span>
+                        <span className="flex items-center gap-1"><Clock size={11} /> {job.job_type}</span>
+                      </div>
+                      <p className="mt-3 text-sm text-brand-brown leading-relaxed">{job.description}</p>
+                    </div>
+                    <button onClick={() => setApplyRole({ title: job.title, dept: job.department, location: job.location })}
+                      className="btn-shimmer w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-semibold shadow-gold hover:shadow-gold-lg hover:scale-105 active:scale-[0.98] transition-all duration-300 whitespace-nowrap">
+                      Apply Now
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
