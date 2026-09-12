@@ -69,7 +69,28 @@ export default function GalleryPage() {
     setLoading(true)
     try {
       const data = await api.getGalleryItems()
-      setItems(Array.isArray(data) ? data : [])
+      const list = Array.isArray(data) ? data : []
+      setItems(list)
+
+      // The category/subcategory tree is browser-local, but photos are shared
+      // (MongoDB-backed) — if a subcategory was created in another browser and
+      // already has real photos, make sure it's still reachable here too,
+      // instead of silently hiding synced photos with no way to select them.
+      setTree(prev => {
+        let changed = false
+        const next = { ...prev }
+        for (const item of list) {
+          if (!next[item.category]) {
+            next[item.category] = []
+            changed = true
+          }
+          if (!next[item.category].includes(item.subcategory)) {
+            next[item.category] = [...next[item.category], item.subcategory]
+            changed = true
+          }
+        }
+        return changed ? next : prev
+      })
     } finally {
       setLoading(false)
     }
