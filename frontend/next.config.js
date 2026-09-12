@@ -4,6 +4,9 @@ const nextConfig = {
   swcMinify: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      { protocol: "https", hostname: "res.cloudinary.com" },
+    ],
   },
   async headers() {
     return [
@@ -23,7 +26,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self' https://formspree.io",
+              "connect-src 'self' https://formspree.io https://api.soumyashipower.in",
               "frame-src 'none'",
               "object-src 'none'",
               "base-uri 'self'",

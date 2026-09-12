@@ -168,6 +168,17 @@ class ApiClient {
     return this.delete(`/api/v1/admin/newsletter/${id}`)
   }
 
+  // Gallery
+  getGalleryItems() {
+    return this.get('/api/v1/admin/gallery')
+  }
+  createGalleryItem(data) {
+    return this.post('/api/v1/admin/gallery', data)
+  }
+  deleteGalleryItem(id) {
+    return this.delete(`/api/v1/admin/gallery/${id}`)
+  }
+
   // Admin users
   createAdmin(data) {
     return this.post('/api/v1/admin/create-admin', data)

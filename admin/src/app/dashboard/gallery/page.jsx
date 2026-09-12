@@ -1,101 +1,133 @@
 'use client'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Header from '@/components/layout/Header'
 import Modal from '@/components/ui/Modal'
 import { useToast } from '@/components/ui/Toast'
+import { api } from '@/lib/api'
 import { uploadToCloudinary, isCloudinaryConfigured } from '@/lib/cloudinary'
-import { Info, Upload, MapPin, Edit, Image as ImageIcon, Copy, AlertTriangle } from 'lucide-react'
+import {
+  Plus, Upload, Trash2, ChevronDown, ChevronRight, Folder,
+  AlertTriangle, ImageIcon,
+} from 'lucide-react'
 
-const FRONTEND_URL = 'https://www.soumyashipower.in'
+const TREE_STORAGE_KEY = 'gallery_tree'
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 
-const INITIAL_GALLERY_ITEMS = [
-  {
-    id: 1,
-    category: 'Solar',
-    title: 'Rooftop Solar Installation',
-    location: 'Manufacturing Plant, Bhubaneswar',
-    capacity: '500 kW',
-    description: 'Ground-mount solar system powering a full manufacturing facility',
-    image: '/soumyasi/solar-field-odisha.png',
-  },
-  {
-    id: 2,
-    category: 'EV Charging',
-    title: 'Ultra 60 Thunder Charge',
-    location: 'Commercial Hub, Bhubaneswar',
-    capacity: '60 kW DC',
-    description: 'Dual connector fast charging station serving urban EV users',
-    image: '/soumyasi/ev-charger-ultra60.png',
-  },
-  {
-    id: 3,
-    category: 'Wind Power',
-    title: 'Wind Energy Project',
-    location: 'Coastal Odisha',
-    capacity: '2 MW',
-    description: 'Harnessing Odisha coastline wind for clean power generation',
-    image: '/soumyasi/wind-power-plant.png',
-  },
-  {
-    id: 4,
-    category: 'Industrial',
-    title: 'Industrial Power Supply',
-    location: 'Industrial Park, Rourkela',
-    capacity: '5 MVA',
-    description: 'Complete substation and switchgear for industrial complex',
-    image: '/soumyasi/industrial-power.png',
-  },
-  {
-    id: 5,
-    category: 'Solar',
-    title: 'Commercial Solar Setup',
-    location: 'Office Complex, Cuttack',
-    capacity: '200 kW',
-    description: 'Rooftop solar reducing electricity costs by 85%',
-    image: '/soumyasi/solar-field-odisha.png',
-  },
-  {
-    id: 6,
-    category: 'EV Charging',
-    title: 'EV Hub at Hotel',
-    location: 'Hotel Parking, Puri',
-    capacity: '60 kW DC',
-    description: 'Charging station serving hotel guests 24/7',
-    image: '/soumyasi/ev-charger-ultra60.png',
-  },
-]
-
-const CATEGORY_STYLES = {
-  Solar: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-  'EV Charging': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  'Wind Power': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  Industrial: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-  Uncategorized: 'bg-slate-500/10 text-slate-400 border-slate-500/20',
+const DEFAULT_TREE = {
+  'EV Charging': ['Ultra 60 Thunder Charge'],
+  'Solar': ['Rooftop Solar', 'Ground Mount Solar'],
+  'Wind Power': ['Wind Turbines'],
+  'Industrial': ['Substations', 'Switchgear'],
 }
 
-function imageSrc(image) {
-  return image.startsWith('http') ? image : `${FRONTEND_URL}${image}`
+const CATEGORY_ICON = {
+  'EV Charging': '⚡',
+  'Solar': '☀️',
+  'Wind Power': '🌬️',
+  'Industrial': '🏭',
 }
 
 export default function GalleryPage() {
-  const [items, setItems] = useState(INITIAL_GALLERY_ITEMS)
-  const [editing, setEditing] = useState(null)
-  const [form, setForm] = useState({ title: '', description: '' })
+  const [tree, setTree] = useState(DEFAULT_TREE)
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [expanded, setExpanded] = useState(new Set())
+  const [selected, setSelected] = useState(null) // {category, subcategory}
+  const [addModal, setAddModal] = useState(false)
+  const [addForm, setAddForm] = useState({ name: '', parent: '__new__' })
+  const [uploadModal, setUploadModal] = useState(false)
+  const [placeName, setPlaceName] = useState('')
   const [uploading, setUploading] = useState(false)
   const [progress, setProgress] = useState(0)
-  const [uploadedUrl, setUploadedUrl] = useState(null)
+  const [lightbox, setLightbox] = useState(null)
   const fileInputRef = useRef(null)
   const { showToast } = useToast()
   const cloudinaryReady = isCloudinaryConfigured()
 
-  const triggerFileInput = () => fileInputRef.current?.click()
+  // Load category tree (organization structure only — lives in the browser)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(TREE_STORAGE_KEY)
+      if (saved) setTree(JSON.parse(saved))
+    } catch {}
+  }, [])
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files?.[0]
-    e.target.value = ''
-    if (!file) return
+  useEffect(() => {
+    try {
+      localStorage.setItem(TREE_STORAGE_KEY, JSON.stringify(tree))
+    } catch {}
+  }, [tree])
 
+  // Load actual photos from the real backend — this is what the public site reads too
+  const loadItems = async () => {
+    setLoading(true)
+    try {
+      const data = await api.getGalleryItems()
+      setItems(Array.isArray(data) ? data : [])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => { loadItems() }, [])
+
+  const itemsFor = (category, subcategory) =>
+    items.filter(i => i.category === category && i.subcategory === subcategory)
+
+  const toggleCategory = (category) => {
+    setExpanded(prev => {
+      const next = new Set(prev)
+      next.has(category) ? next.delete(category) : next.add(category)
+      return next
+    })
+  }
+
+  const openAddModal = () => {
+    setAddForm({ name: '', parent: '__new__' })
+    setAddModal(true)
+  }
+
+  const saveCategory = () => {
+    const name = addForm.name.trim()
+    if (!name) return
+
+    if (addForm.parent === '__new__') {
+      if (tree[name]) {
+        showToast('That category already exists.', 'error')
+        return
+      }
+      setTree(prev => ({ ...prev, [name]: [] }))
+      setExpanded(prev => new Set(prev).add(name))
+    } else {
+      if (tree[addForm.parent]?.includes(name)) {
+        showToast('That subcategory already exists.', 'error')
+        return
+      }
+      setTree(prev => ({
+        ...prev,
+        [addForm.parent]: [...(prev[addForm.parent] || []), name],
+      }))
+      setExpanded(prev => new Set(prev).add(addForm.parent))
+    }
+    setAddModal(false)
+    showToast('Category added', 'success')
+  }
+
+  const openUpload = () => {
+    setPlaceName('')
+    setUploadModal(true)
+  }
+
+  const handleUpload = async () => {
+    const file = fileInputRef.current?.files?.[0]
+    if (!placeName.trim()) {
+      showToast('Enter a place/location name.', 'error')
+      return
+    }
+    if (!file) {
+      showToast('Choose an image to upload.', 'error')
+      return
+    }
     if (!cloudinaryReady) {
       showToast('Cloudinary is not configured yet. Add NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET in Vercel env vars.', 'error')
       return
@@ -111,21 +143,18 @@ export default function GalleryPage() {
 
     setUploading(true)
     setProgress(0)
-    setUploadedUrl(null)
-
     try {
       const result = await uploadToCloudinary(file, setProgress)
-      setUploadedUrl(result.url)
-      setItems(prev => [...prev, {
-        id: Date.now(),
-        category: 'Uncategorized',
-        title: file.name.replace(/\.[^.]+$/, ''),
-        location: '',
-        capacity: '',
-        description: '',
-        image: result.url,
-      }])
-      showToast('Image uploaded! Add the URL to frontend/src/components/sections/home/Gallery.jsx', 'success')
+      await api.createGalleryItem({
+        title: placeName.trim(),
+        category: selected.category,
+        subcategory: selected.subcategory,
+        location: placeName.trim(),
+        image_url: result.url,
+      })
+      await loadItems()
+      setUploadModal(false)
+      showToast('Photo uploaded and published to the website gallery!', 'success')
     } catch (err) {
       showToast(err.message || 'Upload failed', 'error')
     } finally {
@@ -133,83 +162,18 @@ export default function GalleryPage() {
     }
   }
 
-  const openEdit = (item) => {
-    setEditing(item)
-    setForm({ title: item.title, description: item.description })
-  }
-
-  const saveEdit = () => {
-    setItems(items.map(i => i.id === editing.id ? { ...i, ...form } : i))
-    setEditing(null)
-    showToast('Preview updated. This does not change the live site yet — update frontend/src/components/sections/home/Gallery.jsx to publish changes.', 'info')
+  const removePhoto = async (item) => {
+    if (!confirm('Delete this photo? This removes it from the live website too.')) return
+    await api.deleteGalleryItem(item._id)
+    setItems(prev => prev.filter(i => i._id !== item._id))
   }
 
   return (
     <div>
       <Header title="Gallery Management" subtitle="Manage project photos shown on the website" />
 
-      <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-6 flex items-start gap-3">
-        <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-        <p className="text-slate-300 text-sm">
-          Existing gallery images are stored in <code className="text-blue-300">frontend/public/soumyasi/</code>.
-          New images can now be uploaded directly to Cloudinary below.
-        </p>
-      </div>
-
-      {/* Upload dropzone */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={handleFileChange}
-      />
-      <div
-        onClick={!uploading ? triggerFileInput : undefined}
-        className="border-2 border-dashed border-admin-border rounded-2xl p-8 text-center hover:border-amber-500/40 transition cursor-pointer bg-admin-card"
-      >
-        {uploading ? (
-          <div>
-            <div className="w-full bg-admin-border rounded-full h-2 mb-3 max-w-sm mx-auto">
-              <div className="bg-amber-500 h-2 rounded-full transition-all" style={{ width: `${progress}%` }} />
-            </div>
-            <p className="text-slate-400 text-sm">Uploading... {progress}%</p>
-          </div>
-        ) : (
-          <div>
-            <Upload className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-            <p className="text-white font-medium">Click to upload image</p>
-            <p className="text-slate-500 text-sm mt-1">PNG, JPG up to 10MB</p>
-          </div>
-        )}
-      </div>
-
-      {uploadedUrl && (
-        <div className="bg-admin-card border border-amber-500/20 rounded-xl p-4 mt-4">
-          <p className="text-amber-400 text-sm font-medium mb-2">
-            ✅ Image uploaded successfully!
-          </p>
-          <p className="text-slate-400 text-xs mb-2">
-            Image URL (copy and add to Gallery.jsx):
-          </p>
-          <div className="flex gap-2">
-            <input value={uploadedUrl} readOnly
-              className="flex-1 bg-admin-bg border border-admin-border rounded-lg px-3 py-2 text-xs text-white" />
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(uploadedUrl)
-                showToast('Copied to clipboard', 'success')
-              }}
-              className="flex items-center gap-1.5 bg-amber-500 text-black px-3 py-2 rounded-lg text-xs font-bold">
-              <Copy className="w-3.5 h-3.5" />
-              Copy
-            </button>
-          </div>
-        </div>
-      )}
-
       {!cloudinaryReady && (
-        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 mt-6 flex gap-3">
+        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 mb-6 flex gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
           <div className="text-slate-300 text-sm space-y-1">
             <p className="text-amber-400 font-medium mb-1">How to set up Cloudinary (free)</p>
@@ -224,97 +188,250 @@ export default function GalleryPage() {
         </div>
       )}
 
-      <div className="flex items-center justify-between mt-8 mb-6">
-        <p className="text-slate-400 text-sm">
-          {items.length} gallery item{items.length !== 1 ? 's' : ''} shown on the homepage
-        </p>
-      </div>
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Left panel — category tree */}
+        <div className="w-full lg:w-64 flex-shrink-0">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-white font-semibold text-sm">Gallery</h3>
+            <button onClick={openAddModal}
+              className="flex items-center gap-1 text-amber-400 text-xs
+                hover:text-amber-300 transition-colors">
+              <Plus className="w-3.5 h-3.5" />
+              Add Category
+            </button>
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {items.map(item => (
-          <div key={item.id} className="bg-admin-card border border-admin-border rounded-2xl overflow-hidden">
-            <div className="relative aspect-[4/3] bg-admin-bg">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imageSrc(item.image)}
-                alt={item.title}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <span className={`absolute top-3 left-3 rounded-full px-2.5 py-1
-                text-[10px] font-bold border backdrop-blur-sm ${CATEGORY_STYLES[item.category] || CATEGORY_STYLES.Uncategorized}`}>
-                {item.category}
-              </span>
-              {item.capacity && (
-                <span className="absolute top-3 right-3 rounded-full px-2.5 py-1
-                  text-[10px] font-bold bg-black/50 backdrop-blur-sm text-white border border-white/20">
-                  {item.capacity}
-                </span>
-              )}
+          <div className="bg-admin-card border border-admin-border rounded-2xl p-2 space-y-0.5">
+            {Object.keys(tree).length === 0 && (
+              <p className="text-slate-500 text-xs text-center py-6">No categories yet</p>
+            )}
+            {Object.entries(tree).map(([category, subs]) => {
+              const isExpanded = expanded.has(category)
+              return (
+                <div key={category}>
+                  <button
+                    onClick={() => toggleCategory(category)}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-xl
+                      text-sm text-slate-300 hover:bg-admin-hover transition-colors"
+                  >
+                    {isExpanded ? <ChevronDown className="w-3.5 h-3.5 flex-shrink-0" /> : <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />}
+                    <Folder className="w-3.5 h-3.5 flex-shrink-0 text-amber-400" />
+                    <span className="flex-1 text-left truncate">{category}</span>
+                  </button>
+                  {isExpanded && (
+                    <div className="ml-4 border-l border-admin-border pl-2 space-y-0.5 mb-1">
+                      {subs.length === 0 && (
+                        <p className="text-slate-600 text-xs px-3 py-1.5">No subcategories</p>
+                      )}
+                      {subs.map(sub => {
+                        const isActive = selected?.category === category && selected?.subcategory === sub
+                        const count = itemsFor(category, sub).length
+                        return (
+                          <button
+                            key={sub}
+                            onClick={() => setSelected({ category, subcategory: sub })}
+                            className={`w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs transition-colors
+                              ${isActive
+                                ? 'bg-amber-500/10 border-l-2 border-amber-500 text-amber-400'
+                                : 'text-slate-400 hover:bg-admin-hover hover:text-white'}`}
+                          >
+                            <span>{CATEGORY_ICON[category] || '📍'}</span>
+                            <span className="flex-1 text-left truncate">{sub}</span>
+                            <span className="text-slate-600">({count})</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Right panel */}
+        <div className="flex-1 min-w-0">
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
             </div>
-            <div className="p-4">
-              <p className="text-white text-sm font-semibold leading-tight">{item.title}</p>
-              {item.location && (
-                <div className="flex items-center gap-1.5 text-slate-500 text-xs mt-1.5">
-                  <MapPin className="w-3 h-3" />
-                  {item.location}
+          ) : selected ? (
+            <div>
+              <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+                <h2 className="text-white font-semibold">
+                  <span className="text-slate-500">{selected.category}</span>
+                  <span className="text-slate-600 mx-2">/</span>
+                  {selected.subcategory}
+                </h2>
+                <button onClick={openUpload}
+                  className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400
+                    text-black font-bold px-4 py-2.5 rounded-xl text-sm transition-all">
+                  <Upload className="w-4 h-4" />
+                  Upload Photo
+                </button>
+              </div>
+
+              {itemsFor(selected.category, selected.subcategory).length === 0 ? (
+                <div className="bg-admin-card border border-admin-border rounded-2xl py-16 text-center">
+                  <ImageIcon className="w-10 h-10 text-slate-600 mx-auto mb-3" />
+                  <p className="text-slate-500 text-sm">No photos yet in this subcategory</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {itemsFor(selected.category, selected.subcategory).map(item => (
+                    <div key={item._id} className="bg-admin-card border border-admin-border rounded-2xl overflow-hidden group relative">
+                      <button
+                        onClick={() => removePhoto(item)}
+                        className="absolute top-2 right-2 z-10 w-7 h-7 bg-black/60 backdrop-blur
+                          rounded-lg flex items-center justify-center text-white
+                          hover:bg-red-500/80 transition-colors">
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                      <div
+                        onClick={() => setLightbox(item)}
+                        className="relative aspect-[4/3] bg-admin-bg cursor-pointer"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={item.image_url} alt={item.location}
+                          className="w-full h-full object-cover" loading="lazy" />
+                      </div>
+                      <div className="p-3">
+                        <p className="text-white text-sm font-medium truncate">{item.location}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
-              {item.description && (
-                <p className="text-slate-500 text-xs mt-2 line-clamp-2">{item.description}</p>
-              )}
-              <button onClick={() => openEdit(item)}
-                className="w-full flex items-center justify-center gap-1.5
-                  bg-amber-500/10 border border-amber-500/20 text-amber-400
-                  rounded-xl py-2 text-xs mt-3 hover:bg-amber-500/20 transition-all">
-                <Edit className="w-3.5 h-3.5" />
-                Edit
-              </button>
             </div>
-          </div>
-        ))}
+          ) : (
+            <div>
+              <h2 className="text-white font-semibold mb-6">All Categories</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {Object.entries(tree).map(([category, subs]) => {
+                  const totalPhotos = subs.reduce((sum, s) => sum + itemsFor(category, s).length, 0)
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => setExpanded(prev => new Set(prev).add(category))}
+                      className="text-left bg-admin-card border border-admin-border rounded-2xl p-5
+                        hover:border-amber-500/40 hover:bg-admin-hover transition-all"
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20
+                          flex items-center justify-center text-lg">
+                          {CATEGORY_ICON[category] || '📁'}
+                        </div>
+                        <p className="text-white font-semibold">{category}</p>
+                      </div>
+                      <p className="text-slate-500 text-xs">
+                        {subs.length} subcategor{subs.length === 1 ? 'y' : 'ies'} · {totalPhotos} photo{totalPhotos === 1 ? '' : 's'}
+                      </p>
+                    </button>
+                  )
+                })}
+              </div>
+              {Object.keys(tree).length === 0 && (
+                <p className="text-slate-500 text-sm text-center py-16">No categories yet. Click &lsquo;+ Add Category&rsquo; to start.</p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
-      <Modal isOpen={!!editing} onClose={() => setEditing(null)} title="Edit Gallery Item">
-        {editing && (
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 bg-admin-bg border border-admin-border rounded-xl p-3">
-              <ImageIcon className="w-4 h-4 text-slate-500 flex-shrink-0" />
-              <p className="text-slate-500 text-xs truncate">{editing.image}</p>
-            </div>
-            <div>
-              <label className="text-slate-400 text-xs font-medium mb-1.5 block">Title</label>
-              <input
-                type="text"
-                value={form.title}
-                onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-                className="w-full bg-admin-bg border border-admin-border rounded-xl
-                  px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500/50"
-              />
-            </div>
-            <div>
-              <label className="text-slate-400 text-xs font-medium mb-1.5 block">Description</label>
-              <textarea
-                rows={3}
-                value={form.description}
-                onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                className="w-full bg-admin-bg border border-admin-border rounded-xl
-                  px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500/50 resize-none"
-              />
-            </div>
-            <div className="flex gap-3">
-              <button onClick={() => setEditing(null)}
-                className="flex-1 border border-admin-border text-slate-400
-                  hover:text-white rounded-xl py-2.5 text-sm transition-all">
-                Cancel
-              </button>
-              <button onClick={saveEdit}
-                className="flex-1 bg-amber-500 hover:bg-amber-400
-                  text-black font-bold rounded-xl py-2.5 text-sm">
-                Save Preview
-              </button>
-            </div>
+      {/* Add Category modal */}
+      <Modal isOpen={addModal} onClose={() => setAddModal(false)} title="Add Category">
+        <div className="space-y-4">
+          <div>
+            <label className="text-slate-400 text-xs font-medium mb-1.5 block">Category / Subcategory Name</label>
+            <input
+              type="text"
+              value={addForm.name}
+              onChange={e => setAddForm(f => ({ ...f, name: e.target.value }))}
+              placeholder="e.g. Rooftop Solar"
+              className="w-full bg-admin-bg border border-admin-border rounded-xl
+                px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500/50"
+            />
           </div>
+          <div>
+            <label className="text-slate-400 text-xs font-medium mb-1.5 block">Select parent category</label>
+            <select
+              value={addForm.parent}
+              onChange={e => setAddForm(f => ({ ...f, parent: e.target.value }))}
+              className="w-full bg-admin-bg border border-admin-border rounded-xl
+                px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500/50"
+            >
+              <option value="__new__">New top-level category</option>
+              {Object.keys(tree).map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
+          <div className="flex gap-3">
+            <button onClick={() => setAddModal(false)}
+              className="flex-1 border border-admin-border text-slate-400
+                hover:text-white rounded-xl py-2.5 text-sm transition-all">
+              Cancel
+            </button>
+            <button onClick={saveCategory}
+              className="flex-1 bg-amber-500 hover:bg-amber-400
+                text-black font-bold rounded-xl py-2.5 text-sm">
+              Save
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Upload Photo modal */}
+      <Modal isOpen={uploadModal} onClose={() => !uploading && setUploadModal(false)} title="Upload Photo">
+        <div className="space-y-4">
+          <p className="text-slate-500 text-xs">
+            {selected?.category} <span className="mx-1">/</span> {selected?.subcategory}
+          </p>
+          <div>
+            <label className="text-slate-400 text-xs font-medium mb-1.5 block">Place / Location Name</label>
+            <input
+              type="text"
+              value={placeName}
+              onChange={e => setPlaceName(e.target.value)}
+              placeholder="e.g. Patia, Bhubaneswar"
+              className="w-full bg-admin-bg border border-admin-border rounded-xl
+                px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500/50"
+            />
+          </div>
+          <div>
+            <label className="text-slate-400 text-xs font-medium mb-1.5 block">Photo</label>
+            <input ref={fileInputRef} type="file" accept="image/*"
+              className="w-full bg-admin-bg border border-admin-border rounded-xl
+                px-4 py-2.5 text-sm text-white file:mr-3 file:py-1 file:px-3
+                file:rounded-lg file:border-0 file:bg-amber-500 file:text-black
+                file:text-xs file:font-bold" />
+          </div>
+          {uploading && (
+            <div>
+              <div className="w-full bg-admin-border rounded-full h-2 mb-2">
+                <div className="bg-amber-500 h-2 rounded-full transition-all" style={{ width: `${progress}%` }} />
+              </div>
+              <p className="text-slate-400 text-xs">Uploading... {progress}%</p>
+            </div>
+          )}
+          <div className="flex gap-3">
+            <button onClick={() => setUploadModal(false)} disabled={uploading}
+              className="flex-1 border border-admin-border text-slate-400
+                hover:text-white rounded-xl py-2.5 text-sm transition-all disabled:opacity-50">
+              Cancel
+            </button>
+            <button onClick={handleUpload} disabled={uploading}
+              className="flex-1 bg-amber-500 hover:bg-amber-400
+                text-black font-bold rounded-xl py-2.5 text-sm disabled:opacity-50">
+              {uploading ? 'Uploading...' : 'Upload'}
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Lightbox */}
+      <Modal isOpen={!!lightbox} onClose={() => setLightbox(null)} title={lightbox?.location || ''} size="lg">
+        {lightbox && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={lightbox.image_url} alt={lightbox.location} className="w-full rounded-xl" />
         )}
       </Modal>
     </div>

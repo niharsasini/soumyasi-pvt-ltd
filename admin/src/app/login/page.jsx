@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { api } from '@/lib/api'
 import { Zap, Eye, EyeOff, Lock, User } from 'lucide-react'
@@ -11,11 +11,30 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    const token = localStorage.getItem('admin_token')
+    if (!token) return
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]))
+      if (Date.now() < payload.exp * 1000) {
+        router.replace('/dashboard')
+      } else {
+        localStorage.removeItem('admin_token')
+        localStorage.removeItem('admin_user')
+      }
+    } catch {
+      localStorage.removeItem('admin_token')
+      localStorage.removeItem('admin_user')
+    }
+  }, [router])
+
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError('')
     try {
+      localStorage.removeItem('admin_token')
+      localStorage.removeItem('admin_user')
       await api.login(form.username, form.password)
       router.push('/dashboard')
     } catch (err) {

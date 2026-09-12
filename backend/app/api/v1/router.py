@@ -7,7 +7,8 @@ from app.api.v1.endpoints import (
     projects,
     blog,
     careers,
-    admin
+    admin,
+    gallery
 )
 
 api_router = APIRouter()
@@ -51,4 +52,9 @@ api_router.include_router(
     admin.router,
     prefix="/admin",
     tags=["Admin"]
+)
+api_router.include_router(
+    gallery.router,
+    prefix="/gallery",
+    tags=["Gallery"]
 )

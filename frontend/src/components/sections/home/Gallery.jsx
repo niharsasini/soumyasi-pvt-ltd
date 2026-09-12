@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,7 +10,9 @@ import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 const HEADING_LINE_1 = ["Our", "Projects"];
 const HEADING_LINE_2 = ["Across", "Odisha"];
 
-const GALLERY_ITEMS = [
+const BASE_CATEGORIES = ["Solar", "EV Charging", "Wind Power", "Industrial"];
+
+const FALLBACK_GALLERY_ITEMS = [
   {
     id: 1,
     category: "Solar",
@@ -79,14 +81,13 @@ const GALLERY_ITEMS = [
   },
 ];
 
-const CATEGORIES = ["All", "Solar", "EV Charging", "Wind Power", "Industrial"];
-
 const CATEGORY_PILL_STYLES = {
   Solar: "bg-amber-500/20 border-amber-400/40 text-amber-300",
   "EV Charging": "bg-emerald-500/20 border-emerald-400/40 text-emerald-300",
   "Wind Power": "bg-sky-500/20 border-sky-400/40 text-sky-300",
   Industrial: "bg-orange-500/20 border-orange-400/40 text-orange-300",
 };
+const DEFAULT_PILL_STYLE = "bg-slate-500/20 border-slate-400/40 text-slate-300";
 
 const STATS = [
   { label: "Projects", value: "500+" },
@@ -98,11 +99,39 @@ export default function Gallery() {
   const { ref, isInView } = useScrollReveal();
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightbox, setLightbox] = useState(null);
+  const [galleryItems, setGalleryItems] = useState(FALLBACK_GALLERY_ITEMS);
+
+  useEffect(() => {
+    const API = process.env.NEXT_PUBLIC_API_URL;
+    if (!API) return;
+
+    fetch(`${API}/api/v1/gallery`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data && Array.isArray(data) && data.length > 0) {
+          setGalleryItems(data.map((item, i) => ({
+            size: "medium",
+            accent: "amber",
+            ...item,
+            id: item.id || i,
+          })));
+        }
+      })
+      .catch(() => {}); // silently fall back to hardcoded items
+  }, []);
+
+  const categories = [
+    "All",
+    ...BASE_CATEGORIES,
+    ...Array.from(new Set(galleryItems.map((i) => i.category))).filter(
+      (c) => !BASE_CATEGORIES.includes(c)
+    ),
+  ];
 
   const filtered =
     activeCategory === "All"
-      ? GALLERY_ITEMS
-      : GALLERY_ITEMS.filter((item) => item.category === activeCategory);
+      ? galleryItems
+      : galleryItems.filter((item) => item.category === activeCategory);
 
   return (
     <section className="w-full bg-brand-section py-16 sm:py-20 lg:py-24 relative overflow-hidden">
@@ -176,7 +205,7 @@ export default function Gallery() {
 
         {/* Filter tabs */}
         <div className="mt-10 mb-8 flex gap-2 flex-nowrap overflow-x-auto sm:flex-wrap pb-1 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
-          {CATEGORIES.map((category) => {
+          {categories.map((category) => {
             const isActive = activeCategory === category;
             return (
               <motion.button
@@ -227,7 +256,7 @@ export default function Gallery() {
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 lg:p-6">
                   <div className="flex items-center justify-between mb-2">
                     <span
-                      className={`rounded-full px-3 py-1 text-[10px] font-bold backdrop-blur-sm border ${CATEGORY_PILL_STYLES[item.category]}`}
+                      className={`rounded-full px-3 py-1 text-[10px] font-bold backdrop-blur-sm border ${CATEGORY_PILL_STYLES[item.category] || DEFAULT_PILL_STYLE}`}
                     >
                       {item.category}
                     </span>
@@ -321,7 +350,7 @@ export default function Gallery() {
               <div className="p-4 sm:p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <span
-                    className={`rounded-full px-3 py-1 text-[10px] font-bold backdrop-blur-sm border ${CATEGORY_PILL_STYLES[lightbox.category]}`}
+                    className={`rounded-full px-3 py-1 text-[10px] font-bold backdrop-blur-sm border ${CATEGORY_PILL_STYLES[lightbox.category] || DEFAULT_PILL_STYLE}`}
                   >
                     {lightbox.category}
                   </span>

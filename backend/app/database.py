@@ -23,6 +23,7 @@ async def connect_db():
         from app.models.job import Job
         from app.models.application import JobApplication
         from app.models.user import AdminUser
+        from app.models.gallery import GalleryItem
 
         await init_beanie(
             database=db.client[settings.MONGODB_DB_NAME],
@@ -36,6 +37,7 @@ async def connect_db():
                 Job,
                 JobApplication,
                 AdminUser,
+                GalleryItem,
             ]
         )
         logger.info("Connected to MongoDB")

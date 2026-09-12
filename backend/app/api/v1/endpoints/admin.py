@@ -9,6 +9,7 @@ from app.models.project import Project
 from app.models.blog_post import BlogPost
 from app.models.job import Job
 from app.models.application import JobApplication
+from app.models.gallery import GalleryItem
 from app.schemas.user import LoginRequest, TokenResponse, AdminCreate
 from app.schemas.contact import ContactUpdate
 from app.schemas.ev_partner import EVPartnerUpdate
@@ -413,3 +414,29 @@ async def create_admin(
     )
     await user.insert()
     return {"success": True, "username": user.username}
+
+# ── GALLERY ───────────────────────────────────────
+@router.get("/gallery")
+async def get_all_gallery_items(
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    return await GalleryItem.find_all().sort(-GalleryItem.created_at).to_list()
+
+@router.post("/gallery")
+async def create_gallery_item(
+    data: dict,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    item = GalleryItem(**data)
+    await item.insert()
+    return {"success": True, "id": str(item.id)}
+
+@router.delete("/gallery/{item_id}")
+async def delete_gallery_item(
+    item_id: str,
+    current_user: AdminUser = Depends(get_current_admin)
+):
+    item = await GalleryItem.get(PydanticObjectId(item_id))
+    if item:
+        await item.delete()
+    return {"success": True}
