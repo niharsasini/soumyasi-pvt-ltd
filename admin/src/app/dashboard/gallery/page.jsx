@@ -10,7 +10,13 @@ import {
   AlertTriangle, ImageIcon,
 } from 'lucide-react'
 
-const TREE_STORAGE_KEY = 'gallery_tree'
+// Only the category/subcategory organization tree lives here — not the photos
+// themselves. Photos are real GalleryItem documents in MongoDB (created via
+// api.createGalleryItem / fetched via api.getGalleryItems) so an upload is
+// visible across browsers and on the public website immediately. Storing
+// photos in localStorage instead would make them exist only in the browser
+// that uploaded them, which defeats the point of "connect gallery to website".
+const TREE_STORAGE_KEY = 'sp_gallery_v2'
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 
 const DEFAULT_TREE = {
