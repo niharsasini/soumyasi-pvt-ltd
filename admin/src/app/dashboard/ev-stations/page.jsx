@@ -4,7 +4,8 @@ import { api } from '@/lib/api'
 import Header from '@/components/layout/Header'
 import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
-import { MapPin, Plus, Edit, Trash2, Zap } from 'lucide-react'
+import { formatDate } from '@/lib/utils'
+import { MapPin, Plus, Edit, Trash2, Zap, AlertCircle, X, Navigation, Clock } from 'lucide-react'
 import EVStationForm from '@/components/forms/EVStationForm'
 
 const EMPTY_STATION = {
@@ -20,6 +21,7 @@ export default function EVStationsPage() {
   const [form, setForm] = useState(EMPTY_STATION)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [showBanner, setShowBanner] = useState(true)
 
   const load = async () => {
     setLoading(true)
@@ -70,6 +72,19 @@ export default function EVStationsPage() {
     <div>
       <Header title="EV Stations" subtitle="Manage charging network" />
 
+      {showBanner && (
+        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 mb-6 flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0" />
+          <p className="flex-1 text-slate-300 text-sm">
+            These are placeholder stations. Edit them with your real EV station locations, or add new ones using the &lsquo;+ Add Station&rsquo; button.
+          </p>
+          <button onClick={() => setShowBanner(false)}
+            className="text-slate-500 hover:text-white flex-shrink-0">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
       <div className="flex justify-end mb-6">
         <button onClick={openAdd}
           className="flex items-center gap-2 bg-amber-500
@@ -106,17 +121,28 @@ export default function EVStationsPage() {
                 </div>
                 <Badge status={s.status} />
               </div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="flex items-center gap-1.5 bg-blue-500/10
+                  border border-blue-500/20 text-blue-400 rounded-lg
+                  px-2.5 py-1 text-xs font-bold">
+                  🔌 {s.connectors} Connector{s.connectors === 1 ? '' : 's'}
+                </span>
+                <span className="text-slate-400 text-xs">
+                  {s.power_kw}kW · {s.charger_type}
+                </span>
+              </div>
               <div className="space-y-1 mb-4 text-xs text-slate-400">
                 <div className="flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5" />
                   {s.address}
                 </div>
-                <p>⚡ {s.power_kw}kW · {s.charger_type} ·
-                  {s.connectors} connectors</p>
                 <p>🕐 {s.working_hours}</p>
-                <p>📍 {s.lat}, {s.lng}</p>
+                <div className="flex items-center gap-1.5 text-slate-500">
+                  <Clock className="w-3.5 h-3.5" />
+                  Last updated: {formatDate(s.updated_at || s.created_at)}
+                </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 mb-2">
                 <button onClick={() => openEdit(s)}
                   className="flex-1 flex items-center justify-center
                     gap-1.5 bg-amber-500/10 border border-amber-500/20
@@ -132,6 +158,18 @@ export default function EVStationsPage() {
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
               </div>
+              {s.lat && s.lng && (
+                <a
+                  href={`https://www.google.com/maps?q=${s.lat},${s.lng}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1.5
+                    w-full bg-admin-hover border border-admin-border
+                    text-slate-300 rounded-xl py-2 text-xs
+                    hover:border-amber-500/40 hover:text-white transition-all">
+                  <Navigation className="w-3.5 h-3.5" />
+                  View on Map
+                </a>
+              )}
             </div>
           ))}
         </div>

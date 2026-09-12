@@ -5,7 +5,7 @@ import { logout, getUser } from '@/lib/auth'
 import {
   LayoutDashboard, Mail, Zap, MapPin, FolderOpen,
   FileText, Briefcase, Users, Settings, LogOut,
-  ChevronRight
+  ChevronRight, Image
 } from 'lucide-react'
 
 const NAV_ITEMS = [
@@ -17,6 +17,7 @@ const NAV_ITEMS = [
   { href: '/dashboard/blog', icon: FileText, label: 'Blog Posts' },
   { href: '/dashboard/careers', icon: Briefcase, label: 'Careers' },
   { href: '/dashboard/newsletter', icon: Users, label: 'Newsletter' },
+  { href: '/dashboard/gallery', icon: Image, label: 'Gallery' },
   { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
 ]
 
