@@ -8,7 +8,8 @@ from app.api.v1.endpoints import (
     blog,
     careers,
     admin,
-    gallery
+    gallery,
+    stats
 )
 
 api_router = APIRouter()
@@ -57,4 +58,9 @@ api_router.include_router(
     gallery.router,
     prefix="/gallery",
     tags=["Gallery"]
+)
+api_router.include_router(
+    stats.router,
+    prefix="/stats",
+    tags=["Stats"]
 )

@@ -4,82 +4,13 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Camera, MapPin, ArrowRight, X } from "lucide-react";
+import { Camera, MapPin, ArrowRight, X, ImageOff } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 
 const HEADING_LINE_1 = ["Our", "Projects"];
 const HEADING_LINE_2 = ["Across", "Odisha"];
 
 const BASE_CATEGORIES = ["Solar", "EV Charging", "Wind Power", "Industrial"];
-
-const FALLBACK_GALLERY_ITEMS = [
-  {
-    id: 1,
-    category: "Solar",
-    title: "Rooftop Solar Installation",
-    location: "Manufacturing Plant, Bhubaneswar",
-    capacity: "500 kW",
-    description: "Ground-mount solar system powering a full manufacturing facility",
-    image: "/soumyasi/solar-field-odisha.png",
-    size: "large",
-    accent: "amber",
-  },
-  {
-    id: 2,
-    category: "EV Charging",
-    title: "Ultra 60 Thunder Charge",
-    location: "Commercial Hub, Bhubaneswar",
-    capacity: "60 kW DC",
-    description: "Dual connector fast charging station serving urban EV users",
-    image: "/soumyasi/ev-charger-ultra60.png",
-    size: "medium",
-    accent: "emerald",
-  },
-  {
-    id: 3,
-    category: "Wind Power",
-    title: "Wind Energy Project",
-    location: "Coastal Odisha",
-    capacity: "2 MW",
-    description: "Harnessing Odisha coastline wind for clean power generation",
-    image: "/soumyasi/wind-power-plant.png",
-    size: "medium",
-    accent: "sky",
-  },
-  {
-    id: 4,
-    category: "Industrial",
-    title: "Industrial Power Supply",
-    location: "Industrial Park, Rourkela",
-    capacity: "5 MVA",
-    description: "Complete substation and switchgear for industrial complex",
-    image: "/soumyasi/industrial-power.png",
-    size: "large",
-    accent: "orange",
-  },
-  {
-    id: 5,
-    category: "Solar",
-    title: "Commercial Solar Setup",
-    location: "Office Complex, Cuttack",
-    capacity: "200 kW",
-    description: "Rooftop solar reducing electricity costs by 85%",
-    image: "/soumyasi/solar-field-odisha.png",
-    size: "medium",
-    accent: "amber",
-  },
-  {
-    id: 6,
-    category: "EV Charging",
-    title: "EV Hub at Hotel",
-    location: "Hotel Parking, Puri",
-    capacity: "60 kW DC",
-    description: "Charging station serving hotel guests 24/7",
-    image: "/soumyasi/ev-charger-ultra60.png",
-    size: "medium",
-    accent: "emerald",
-  },
-];
 
 const CATEGORY_PILL_STYLES = {
   Solar: "bg-amber-500/20 border-amber-400/40 text-amber-300",
@@ -89,26 +20,20 @@ const CATEGORY_PILL_STYLES = {
 };
 const DEFAULT_PILL_STYLE = "bg-slate-500/20 border-slate-400/40 text-slate-300";
 
-const STATS = [
-  { label: "Projects", value: "500+" },
-  { label: "Cities", value: "15+" },
-  { label: "Years", value: "10+" },
-];
-
 export default function Gallery() {
   const { ref, isInView } = useScrollReveal();
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightbox, setLightbox] = useState(null);
-  const [galleryItems, setGalleryItems] = useState(FALLBACK_GALLERY_ITEMS);
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const API = process.env.NEXT_PUBLIC_API_URL;
-    if (!API) return;
+    const API = process.env.NEXT_PUBLIC_API_URL || "https://api.soumyashipower.in";
 
     fetch(`${API}/api/v1/gallery`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (data && Array.isArray(data) && data.length > 0) {
+        if (data && Array.isArray(data)) {
           setGalleryItems(data.map((item, i) => ({
             size: "medium",
             accent: "amber",
@@ -117,7 +42,8 @@ export default function Gallery() {
           })));
         }
       })
-      .catch(() => {}); // silently fall back to hardcoded items
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   const categories = [
@@ -184,25 +110,32 @@ export default function Gallery() {
               maximum performance and long-term reliability.
             </motion.p>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="hidden sm:flex items-center gap-6"
-          >
-            {STATS.map((stat, i) => (
-              <div key={stat.label} className="flex items-center gap-6">
-                <div className="text-center">
-                  <div className="font-black text-2xl text-amber-600">{stat.value}</div>
-                  <div className="text-[#a8917a] text-xs">{stat.label}</div>
-                </div>
-                {i < STATS.length - 1 && <div className="w-px h-8 bg-brand-border" />}
-              </div>
-            ))}
-          </motion.div>
         </div>
 
+        {loading ? (
+          <div className="flex items-center justify-center py-24">
+            <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : galleryItems.length === 0 ? (
+          <div className="mt-10 bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6 text-center">
+            <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
+              <ImageOff className="w-6 h-6 text-amber-500" />
+            </div>
+            <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
+              Our project gallery is coming soon.
+            </p>
+            <p className="text-brand-brown text-sm sm:text-base mt-2 max-w-md mx-auto">
+              Check back to see our installations across Odisha.
+            </p>
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full px-8 py-3.5 font-bold mt-6 hover:scale-105 transition shadow-lg shadow-amber-500/20"
+            >
+              View Our Projects <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        ) : (
+        <>
         {/* Filter tabs */}
         <div className="mt-10 mb-8 flex gap-2 flex-nowrap overflow-x-auto sm:flex-wrap pb-1 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
           {categories.map((category) => {
@@ -308,6 +241,8 @@ export default function Gallery() {
             View All Projects <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
+        </>
+        )}
       </div>
 
       {/* Lightbox */}

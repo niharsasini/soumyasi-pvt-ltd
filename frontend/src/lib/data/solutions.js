@@ -23,7 +23,7 @@ export const SOLUTIONS = [
     heroSubtext:     "We design and install rooftop and ground-mount solar systems for homes, businesses, and industries across Odisha. Cut your electricity bill by up to 90%.",
     heroCTAPrimary:  { label: "Get Free Assessment", href: "/contact" },
     heroCTASecondary:{ label: "View Projects",       href: "/projects" },
-    heroStats:       ["500+ Installs", "25yr Warranty", "MNRE Certified"],
+    heroStats:       ["Up to 22% Efficiency", "25yr Warranty", "MNRE Certified"],
 
     benefits: [
       { icon: "TrendingDown", title: "Cut Bills by 90%",    description: "Most customers eliminate their electricity bill entirely within the first year of installation." },

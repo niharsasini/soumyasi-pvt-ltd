@@ -14,7 +14,7 @@ const EVPartnerSection = dynamic(() => import("@/components/sections/home/EVPart
 export const metadata = {
   title: "Soumyashi Power | Solar Panels, EV Charging & Industrial Power — Odisha",
   description:
-    "Odisha's leading energy company. 500+ solar installations, 50+ EV charging stations, wind power and industrial electrical infrastructure across 15+ cities. Based in Bhubaneswar.",
+    "Odisha's leading energy company. Solar installations, EV charging stations, wind power and industrial electrical infrastructure. Based in Bhubaneswar.",
   keywords: [
     "solar panels Odisha",
     "solar installation Bhubaneswar",

@@ -26,7 +26,7 @@ export const metadata = {
     template: "%s | Soumyashi Power",
   },
   description:
-    "Odisha's leading solar panel installation and EV charging network. 500+ installations, 50+ stations across 15+ cities.",
+    "Odisha's leading solar panel installation and EV charging network, based in Bhubaneswar.",
   keywords: [
     "solar panels Odisha",
     "EV charging Bhubaneswar",

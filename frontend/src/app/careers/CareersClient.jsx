@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lightbulb, Leaf, TrendingUp, MapPin, Clock, X } from "lucide-react";
+import { Lightbulb, Leaf, TrendingUp, Briefcase, ArrowRight, X } from "lucide-react";
 import SectionHeading from '@/components/ui/SectionHeading';
 import { VARIANTS } from "@/lib/animations/variants";
 import FormFallback, { FORM_ERROR_MESSAGE } from "@/components/forms/FormFallback";
@@ -205,31 +205,22 @@ export default function CareersClient() {
         <div className="section-divider mb-10 sm:mb-14" />
         <div className="max-w-4xl mx-auto">
           <SectionHeading badge="Join the Team" words={["Open", "Positions"]} goldWords={["Open"]} />
-          <div className="space-y-4">
-            {ROLES.map((role, i) => (
-              <motion.div key={role.title}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                className="active:scale-[0.98] bg-white border border-brand-border rounded-2xl shadow-warm p-5 sm:p-6 hover:border-amber-400 hover:shadow-card-hover transition-all duration-300">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700">{role.dept}</span>
-                    </div>
-                    <h3 className="font-bold font-display text-brand-ink text-base">{role.title}</h3>
-                    <div className="flex flex-wrap gap-4 mt-2 text-xs text-brand-muted">
-                      <span className="flex items-center gap-1"><MapPin size={11} /> {role.location}</span>
-                      <span className="flex items-center gap-1"><Clock size={11} /> {role.type}</span>
-                    </div>
-                    <p className="mt-3 text-sm text-brand-brown leading-relaxed">{role.desc}</p>
-                  </div>
-                  <button onClick={() => setApplyRole(role)}
-                    className="btn-shimmer w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-semibold shadow-gold hover:shadow-gold-lg hover:scale-105 active:scale-[0.98] transition-all duration-300 whitespace-nowrap">
-                    Apply Now
-                  </button>
-                </div>
-              </motion.div>
-            ))}
+          <div className="text-center bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6">
+            <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
+              <Briefcase className="w-6 h-6 text-amber-500" />
+            </div>
+            <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
+              No open positions currently.
+            </p>
+            <p className="text-brand-brown text-sm sm:text-base mt-2 max-w-md mx-auto">
+              We're not actively hiring right now, but we're always glad to hear from good people. Send us your CV for when the right role opens up.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full px-8 py-3.5 font-bold mt-6 hover:scale-105 transition shadow-lg shadow-amber-500/20"
+            >
+              Send Your CV <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>

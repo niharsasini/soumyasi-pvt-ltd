@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Calendar, ArrowRight, Tag } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 import { VARIANTS } from "@/lib/animations/variants";
-import { BLOG_POSTS as ARTICLES } from "@/lib/data/blog-posts";
+
+// NOTE: lib/data/blog-posts.js is placeholder content from the initial site
+// build, not real published articles. Showing a "coming soon" state here
+// instead of presenting invented posts as real content.
 
 export default function BlogClient() {
   return (
@@ -43,53 +46,24 @@ export default function BlogClient() {
         </div>
       </section>
 
-      {/* Articles grid */}
+      {/* Empty state — no published articles yet */}
       <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="section-divider mb-10 sm:mb-14" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {ARTICLES.map((art, i) => (
-              <Link key={art.slug} href={`/blog/${art.slug}`}>
-              <motion.article
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                whileHover={{ y: -6 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-white border border-brand-border rounded-2xl shadow-warm overflow-hidden hover:border-amber-400 hover:shadow-card-hover transition-all duration-300 flex flex-col h-full"
-              >
-                {/* Cover */}
-                <div className={`h-32 sm:h-36 bg-gradient-to-br ${art.gradient} flex items-center justify-center`}>
-                  <Tag size={28} className="text-white/70" />
-                </div>
-
-                <div className="p-4 sm:p-5 flex flex-col flex-1">
-                  <span className={`inline-flex self-start text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 ${art.catColor}`}>
-                    {art.category}
-                  </span>
-                  <h2 className="font-bold font-display text-brand-ink text-base sm:text-lg leading-snug mb-3 flex-1 line-clamp-2">
-                    {art.title}
-                  </h2>
-                  <p className="text-brand-brown text-xs sm:text-sm leading-relaxed mb-5 line-clamp-3">
-                    {art.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between pt-4 border-t border-brand-border">
-                    <div className="flex items-center gap-1.5 text-brand-muted text-xs">
-                      <Calendar size={12} />
-                      <span>{art.date}</span>
-                      <span className="mx-1">·</span>
-                      <span>{art.readTime} read</span>
-                    </div>
-                    <span className="text-brand-gold text-xs font-semibold flex items-center gap-1 hover:gap-2 transition-all">
-                      Read <ArrowRight size={12} />
-                    </span>
-                  </div>
-                </div>
-              </motion.article>
-              </Link>
-            ))}
+        <div className="max-w-2xl mx-auto text-center bg-white rounded-3xl border border-brand-border shadow-warm py-16 sm:py-20 px-6">
+          <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-5">
+            <BookOpen className="w-6 h-6 text-amber-500" />
           </div>
+          <p className="text-brand-ink font-display font-black text-xl sm:text-2xl">
+            Our blog is coming soon.
+          </p>
+          <p className="text-brand-brown text-sm sm:text-base mt-2 max-w-md mx-auto">
+            We're preparing guides on solar savings, EV infrastructure, and clean energy in Odisha. Check back soon.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full px-8 py-3.5 font-bold mt-6 hover:scale-105 transition shadow-lg shadow-amber-500/20"
+          >
+            Talk to Our Experts <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 

@@ -150,7 +150,7 @@ export default function ContactClient() {
                 We’re here to power <span className="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">your future</span>
               </h2>
               <p className="mt-4 text-brand-brown leading-relaxed">
-                Odisha’s most trusted solar, EV, and industrial power company. Over 500 installations, 50+ EV stations, and a team that answers every call.
+                Odisha’s trusted solar, EV, and industrial power company — a team that answers every call.
               </p>
             </div>
 

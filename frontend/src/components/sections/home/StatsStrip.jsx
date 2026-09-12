@@ -1,18 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { STATS as SITE_STATS } from "@/lib/config/stats.config";
+import { useSiteStats } from "@/lib/hooks/useSiteStats";
 
-const STATS = [
-  { value: SITE_STATS.installations, suffix: "+", label: "Projects Completed",  href: "/projects" },
-  { value: SITE_STATS.evStations,    suffix: "+", label: "EV Stations Live",    href: "/solutions/ev-charging" },
-  { value: SITE_STATS.cities,        suffix: "+", label: "Cities Covered",      href: "/about" },
-  { value: SITE_STATS.satisfaction,  suffix: "%", label: "Client Satisfaction", href: null },
-];
-
-function CountUp({ to, suffix, active }) {
+function CountUp({ to, active }) {
   const [n, setN] = useState(0);
   useEffect(() => {
     if (!active) return;
@@ -26,12 +19,13 @@ function CountUp({ to, suffix, active }) {
     };
     requestAnimationFrame(tick);
   }, [to, active]);
-  return <>{n}{suffix}</>;
+  return <>{n}</>;
 }
 
 export default function StatsStrip() {
   const ref    = useRef(null);
   const [on, setOn] = useState(false);
+  const { stats, loaded } = useSiteStats();
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -41,6 +35,13 @@ export default function StatsStrip() {
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
+
+  const STATS = [
+    { value: stats.completedProjects, label: "Projects Completed",  href: "/projects" },
+    { value: stats.activeEvStations,  label: "EV Stations Live",    href: "/solutions/ev-charging" },
+    { value: stats.citiesCovered,     label: "Cities Covered",      href: "/about" },
+    { value: stats.partnerEnquiries,  label: "Partner Enquiries",   href: null },
+  ];
 
   return (
     <section ref={ref} className="w-full py-16 bg-gradient-to-r from-amber-500 to-amber-600 relative overflow-hidden">
@@ -62,7 +63,7 @@ export default function StatsStrip() {
                   <div className="absolute -bottom-3 left-1/4 right-1/4 h-px bg-white/20 md:hidden" />
                 )}
                 <span className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tabular-nums">
-                  <CountUp to={s.value} suffix={s.suffix} active={on} />
+                  {loaded ? <CountUp to={s.value} active={on} /> : "—"}
                 </span>
                 <span className="mt-2 text-xs sm:text-sm text-amber-100 text-center font-medium">
                   {s.label}

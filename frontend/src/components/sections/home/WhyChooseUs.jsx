@@ -122,7 +122,7 @@ export default function WhyChooseUs() {
                 className="relative z-10 text-center px-6"
               >
                 <div
-                  className="text-5xl font-bold font-display mb-1"
+                  className="text-2xl font-bold font-display mb-1"
                   style={{
                     background: "linear-gradient(135deg, #fbbf24, #d97706)",
                     WebkitBackgroundClip: "text",
@@ -130,17 +130,17 @@ export default function WhyChooseUs() {
                     backgroundClip: "text",
                   }}
                 >
-                  10+
+                  Established
                 </div>
-                <div className="text-brand-ink font-display font-semibold text-base">Years in Odisha</div>
+                <div className="text-brand-ink font-display font-semibold text-base">In Odisha</div>
                 <div className="text-brand-muted text-xs mt-1 tracking-wider uppercase">Power · Precision · Pride</div>
               </motion.div>
 
               {/* Corner stats on ring */}
               {[
-                { label: "500+",    sub: "Projects",   angle: 45  },
+                { label: "MNRE",    sub: "Certified",  angle: 45  },
                 { label: "ISO",     sub: "Certified",  angle: 135 },
-                { label: "50+",     sub: "EV Stations",angle: 225 },
+                { label: "Odisha",  sub: "Statewide",  angle: 225 },
                 { label: "24/7",    sub: "Support",    angle: 315 },
               ].map(({ label, sub, angle }) => {
                 const rad = (angle * Math.PI) / 180;

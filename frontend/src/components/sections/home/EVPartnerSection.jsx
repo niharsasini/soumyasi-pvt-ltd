@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 import { CONTACT } from "@/lib/config/site.config";
-import { STATS as SITE_STATS } from "@/lib/config/stats.config";
 import FormFallback, { FORM_ERROR_MESSAGE } from "@/components/forms/FormFallback";
 
 /* ── Data ───────────────────────────────────────────────── */
@@ -34,9 +33,9 @@ const BENEFITS = [
 ];
 
 const STATS = [
-  { value: "₹8K–15K", label: "Monthly Revenue" },
+  { value: "₹8K–15K", label: "Est. Monthly Revenue" },
   { value: "60kW", label: "Charger Output" },
-  { value: `${SITE_STATS.evStations}+`, label: "Active Stations", countTo: SITE_STATS.evStations, suffix: "+" },
+  { value: "Growing Network", label: "Active Stations" },
   { value: "6 Weeks", label: "Survey to Live" },
 ];
 
@@ -677,7 +676,7 @@ function RevenuePotentialCard() {
         Your Revenue Potential
       </h3>
       <p className="text-[#78614a] text-sm mb-6">
-        Estimated monthly earnings by location type
+        Estimated monthly earnings by location type — figures are illustrative, not guaranteed
       </p>
 
       {/* Revenue Tiers */}
@@ -747,7 +746,7 @@ function RevenuePotentialCard() {
         {[
           { value: '60kW', label: 'Charger Output' },
           { value: '30min', label: 'Avg Charge Time' },
-          { value: '50+', label: 'Active Stations' },
+          { value: 'Odisha', label: 'Coverage Area' },
           { value: '6wks', label: 'Survey to Live' },
         ].map((stat, i) => (
           <div key={i} className="text-center bg-[#FFFBF0]

@@ -27,8 +27,8 @@ const CARDS = [
     title: "Solar Power Installation",
     desc: "We design and install rooftop and ground-mount solar systems for homes, businesses, and industries across Odisha. Cut electricity bills by up to 90%.",
     stats: [
-      { value: "500+", label: "Installations" },
       { value: "25yr", label: "Warranty" },
+      { value: "MNRE", label: "Certified" },
     ],
     href: "/solutions/solar-rooftop",
   },
@@ -49,7 +49,7 @@ const CARDS = [
     desc: "Fast-charging stations across Odisha. Our 60kW Ultra Thunder Charge powers most EVs in under 30 minutes. Partner with us to earn revenue.",
     stats: [
       { value: "60kW", label: "Fast Charge" },
-      { value: "50+", label: "Stations" },
+      { value: "24/7", label: "Monitoring" },
     ],
     href: "/solutions/ev-charging",
   },
@@ -100,8 +100,8 @@ const CARDS = [
 const TRUST_BADGES = [
   { Icon: ShieldCheck, label: "MNRE Certified" },
   { Icon: Award, label: "IE Rules Compliant" },
-  { Icon: Clock, label: "10+ Years Experience" },
-  { Icon: MapPin, label: "15+ Cities Served" },
+  { Icon: Clock, label: "24/7 Support" },
+  { Icon: MapPin, label: "Serving All Odisha" },
 ];
 
 const linkFadeIn = {
@@ -128,9 +128,9 @@ function ServiceCard({ card, index, isInView }) {
       transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.12 }}
       whileHover={{ y: -10, transition: { type: "spring", stiffness: 300, damping: 20 } }}
       whileTap={{ scale: 0.98 }}
-      className={`group bg-white rounded-3xl overflow-hidden border border-[#e8d5b0] shadow-[0_4px_24px_rgba(120,80,20,0.08)] cursor-pointer transition-all duration-300 ${card.hoverBorderClass} ${card.hoverShadowClass}`}
+      className={`group bg-white rounded-3xl overflow-hidden border border-[#e8d5b0] shadow-[0_4px_24px_rgba(120,80,20,0.08)] cursor-pointer transition-all duration-300 h-full flex flex-col ${card.hoverBorderClass} ${card.hoverShadowClass}`}
     >
-      <Link href={card.href} className="block">
+      <Link href={card.href} className="flex flex-col h-full">
         {/* Image */}
         <div className="relative h-44 sm:h-52 overflow-hidden">
           <Image
@@ -147,7 +147,7 @@ function ServiceCard({ card, index, isInView }) {
         </div>
 
         {/* Content */}
-        <div className="p-4 sm:p-5">
+        <div className="p-4 sm:p-5 flex-1 flex flex-col">
           <div className="flex items-center gap-3 mb-3">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${card.iconBgClass}`}>
               <Icon className={`w-5 h-5 ${card.iconClass}`} />
@@ -168,7 +168,7 @@ function ServiceCard({ card, index, isInView }) {
           </div>
 
           {/* Bottom row */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mt-auto">
             <span className={`inline-flex items-center gap-1 font-semibold text-xs sm:text-sm transition-all group-hover:gap-2 ${card.accentTextClass}`}>
               Learn More
               <ArrowRight className="w-4 h-4" />
@@ -254,7 +254,7 @@ export default function WhatWeDo() {
           className="mt-12 bg-white rounded-2xl border border-[#e8d5b0] shadow-warm px-8 py-5 flex flex-col sm:flex-row flex-wrap items-center justify-between gap-6 text-center sm:text-left"
         >
           <p className="text-[#78614a] text-sm font-medium">
-            Trusted by 500+ customers across Odisha
+            Serving customers across Odisha
           </p>
 
           <div className="grid grid-cols-2 sm:flex gap-3 sm:gap-8">

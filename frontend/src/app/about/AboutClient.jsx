@@ -8,7 +8,7 @@ import { Target, Leaf, Lightbulb, Shield, Users, MapPin, Award, Settings, Zap } 
 import { useScrollReveal, VARIANTS } from "@/lib/hooks/useScrollReveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Breadcrumb from "@/components/ui/Breadcrumb";
-import { STATS } from "@/lib/config/stats.config";
+import { useSiteStats } from "@/lib/hooks/useSiteStats";
 
 /* ── CountUp ─────────────────────────────────────── */
 function useCountUp(to, active) {
@@ -98,13 +98,14 @@ const MILESTONES = [
   { year: "The Beginning", title: "Our Founding Story",     desc: "Soumyashi Power started with a single rooftop solar installation in Bhubaneswar — and a commitment to bring reliable clean power to Odisha." },
   { year: "Milestone",     title: "First Solar Installations", desc: "Early rooftop solar projects across Bhubaneswar and Cuttack built the foundation for everything that followed." },
   { year: "Expansion",     title: "Launched EV Charging",    desc: "We expanded into EV charging infrastructure, installing fast chargers to support Odisha's growing electric vehicle adoption." },
-  { year: "Today",         title: "15+ Cities Across Odisha", desc: "We now serve homes, businesses, and industries across Odisha — powering the state's transition to clean energy." },
+  { year: "Today",         title: "Serving All of Odisha", desc: "We now serve homes, businesses, and industries across Odisha — powering the state's transition to clean energy." },
 ];
 
 /* ═══════════════════════════════════════════════════ */
 export default function AboutClient() {
   const statsRef  = useRef(null);
   const [statsOn, setStatsOn] = useState(false);
+  const { stats } = useSiteStats();
   const { ref: tlRef, isInView: tlInView } = useScrollReveal();
   const { ref: heroRef, isInView: heroInView } = useScrollReveal();
 
@@ -172,8 +173,9 @@ export default function AboutClient() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400/30 to-amber-600/20 blur-3xl" />
               <div className="absolute inset-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-[0_20px_60px_rgba(217,119,6,0.3)]">
                 <div className="text-center text-white">
-                  <div className="text-5xl font-bold font-display">{STATS.yearsExperience}+</div>
-                  <div className="text-sm font-semibold tracking-wider mt-1">Years of Excellence</div>
+                  <div className="text-3xl font-bold font-display">Soumyashi</div>
+                  <div className="text-sm font-semibold tracking-wider mt-1">Power</div>
+                  <div className="text-xs mt-2 text-white/80">Bhubaneswar, Odisha</div>
                 </div>
               </div>
               {/* Orbiting dots */}
@@ -212,7 +214,7 @@ export default function AboutClient() {
             <div className="space-y-4 text-brand-brown leading-relaxed">
               <p>Soumyashi Power began with a single rooftop solar installation in Bhubaneswar — powering a local factory and proving that clean energy could mean real, measurable savings from day one.</p>
               <p>As demand grew, we expanded into EV charging infrastructure, building out charging stations to meet Odisha's growing electric vehicle adoption.</p>
-              <p>Today, with 500+ projects, 50+ EV stations, and operations in 15+ cities, we remain what we've always been: a local team with deep Odisha roots, building infrastructure that will last decades.</p>
+              <p>Today, we remain what we've always been: a local team with deep Odisha roots, building infrastructure that will last decades.</p>
             </div>
           </motion.div>
 
@@ -233,10 +235,10 @@ export default function AboutClient() {
             {/* 2×2 stat cards */}
             <div className="relative z-10 grid grid-cols-2 gap-3 p-4 pb-14">
               {[
-                { value:STATS.yearsExperience, suffix:"+", label:"Years Experience" },
-                { value:STATS.installations,   suffix:"+", label:"Projects Completed" },
-                { value:STATS.cities,          suffix:"+", label:"Cities Covered" },
-                { value:STATS.evStations,      suffix:"+", label:"EV Stations Live" },
+                { value: stats.completedProjects, suffix: "", label: "Projects Completed" },
+                { value: stats.citiesCovered,      suffix: "", label: "Cities Covered" },
+                { value: stats.activeEvStations,   suffix: "", label: "EV Stations Live" },
+                { value: stats.partnerEnquiries,   suffix: "", label: "Partner Enquiries" },
               ].map((s, i) => (
                 <div key={s.label} className="bg-white/95 backdrop-blur-sm rounded-xl shadow-warm">
                   <StatCard {...s} active={statsOn} delay={i * 0.1} />

@@ -75,7 +75,7 @@ export default function EVMapSection() {
             animate={isInView ? "visible" : "hidden"}
             className="mt-4 text-brand-brown max-w-xl mx-auto text-sm sm:text-base"
           >
-            50+ charging stations and growing across Odisha. Find your nearest station.
+            Charging stations across Odisha, and growing. Find your nearest station.
           </motion.p>
         </div>
 

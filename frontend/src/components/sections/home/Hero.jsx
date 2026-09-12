@@ -3,9 +3,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Zap, Battery, ShieldCheck, Check, Wind, Factory, MapPin, Sun, ArrowRight, PhoneCall, ChevronDown, Star } from "lucide-react";
-import { STATS as SITE_STATS } from "@/lib/config/stats.config";
-import { CONTACT } from "@/lib/config/site.config";
+import { ChevronLeft, ChevronRight, Zap, Battery, ShieldCheck, Check, Wind, Factory, Sun, ArrowRight, PhoneCall, ChevronDown } from "lucide-react";
+import { BRAND, CONTACT } from "@/lib/config/site.config";
 
 const EASE = [0.25, 0.46, 0.45, 0.94];
 
@@ -55,36 +54,13 @@ const HEADLINE_LINES = [
 ];
 
 const FEATURE_PILLS = [
-  { Icon: Sun, iconCls: "text-amber-600", label: "Solar Energy" },
+  { Icon: Sun, iconCls: "text-amber-600", label: "Solar Installation" },
   { Icon: Zap, iconCls: "text-emerald-600", label: "EV Charging" },
   { Icon: Factory, iconCls: "text-orange-600", label: "Industrial Power" },
 ];
 
-function MainStatCard({ Icon, value, label, i, isActive }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={isActive ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 1 + i * 0.1 }}
-      className="bg-white rounded-2xl p-2.5 sm:p-4 border border-[#e8d5b0] shadow-[0_4px_16px_rgba(120,80,20,0.06)] text-center hover:border-amber-300 transition-colors"
-    >
-      <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center mx-auto mb-2">
-        <Icon className="w-4 h-4 text-amber-600" />
-      </div>
-      <p className="font-black text-xl sm:text-2xl text-[#1a1208]">{value}+</p>
-      <p className="text-[#a8917a] text-[10px] mt-0.5 whitespace-nowrap">{label}</p>
-    </motion.div>
-  );
-}
-
 function SlideMain({ isActive }) {
   const [showMobileVideo, setShowMobileVideo] = useState(false);
-
-  const mainStats = [
-    { Icon: Sun, value: SITE_STATS.installations, label: "Solar Installs" },
-    { Icon: Zap, value: SITE_STATS.evStations, label: "EV Stations" },
-    { Icon: MapPin, value: SITE_STATS.cities, label: "Cities Served" },
-  ];
 
   return (
     <section className="relative w-full h-[90vh] min-h-[550px] overflow-hidden bg-[#FFFBF0]">
@@ -164,11 +140,6 @@ function SlideMain({ isActive }) {
               ))}
             </motion.div>
 
-            {/* Mobile-only trust line */}
-            <div className="lg:hidden mt-4 text-center">
-              <p className="text-[#78614a] text-xs">Trusted by 500+ customers across Odisha</p>
-            </div>
-
             {/* 5. CTA buttons */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -191,13 +162,6 @@ function SlideMain({ isActive }) {
                 Call Us Now
               </a>
             </motion.div>
-
-            {/* 6. Stats row */}
-            <div className="mt-4 sm:mt-5 grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
-              {mainStats.map((s, i) => (
-                <MainStatCard key={s.label} {...s} i={i} isActive={isActive} />
-              ))}
-            </div>
 
             {/* Mobile-only: watch story */}
             <div className="lg:hidden mt-3 sm:mt-4 text-center">
@@ -248,51 +212,20 @@ function SlideMain({ isActive }) {
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#FFFBF0]/20 via-transparent to-transparent" />
               </motion.div>
 
-              {/* Floating card 1 — active now */}
+              {/* Floating card — company identity */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={isActive ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.8 }}
-                className="absolute -top-4 -left-4 bg-white rounded-2xl p-3.5 shadow-xl border border-[#e8d5b0] flex items-center gap-3 min-w-[160px]"
+                className="absolute -top-4 -left-4 bg-white rounded-2xl p-3.5 shadow-xl border border-[#e8d5b0] flex items-center gap-3 min-w-[200px]"
               >
-                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-5 h-5 text-emerald-600" />
+                <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0 border border-[#e8d5b0]">
+                  <Image src={BRAND.logo} alt={BRAND.name} width={40} height={40} className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <p className="text-[#a8917a] text-[10px]">Active Right Now</p>
-                  <p className="text-[#1a1208] font-bold text-sm">{SITE_STATS.evStations}+ EV Stations</p>
+                  <p className="text-[#1a1208] font-bold text-sm leading-tight">Soumyashi Power</p>
+                  <p className="text-[#a8917a] text-[10px]">Bhubaneswar, Odisha</p>
                 </div>
-              </motion.div>
-
-              {/* Floating card 3 — years badge */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={isActive ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.9 }}
-                className="absolute top-1/2 -right-6 -translate-y-1/2 bg-amber-500 rounded-xl p-3 shadow-lg text-center"
-              >
-                <p className="text-white font-black text-lg leading-none">{SITE_STATS.yearsExperience}+</p>
-                <p className="text-amber-100 text-[10px]">Years</p>
-              </motion.div>
-
-              {/* Floating card 2 — satisfaction */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={isActive ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: 1 }}
-                className="absolute -bottom-4 -right-4 bg-white rounded-2xl p-3.5 shadow-xl border border-[#e8d5b0] min-w-[180px]"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-[#78614a] text-[10px]">Client Satisfaction</p>
-                  <p className="font-black text-sm text-amber-600">{SITE_STATS.satisfaction}%</p>
-                </div>
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-[#a8917a] text-[10px] mt-1">Based on {SITE_STATS.installations}+ projects</p>
               </motion.div>
             </div>
           </div>
@@ -460,19 +393,6 @@ function SlideSolar({ isActive }) {
               Learn More
             </Link>
           </div>
-        </div>
-      </motion.div>
-
-      {/* Stats badge — top right, desktop only */}
-      <motion.div
-        initial={{ opacity: 0, y: -15 }}
-        animate={isActive ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.7 }}
-        className="hidden sm:block absolute top-24 right-8 z-20"
-      >
-        <div className="bg-amber-500/90 backdrop-blur-xl rounded-xl p-3 text-center shadow-lg border border-amber-400/50">
-          <p className="text-white font-black text-xl leading-none">500+</p>
-          <p className="text-amber-100 text-[10px] font-medium mt-0.5">Installations</p>
         </div>
       </motion.div>
 
