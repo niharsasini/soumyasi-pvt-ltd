@@ -30,7 +30,7 @@ export default function Gallery() {
   useEffect(() => {
     const API = process.env.NEXT_PUBLIC_API_URL || "https://api.soumyashipower.in";
 
-    fetch(`${API}/api/v1/gallery`)
+    fetch(`${API}/api/v1/gallery/`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data && Array.isArray(data)) {
@@ -42,7 +42,7 @@ export default function Gallery() {
           })));
         }
       })
-      .catch(() => {})
+      .catch((err) => console.error("Gallery fetch failed:", err))
       .finally(() => setLoading(false));
   }, []);
 
