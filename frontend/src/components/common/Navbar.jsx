@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -73,6 +73,10 @@ const HamburgerIcon = ({ open }) => (
 
 export default function Navbar() {
   const router = useRouter();
+  const pathname = usePathname() || "";
+  const isActiveLink = (href) => href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+  const PILL_ACTIVE = "bg-amber-500 text-white rounded-full px-4 py-1.5 text-sm font-semibold shadow-sm shadow-amber-500/30";
+  const PILL_IDLE = "text-[#78614a] text-sm font-medium hover:text-[#1a1208] px-4 py-1.5 rounded-full transition";
   const [scrolled,  setScrolled]  = useState(false);
   const [open,      setOpen]      = useState(false);
   const [progress,  setProgress]  = useState(0);
@@ -112,9 +116,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-400 bg-[#FFFBF0]/95 backdrop-blur-xl ${
-          scrolled ? "border-b border-[#e8d5b0]" : ""
-        }`}
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-400 bg-white/90 backdrop-blur-xl border-b border-amber-100`}
         style={scrolled ? { boxShadow: "0 4px 30px rgba(120,80,20,0.10)" } : {}}
       >
         {/* Reading progress bar */}
@@ -164,10 +166,8 @@ export default function Navbar() {
                     onClick={handleSolutionsClick}
                     aria-haspopup="true"
                     aria-expanded={megaOpen}
-                    className={`flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                      megaOpen
-                        ? "bg-amber-100 text-[#d97706] border border-amber-300 shadow-[0_4px_12px_rgba(217,119,6,0.2)]"
-                        : "text-[#78614a] hover:bg-amber-50 hover:text-[#d97706] hover:border hover:border-amber-200 hover:shadow-[0_4px_12px_rgba(217,119,6,0.15)]"
+                    className={`flex items-center gap-1 ${
+                      isActiveLink(item.href) ? PILL_ACTIVE : megaOpen ? `${PILL_IDLE} !text-[#1a1208]` : PILL_IDLE
                     }`}
                   >
                     {item.label}
@@ -222,7 +222,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={item.href}
-                    className="block px-4 py-2 rounded-full text-sm font-medium text-[#78614a] hover:bg-amber-50 hover:text-[#d97706] hover:border hover:border-amber-200 hover:shadow-[0_4px_12px_rgba(217,119,6,0.15)] transition-all duration-200"
+                    className={`block ${isActiveLink(item.href) ? PILL_ACTIVE : PILL_IDLE}`}
                   >
                     {item.label}
                   </Link>
@@ -236,11 +236,12 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="hidden md:block shrink-0"
+            className="hidden md:inline-flex relative shrink-0"
           >
+            <span className="absolute -inset-0.5 rounded-full bg-amber-400/30 animate-ping pointer-events-none" aria-hidden="true" />
             <Link
               href={NAV_CTA.href}
-              className="btn-shimmer inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-amber-600 border border-amber-400/50"
+              className="relative btn-shimmer inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-amber-600 border border-amber-400/50"
               style={{ boxShadow: "0 4px 20px rgba(217,119,6,0.35)" }}
             >
               Get Free Quote
@@ -285,7 +286,11 @@ export default function Navbar() {
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="flex items-center px-5 py-4 rounded-2xl text-xl font-bold font-display text-[#78614a] border-b border-[#e8d5b0] hover:bg-amber-50 hover:text-[#d97706] hover:border-amber-200 hover:shadow-[0_4px_16px_rgba(217,119,6,0.12)] transition-all duration-200 active:scale-[0.98]"
+                    className={`flex items-center px-5 py-3 rounded-full text-xl font-display transition-all duration-200 active:scale-[0.98] ${
+                      isActiveLink(item.href)
+                        ? "bg-amber-500 text-white font-semibold shadow-sm shadow-amber-500/30"
+                        : "text-[#78614a] font-bold hover:text-[#1a1208]"
+                    }`}
                   >
                     {item.label}
                   </Link>

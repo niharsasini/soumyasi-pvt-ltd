@@ -582,82 +582,6 @@ function PartnerEnquiryForm() {
   );
 }
 
-/* ── Revenue Calculator (full-width, below the 3-column grid) ───────── */
-
-function RevenueCalculator() {
-  const { ref, isInView } = useScrollReveal();
-  const [sessions, setSessions] = useState(15);
-  const [duration, setDuration] = useState(30);
-  // Revenue basis: average utilized draw per session (~5kW across ramp-up/taper),
-  // not the 60kW charger's peak nameplate rating — sessions rarely sustain peak power throughout.
-  const AVG_SESSION_KW = 5;
-  const kwhDelivered = (duration / 60) * AVG_SESSION_KW * 0.85; // 85% efficiency
-  const revenuePerSession = kwhDelivered * 12; // ₹12/kWh standard rate
-  const monthlyRevenue = Math.round(sessions * 30 * revenuePerSession);
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-      className="bg-white rounded-2xl border border-[#e8d5b0] shadow-warm p-5 sm:p-8 mt-8 grid md:grid-cols-2 gap-6 md:gap-8 items-center"
-    >
-      {/* Left: sliders */}
-      <div>
-        <h3 className="text-base sm:text-lg font-bold text-[#1a1208] mb-4">Estimate Your Revenue Potential</h3>
-        <div className="mb-6">
-          <label htmlFor="ev-sessions" className="flex items-center justify-between text-sm font-medium text-[#1a1208] mb-3">
-            <span>Daily charging sessions</span>
-            <span className="bg-emerald-100 text-emerald-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">{sessions}</span>
-          </label>
-          <input
-            id="ev-sessions"
-            type="range"
-            min={5}
-            max={50}
-            value={sessions}
-            onChange={(e) => setSessions(Number(e.target.value))}
-            aria-label="Daily charging sessions"
-            className="w-full accent-emerald-600"
-          />
-        </div>
-        <div>
-          <label htmlFor="ev-duration" className="flex items-center justify-between text-sm font-medium text-[#1a1208] mb-3">
-            <span>Avg. session duration (min)</span>
-            <span className="bg-emerald-100 text-emerald-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">{duration}</span>
-          </label>
-          <input
-            id="ev-duration"
-            type="range"
-            min={15}
-            max={60}
-            value={duration}
-            onChange={(e) => setDuration(Number(e.target.value))}
-            aria-label="Average session duration in minutes"
-            className="w-full accent-emerald-600"
-          />
-        </div>
-      </div>
-
-      {/* Right: result */}
-      <div className="text-center md:border-l md:border-emerald-100 md:pl-8">
-        <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-emerald-600 tabular-nums">₹{monthlyRevenue.toLocaleString("en-IN")}</p>
-        <p className="text-[#78614a] text-sm mt-1">estimated monthly revenue</p>
-        <p className="text-[#a8917a] text-xs mt-2">
-          at ₹12/kWh · Based on {sessions} sessions/day
-        </p>
-        <a
-          href="#partner-application"
-          className="btn-shimmer mt-6 inline-flex items-center justify-center bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full px-8 py-3 font-bold hover:scale-105 transition-transform duration-300"
-        >
-          Apply Now
-        </a>
-      </div>
-    </motion.div>
-  );
-}
-
 /* ── Revenue Potential Card (center column) ─────────────── */
 
 function RevenuePotentialCard() {
@@ -667,7 +591,7 @@ function RevenuePotentialCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: 0.2 }}
-      className="bg-white rounded-3xl p-6 sm:p-8
+      className="bg-white rounded-3xl p-5 sm:p-6
         border-2 border-emerald-200
         shadow-[0_20px_60px_rgba(16,185,129,0.12)]"
     >
@@ -675,17 +599,17 @@ function RevenuePotentialCard() {
       <h3 className="text-xl font-bold text-[#1a1208] mb-1">
         Your Revenue Potential
       </h3>
-      <p className="text-[#78614a] text-sm mb-6">
+      <p className="text-[#78614a] text-xs mb-4">
         Estimated monthly earnings by location type — figures are illustrative, not guaranteed
       </p>
 
       {/* Revenue Tiers */}
-      <div className="space-y-3 mb-6">
+      <div className="space-y-2 mb-4">
         {[
           {
             label: 'High Traffic',
             sublabel: 'Malls, Highways, Tourist Spots',
-            range: '₹12,000 – ₹18,000',
+            range: '₹50,000 – ₹80,000',
             color: 'emerald',
             bg: 'bg-emerald-50',
             border: 'border-emerald-200',
@@ -694,7 +618,7 @@ function RevenuePotentialCard() {
           {
             label: 'Medium Traffic',
             sublabel: 'Hotels, Office Complexes',
-            range: '₹8,000 – ₹12,000',
+            range: '₹40,000 – ₹50,000',
             color: 'amber',
             bg: 'bg-amber-50',
             border: 'border-amber-200',
@@ -703,7 +627,7 @@ function RevenuePotentialCard() {
           {
             label: 'Standard',
             sublabel: 'Petrol Pumps, Residential',
-            range: '₹4,000 – ₹8,000',
+            range: '₹24,000 – ₹30,000',
             color: 'gray',
             bg: 'bg-[#FFFBF0]',
             border: 'border-[#e8d5b0]',
@@ -712,12 +636,12 @@ function RevenuePotentialCard() {
         ].map((tier, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 + i * 0.1 }}
+            transition={{ delay: 0.1 * (i + 1), duration: 0.45, ease: "easeOut" }}
             className={`${tier.bg} ${tier.border}
-              border rounded-2xl p-4`}
+              border rounded-xl px-3 py-2.5`}
           >
             <div className="flex items-center
               justify-between">
@@ -728,7 +652,7 @@ function RevenuePotentialCard() {
                   mt-0.5">{tier.sublabel}</p>
               </div>
               <div className="text-right">
-                <p className={`font-black text-lg
+                <p className={`font-black text-base
                   ${tier.text}`}>{tier.range}</p>
                 <p className="text-[#a8917a]
                   text-[10px]">/month</p>
@@ -739,10 +663,10 @@ function RevenuePotentialCard() {
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-[#e8d5b0] mb-5" />
+      <div className="h-px bg-[#e8d5b0] mb-4" />
 
       {/* 4 Stats */}
-      <div className="grid grid-cols-2 gap-3 mb-6">
+      <div className="grid grid-cols-2 gap-2 mb-4">
         {[
           { value: '60kW', label: 'Charger Output' },
           { value: 'Dual', label: 'CCS2 + CHAdeMO' },
@@ -750,8 +674,8 @@ function RevenuePotentialCard() {
           { value: '6wks', label: 'Survey to Live' },
         ].map((stat, i) => (
           <div key={i} className="text-center bg-[#FFFBF0]
-            rounded-xl p-3 border border-[#e8d5b0]">
-            <p className="font-black text-xl
+            rounded-xl p-2 border border-[#e8d5b0]">
+            <p className="font-black text-lg
               text-emerald-600">{stat.value}</p>
             <p className="text-[#a8917a] text-[10px]
               mt-0.5">{stat.label}</p>
@@ -769,7 +693,7 @@ function RevenuePotentialCard() {
         })}
         className="w-full bg-gradient-to-r
           from-emerald-500 to-emerald-600
-          text-white rounded-full py-3.5
+          text-white rounded-full py-3
           font-bold text-sm
           hover:scale-105 transition-all
           shadow-lg shadow-emerald-500/20
@@ -819,7 +743,7 @@ function BecomePartnerSection() {
           </motion.p>
         </div>
         {/* 3-column grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 items-stretch">
           {/* Who Can Partner */}
           <motion.div
             variants={VARIANTS.slideRight}
@@ -865,9 +789,6 @@ function BecomePartnerSection() {
             ))}
           </motion.div>
         </div>
-
-        {/* Revenue calculator — full width, below the 3-column grid */}
-        <RevenueCalculator />
 
         {/* Stats row */}
         <motion.div
