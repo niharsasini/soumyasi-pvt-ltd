@@ -37,7 +37,7 @@ export default function EVStationMap() {
       if (!mapRef.current || mapInstanceRef.current) return;
 
       const map = L.map(mapRef.current, {
-        center: [20.9517, 85.0985],
+        center: [20.2961, 85.8245],
         zoom: 7,
         zoomControl: true,
         scrollWheelZoom: false,
@@ -47,10 +47,10 @@ export default function EVStationMap() {
       markersRef.current = L.layerGroup().addTo(map);
 
       L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         {
-          attribution: "© OpenStreetMap contributors © CARTO",
-          subdomains: "abcd",
+          attribution:
+            "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
           maxZoom: 19,
         }
       ).addTo(map);
