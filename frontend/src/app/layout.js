@@ -47,7 +47,7 @@ export const metadata = {
       "Odisha's leading solar panel installation and EV charging network.",
     images: [
       {
-        url: "/soumyasi/solar-field-odisha.png",
+        url: "/soumyasi/SOUMYASHI%20NEW%20LOGO.jpeg",
         width: 1200,
         height: 630,
         alt: "Soumyashi Power Solar Installation",
@@ -59,11 +59,11 @@ export const metadata = {
     title: "Soumyashi Power | Solar & EV Charging Odisha",
     description:
       "Odisha's leading solar panel installation and EV charging network.",
-    images: ["/soumyasi/solar-field-odisha.png"],
+    images: ["/soumyasi/SOUMYASHI%20NEW%20LOGO.jpeg"],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/soumyasi/SOUMYASHI%20NEW%20LOGO.jpeg",
+    apple: "/soumyasi/SOUMYASHI%20NEW%20LOGO.jpeg",
   },
   manifest: "/site.webmanifest",
   robots: {

@@ -12,7 +12,7 @@ export const BRAND = {
   tagline: "Electrical & Power Solutions",
   description:
     "Delivering innovative and sustainable power solutions with excellence, reliability, and cutting-edge technology across industries.",
-  logo: "/soumyasi/soumyasi.jpeg",
+  logo: "/soumyasi/SOUMYASHI NEW LOGO.jpeg",
   email: "soumyashipower@gmail.com",
 };
 

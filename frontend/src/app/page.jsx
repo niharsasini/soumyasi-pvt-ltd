@@ -31,7 +31,7 @@ export const metadata = {
     title: "Soumyashi Power | Solar & EV Charging — Odisha",
     description:
       "Leading energy company in Odisha. Solar installations, EV charging network, wind power and industrial infrastructure.",
-    images: ["/soumyasi/solar-field-odisha.png"],
+    images: ["/soumyasi/SOUMYASHI%20NEW%20LOGO.jpeg"],
     locale: "en_IN",
     type: "website",
   },
